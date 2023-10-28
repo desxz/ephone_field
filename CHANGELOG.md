@@ -3,6 +3,6 @@
 * Initial release.
 * Add `EPhoneField` widget.
 * Add `Country` model.
-* Add `EPhoneTextFieldType` enum.
+* Add `EphoneFieldType` enum.
 * Add `PickerMenuType` enum.
 * Add `CountryPickerHeight` enum.

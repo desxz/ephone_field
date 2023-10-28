@@ -13,7 +13,7 @@ class EPhoneField extends StatefulWidget {
     super.key,
     this.controller,
     this.focusNode,
-    this.initialType = EPhoneTextFieldType.initial,
+    this.initialType = EphoneFieldType.initial,
     this.countries = Country.values,
     this.searchInputDecoration = const InputDecoration(
       hintText: 'Search your country',
@@ -58,8 +58,8 @@ class EPhoneField extends StatefulWidget {
   /// The [Country] to be selected when the widget is initialized. Defaults to [Country.unitedStates].
   final Country initialCountry;
 
-  /// The [EPhoneTextFieldType] to be selected when the widget is initialized. Defaults to [EPhoneTextFieldType.initial].
-  final EPhoneTextFieldType initialType;
+  /// The [EphoneFieldType] to be selected when the widget is initialized. Defaults to [EphoneFieldType.initial].
+  final EphoneFieldType initialType;
 
   /// The [String] to be used as the initial value of the input field.
   final String? initialValue;
@@ -120,25 +120,25 @@ class EPhoneField extends StatefulWidget {
   /// hintText: 'Phone number or email',
   /// )
   /// ```
-  /// The [prefixIcon] of the input field is replaced by the country picker button when the [EPhoneTextFieldType] is [EPhoneTextFieldType.phone].
-  /// The [labelText] of the input field is replaced by the [EPhoneTextFieldType] label text when the [EPhoneTextFieldType] is [EPhoneTextFieldType.phone] or [EPhoneTextFieldType.email].
-  /// The [labelText] of the input field is replaced by the [emptyLabelText] when the [EPhoneTextFieldType] is [EPhoneTextFieldType.initial].
-  /// The [labelText] of the input field is replaced by the [emailLabelText] when the [EPhoneTextFieldType] is [EPhoneTextFieldType.email].
-  /// The [labelText] of the input field is replaced by the [phoneLabelText] when the [EPhoneTextFieldType] is [EPhoneTextFieldType.phone].
+  /// The [prefixIcon] of the input field is replaced by the country picker button when the [EphoneFieldType] is [EphoneFieldType.phone].
+  /// The [labelText] of the input field is replaced by the [EphoneFieldType] label text when the [EphoneFieldType] is [EphoneFieldType.phone] or [EphoneFieldType.email].
+  /// The [labelText] of the input field is replaced by the [emptyLabelText] when the [EphoneFieldType] is [EphoneFieldType.initial].
+  /// The [labelText] of the input field is replaced by the [emailLabelText] when the [EphoneFieldType] is [EphoneFieldType.email].
+  /// The [labelText] of the input field is replaced by the [phoneLabelText] when the [EphoneFieldType] is [EphoneFieldType.phone].
   final InputDecoration decoration;
 
   /// The [IconData] to be used as the icon of the country picker button. Defaults to [Icons.arrow_drop_down
   final IconData countryPickerButtonIcon;
 
   /// The [MaskSplitCharacter] to be used as the mask splitter of the phone number input field. Defaults to [MaskSplitCharacter.space].
-  /// The [MaskSplitCharacter] is only used when the [EPhoneTextFieldType] is [EPhoneTextFieldType.phone].
+  /// The [MaskSplitCharacter] is only used when the [EphoneFieldType] is [EphoneFieldType.phone].
   /// If the [MaskSplitCharacter] is [MaskSplitCharacter.none], the [PhoneNumberMaskFormatter] is not used.
   /// If the [MaskSplitCharacter] is [MaskSplitCharacter.space], the [PhoneNumberMaskFormatter] is used with the space character as the mask splitter.
   /// If the [MaskSplitCharacter] is [MaskSplitCharacter.dash], the [PhoneNumberMaskFormatter] is used with the dash character as the mask splitter.
   final MaskSplitCharacter phoneNumberMaskSplitter;
 
   /// The [List<TextInputFormatter>] to be used as the input formatters of the input field.
-  /// As default, the [PhoneNumberMaskFormatter] and [PhoneNumberDigistOnlyFormatter] are used when the [EPhoneTextFieldType] is [EPhoneTextFieldType.phone].
+  /// As default, the [PhoneNumberMaskFormatter] and [PhoneNumberDigistOnlyFormatter] are used when the [EphoneFieldType] is [EphoneFieldType.phone].
   /// If the [phoneNumberMaskSplitter] is [MaskSplitCharacter.none], the [PhoneNumberMaskFormatter] is not used.
   /// If don't want to use the [PhoneNumberMaskFormatter], you can pass an empty list to the [inputFormatters].
   final List<TextInputFormatter>? inputFormatters;
@@ -150,11 +150,11 @@ class EPhoneField extends StatefulWidget {
   final AutovalidateMode autovalidateMode;
 
   @override
-  State<EPhoneField> createState() => _EPhoneTextFieldState();
+  State<EPhoneField> createState() => _EphoneFieldState();
 }
 
-class _EPhoneTextFieldState extends State<EPhoneField> {
-  late EPhoneTextFieldType _type;
+class _EphoneFieldState extends State<EPhoneField> {
+  late EphoneFieldType _type;
   late TextEditingController _controller;
   late FocusNode _focusNode;
   late Country _selectedCountry;
@@ -183,21 +183,21 @@ class _EPhoneTextFieldState extends State<EPhoneField> {
       focusNode: _focusNode,
       autovalidateMode: widget.autovalidateMode,
       onChanged: (String value) {
-        if (_type == EPhoneTextFieldType.phone) {
+        if (_type == EphoneFieldType.phone) {
           value =
               '+${_selectedCountry.dialCodeString}${value.replaceAll(widget.phoneNumberMaskSplitter.maskSplitCharacter, '')}';
         }
         widget.onChanged?.call(value);
       },
       onSaved: (String? value) {
-        if (_type == EPhoneTextFieldType.phone) {
+        if (_type == EphoneFieldType.phone) {
           value =
               '+${_selectedCountry.dialCodeString}${value?.replaceAll(widget.phoneNumberMaskSplitter.maskSplitCharacter, '')}';
         }
         widget.onSaved?.call(value);
       },
       onFieldSubmitted: (String? value) {
-        if (_type == EPhoneTextFieldType.phone) {
+        if (_type == EphoneFieldType.phone) {
           value =
               '+${_selectedCountry.dialCodeString}${value?.replaceAll(widget.phoneNumberMaskSplitter.maskSplitCharacter, '')}';
         }
@@ -205,12 +205,12 @@ class _EPhoneTextFieldState extends State<EPhoneField> {
       },
       initialValue: widget.initialValue,
       decoration: widget.decoration.copyWith(
-          prefixIcon: _buildCountryPicker(_type == EPhoneTextFieldType.phone),
+          prefixIcon: _buildCountryPicker(_type == EphoneFieldType.phone),
           labelText: _type.labelText(widget.emptyLabelText,
               widget.emailLabelText, widget.phoneLabelText)),
       keyboardType: _type.keyboardType,
       validator: (String? value) {
-        if (_type == EPhoneTextFieldType.phone) {
+        if (_type == EphoneFieldType.phone) {
           value =
               '+${_selectedCountry.dialCodeString}${value?.replaceAll(widget.phoneNumberMaskSplitter.maskSplitCharacter, '')}';
         }
@@ -224,7 +224,7 @@ class _EPhoneTextFieldState extends State<EPhoneField> {
     );
   }
 
-  /// Builds the [CountryPickerButton] if the [_type] is [EPhoneTextFieldType.phone].
+  /// Builds the [CountryPickerButton] if the [_type] is [EphoneFieldType.phone].
   Widget? _buildCountryPicker(bool isPhoneFieldSelected) {
     return isPhoneFieldSelected
         ? CountryPickerButton(
@@ -259,11 +259,11 @@ class _EPhoneTextFieldState extends State<EPhoneField> {
       });
     } else if (text.contains('@') || int.tryParse(text) == null) {
       setState(() {
-        _type = EPhoneTextFieldType.email;
+        _type = EphoneFieldType.email;
       });
     } else {
       setState(() {
-        _type = EPhoneTextFieldType.phone;
+        _type = EphoneFieldType.phone;
       });
     }
   }

@@ -47,12 +47,12 @@ EPhoneField()
 | Property                 | Description                                  | Type                       | Default                                 |
 | ------------------------ | -------------------------------------------- | -------------------------- | --------------------------------------- |
 | key                      | The key for the input field.                 | `Key`                      | `null`                                  |
-| initialType              | The initial type of the input field.         | `EPhoneTextFieldType`      | `EPhoneTextFieldType.initial`           |
+| initialType              | The initial type of the input field.         | `EphoneFieldType`      | `EphoneFieldType.initial`           |
 | countries                | The list of countries to display.            | `List<Country>`            | `Country.all`                           |
 | controller               | The controller for the input field.          | `TextEditingController`    | `TextEditingController()`               |
 | focusNode                | The focus node for the input field.          | `FocusNode`                | `FocusNode()`                           |
 | decoration               | The decoration for the input field.          | `InputDecoration`          | `InputDecoration()`                     |
-| keyboardType             | The keyboard type for the input field.       | `TextInputType`            | `EPhoneTextFieldType.keyboardType`      |
+| keyboardType             | The keyboard type for the input field.       | `TextInputType`            | `EphoneFieldType.keyboardType`      |
 | searchInputDecoration    | The decoration for the search input field.   | `InputDecoration`          | `InputDecoration()`                     |
 | isSearchable             | Whether the search input is enabled.         | `bool`                     | `true`                                  |
 | title                    | The title for the country picker.            | `String`                   | `null`                                  |
@@ -73,4 +73,4 @@ EPhoneField()
 | validator                | The validator for the input field.           | `FormValidator`            | `null`                                  |
 | onFieldSubmitted         | The callback when the input is submitted.    | `ValueChanged<String>`     | `null`                                  |
 | onCountryChanged         | The callback when the country is changed.    | `ValueChanged<Country>`    | `null`                                  |
-| inputFormatters          | The input formatters for the input field.    | `List<TextInputFormatter>` | `EPhoneTextFieldType.inputFormatters()` |
+| inputFormatters          | The input formatters for the input field.    | `List<TextInputFormatter>` | `EphoneFieldType.inputFormatters()` |

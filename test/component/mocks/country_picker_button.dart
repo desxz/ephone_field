@@ -19,7 +19,7 @@ class CountryPickerButtonMock extends StatelessWidget {
   );
   final IconData icon = Icons.add;
   final Country initialValue = Country.afghanistan;
-  final EPhoneTextFieldType initialType = EPhoneTextFieldType.phone;
+  final EphoneFieldType initialType = EphoneFieldType.phone;
   final PickerMenuType menuType = PickerMenuType.dialog;
   final CountryPickerHeigth pickerHeight = CountryPickerHeigth.h75;
 

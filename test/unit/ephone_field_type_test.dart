@@ -3,34 +3,33 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('should EPhoneTextFieldType keyboardType match successfully', () {
-    expect(EPhoneTextFieldType.email.keyboardType, TextInputType.emailAddress);
-    expect(EPhoneTextFieldType.phone.keyboardType, TextInputType.phone);
-    expect(EPhoneTextFieldType.initial.keyboardType, TextInputType.text);
+  test('should EphoneFieldType keyboardType match successfully', () {
+    expect(EphoneFieldType.email.keyboardType, TextInputType.emailAddress);
+    expect(EphoneFieldType.phone.keyboardType, TextInputType.phone);
+    expect(EphoneFieldType.initial.keyboardType, TextInputType.text);
   });
 
   test(
-    'should EPhoneTextFieldType inputFormatters match successfully',
+    'should EphoneFieldType inputFormatters match successfully',
     () {
       expect(
-        EPhoneTextFieldType.email
-            .inputFormatters(Country.unitedStates, true, " "),
+        EphoneFieldType.email.inputFormatters(Country.unitedStates, true, " "),
         [],
       );
       expect(
-        EPhoneTextFieldType.phone
+        EphoneFieldType.phone
             .inputFormatters(Country.unitedStates, true, " ")
             .length,
         2,
       );
       expect(
-        EPhoneTextFieldType.phone
+        EphoneFieldType.phone
             .inputFormatters(Country.unitedStates, false, "")
             .length,
         2,
       );
       expect(
-        EPhoneTextFieldType.initial
+        EphoneFieldType.initial
             .inputFormatters(Country.unitedStates, true, " "),
         [],
       );
@@ -38,18 +37,18 @@ void main() {
   );
 
   test(
-    'should EPhoneTextFieldType labelText match successfully',
+    'should EphoneFieldType labelText match successfully',
     () {
       expect(
-        EPhoneTextFieldType.email.labelText("empty", "email", "phone"),
+        EphoneFieldType.email.labelText("empty", "email", "phone"),
         "email",
       );
       expect(
-        EPhoneTextFieldType.phone.labelText("empty", "email", "phone"),
+        EphoneFieldType.phone.labelText("empty", "email", "phone"),
         "phone",
       );
       expect(
-        EPhoneTextFieldType.initial.labelText("empty", "email", "phone"),
+        EphoneFieldType.initial.labelText("empty", "email", "phone"),
         "empty",
       );
     },

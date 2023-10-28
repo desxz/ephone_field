@@ -3,16 +3,16 @@ import 'package:flutter/services.dart';
 import '../formatters/formatters.dart';
 import 'country.dart';
 
-enum EPhoneTextFieldType { initial, email, phone }
+enum EphoneFieldType { initial, email, phone }
 
-extension EPhoneTextFielExtension on EPhoneTextFieldType {
+extension EPhoneTextFielExtension on EphoneFieldType {
   TextInputType get keyboardType {
     switch (this) {
-      case EPhoneTextFieldType.initial:
+      case EphoneFieldType.initial:
         return TextInputType.text;
-      case EPhoneTextFieldType.email:
+      case EphoneFieldType.email:
         return TextInputType.emailAddress;
-      case EPhoneTextFieldType.phone:
+      case EphoneFieldType.phone:
         return TextInputType.phone;
       default:
         return TextInputType.emailAddress;
@@ -22,11 +22,11 @@ extension EPhoneTextFielExtension on EPhoneTextFieldType {
   List<TextInputFormatter> inputFormatters(
       Country country, bool useMask, String maskSplitCharacter) {
     switch (this) {
-      case EPhoneTextFieldType.initial:
+      case EphoneFieldType.initial:
         return [];
-      case EPhoneTextFieldType.email:
+      case EphoneFieldType.email:
         return [];
-      case EPhoneTextFieldType.phone:
+      case EphoneFieldType.phone:
         return [
           useMask
               ? PhoneNumberMaskFormatter(
@@ -42,11 +42,11 @@ extension EPhoneTextFielExtension on EPhoneTextFieldType {
   String labelText(
       String emptyLabelText, String emailLabelText, String phoneLabelText) {
     switch (this) {
-      case EPhoneTextFieldType.initial:
+      case EphoneFieldType.initial:
         return emptyLabelText;
-      case EPhoneTextFieldType.email:
+      case EphoneFieldType.email:
         return emailLabelText;
-      case EPhoneTextFieldType.phone:
+      case EphoneFieldType.phone:
         return phoneLabelText;
       default:
         return emptyLabelText;
