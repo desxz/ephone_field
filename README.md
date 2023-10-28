@@ -47,12 +47,12 @@ EPhoneField()
 | Property                 | Description                                  | Type                       | Default                                 |
 | ------------------------ | -------------------------------------------- | -------------------------- | --------------------------------------- |
 | key                      | The key for the input field.                 | `Key`                      | `null`                                  |
-| initialType              | The initial type of the input field.         | `EphoneFieldType`      | `EphoneFieldType.initial`           |
+| initialType              | The initial type of the input field.         | `EphoneFieldType`          | `EphoneFieldType.initial`               |
 | countries                | The list of countries to display.            | `List<Country>`            | `Country.all`                           |
 | controller               | The controller for the input field.          | `TextEditingController`    | `TextEditingController()`               |
 | focusNode                | The focus node for the input field.          | `FocusNode`                | `FocusNode()`                           |
 | decoration               | The decoration for the input field.          | `InputDecoration`          | `InputDecoration()`                     |
-| keyboardType             | The keyboard type for the input field.       | `TextInputType`            | `EphoneFieldType.keyboardType`      |
+| keyboardType             | The keyboard type for the input field.       | `TextInputType`            | `EphoneFieldType.keyboardType`          |
 | searchInputDecoration    | The decoration for the search input field.   | `InputDecoration`          | `InputDecoration()`                     |
 | isSearchable             | Whether the search input is enabled.         | `bool`                     | `true`                                  |
 | title                    | The title for the country picker.            | `String`                   | `null`                                  |
