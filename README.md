@@ -34,7 +34,7 @@ import 'package:ephone_field/ephone_field.dart';
 ```
 ## Usage
 
-Implement the `EmailPhoneTextField` widget in your UI:
+Implement the `EmailPhoneField` widget in your UI:
 
 ```dart
 EPhoneField()
