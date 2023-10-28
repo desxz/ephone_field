@@ -1,8 +1,20 @@
 enum MaskSplitCharacter {
-  none(''),
-  dash('-'),
-  space(' ');
+  none,
+  dash,
+  space,
+}
 
-  final String maskSplitCharacter;
-  const MaskSplitCharacter(this.maskSplitCharacter);
+extension MaskSplitCharacterExtension on MaskSplitCharacter {
+  String get value {
+    switch (this) {
+      case MaskSplitCharacter.none:
+        return '';
+      case MaskSplitCharacter.dash:
+        return '-';
+      case MaskSplitCharacter.space:
+        return ' ';
+      default:
+        return '';
+    }
+  }
 }

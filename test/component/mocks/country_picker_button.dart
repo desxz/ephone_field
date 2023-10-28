@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 
 class CountryPickerButtonMock extends StatelessWidget {
   const CountryPickerButtonMock({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
   final List<Country> countries = Country.values;
   final String title = "Select Country";
   final bool isSearchable = true;

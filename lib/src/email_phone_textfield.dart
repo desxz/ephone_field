@@ -10,7 +10,7 @@ import 'enums/mask_split_character.dart';
 
 class EPhoneField extends StatefulWidget {
   const EPhoneField({
-    super.key,
+    Key? key,
     this.controller,
     this.focusNode,
     this.initialType = EphoneFieldType.initial,
@@ -44,7 +44,7 @@ class EPhoneField extends StatefulWidget {
     this.validator,
     this.countryPickerButtonWidth = 100.0,
     this.autovalidateMode = AutovalidateMode.onUserInteraction,
-  });
+  }) : super(key: key);
 
   /// The [FocusNode] of the input field.
   final FocusNode? focusNode;
@@ -185,21 +185,21 @@ class _EphoneFieldState extends State<EPhoneField> {
       onChanged: (String value) {
         if (_type == EphoneFieldType.phone) {
           value =
-              '+${_selectedCountry.dialCode}${value.replaceAll(widget.phoneNumberMaskSplitter.maskSplitCharacter, '')}';
+              '+${_selectedCountry.dialCode}${value.replaceAll(widget.phoneNumberMaskSplitter.value, '')}';
         }
         widget.onChanged?.call(value);
       },
       onSaved: (String? value) {
         if (_type == EphoneFieldType.phone) {
           value =
-              '+${_selectedCountry.dialCode}${value?.replaceAll(widget.phoneNumberMaskSplitter.maskSplitCharacter, '')}';
+              '+${_selectedCountry.dialCode}${value?.replaceAll(widget.phoneNumberMaskSplitter.value, '')}';
         }
         widget.onSaved?.call(value);
       },
       onFieldSubmitted: (String? value) {
         if (_type == EphoneFieldType.phone) {
           value =
-              '+${_selectedCountry.dialCode}${value?.replaceAll(widget.phoneNumberMaskSplitter.maskSplitCharacter, '')}';
+              '+${_selectedCountry.dialCode}${value?.replaceAll(widget.phoneNumberMaskSplitter.value, '')}';
         }
         widget.onFieldSubmitted?.call(value);
       },
@@ -212,7 +212,7 @@ class _EphoneFieldState extends State<EPhoneField> {
       validator: (String? value) {
         if (_type == EphoneFieldType.phone) {
           value =
-              '+${_selectedCountry.dialCode}${value?.replaceAll(widget.phoneNumberMaskSplitter.maskSplitCharacter, '')}';
+              '+${_selectedCountry.dialCode}${value?.replaceAll(widget.phoneNumberMaskSplitter.value, '')}';
         }
         return widget.validator?.call(value);
       },
@@ -220,7 +220,7 @@ class _EphoneFieldState extends State<EPhoneField> {
           _type.inputFormatters(
               _selectedCountry,
               widget.phoneNumberMaskSplitter != MaskSplitCharacter.none,
-              widget.phoneNumberMaskSplitter.maskSplitCharacter),
+              widget.phoneNumberMaskSplitter.value),
     );
   }
 
@@ -251,8 +251,8 @@ class _EphoneFieldState extends State<EPhoneField> {
 
   /// Updates the [_type] of the input field based on the [_controller] text.
   void _updateTextFieldType() {
-    final text = _controller.text
-        .replaceAll(widget.phoneNumberMaskSplitter.maskSplitCharacter, '');
+    final text =
+        _controller.text.replaceAll(widget.phoneNumberMaskSplitter.value, '');
     if (text.isEmpty) {
       setState(() {
         _type = widget.initialType;

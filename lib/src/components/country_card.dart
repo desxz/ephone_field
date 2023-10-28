@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../enums/country.dart';
 
 class CountryCard extends StatelessWidget {
-  const CountryCard({super.key, required this.country});
+  const CountryCard({Key? key, required this.country}) : super(key: key);
   final Country country;
 
   @override

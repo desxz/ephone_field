@@ -5,7 +5,7 @@ import 'country_picker.dart';
 
 class CountryPickerMenu extends StatelessWidget {
   const CountryPickerMenu({
-    super.key,
+    Key? key,
     required this.onValuePicked,
     required this.itemBuilder,
     required this.titlePadding,
@@ -14,7 +14,7 @@ class CountryPickerMenu extends StatelessWidget {
     required this.searchInputDecoration,
     required this.height,
     required this.countries,
-  });
+  }) : super(key: key);
   final Function(Country) onValuePicked;
   final Widget Function(Country) itemBuilder;
   final InputDecoration searchInputDecoration;

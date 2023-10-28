@@ -4,13 +4,13 @@ import '../enums/country.dart';
 
 class CountryPicker extends StatefulWidget {
   const CountryPicker({
-    super.key,
+    Key? key,
     required this.onValuePicked,
     required this.itemBuilder,
     required this.searchInputDecoration,
     required this.isSearchable,
     required this.countries,
-  });
+  }) : super(key: key);
   final Function(Country) onValuePicked;
   final Widget Function(Country) itemBuilder;
   final InputDecoration searchInputDecoration;

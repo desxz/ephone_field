@@ -2,7 +2,7 @@ import 'package:ephone_field/src/email_phone_textfield.dart';
 import 'package:flutter/material.dart';
 
 class EPhoneFieldMock extends StatelessWidget {
-  const EPhoneFieldMock({super.key});
+  const EPhoneFieldMock({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

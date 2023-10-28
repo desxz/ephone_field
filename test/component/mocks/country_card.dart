@@ -3,7 +3,7 @@ import 'package:ephone_field/src/enums/country.dart';
 import 'package:flutter/material.dart';
 
 class CountryCardMock extends StatelessWidget {
-  const CountryCardMock({super.key, required this.country});
+  const CountryCardMock({Key? key, required this.country}) : super(key: key);
   final Country country;
 
   @override
