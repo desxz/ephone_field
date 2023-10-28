@@ -44,7 +44,8 @@ class _CountryPickerState extends State<CountryPicker> {
               .where((country) =>
                   country.alpha2.toLowerCase().contains(text.toLowerCase()) ||
                   country.name.toLowerCase().contains(text.toLowerCase()) ||
-                  country.dialCodeString
+                  country.dialCode
+                      .toString()
                       .toLowerCase()
                       .contains(text.toLowerCase()))
               .toList();

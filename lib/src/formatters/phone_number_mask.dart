@@ -12,8 +12,8 @@ class PhoneNumberMaskFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    final String mask = country.maskString;
-    final String maskCharacter = country.maskString[0];
+    final String mask = country.mask;
+    final String maskCharacter = country.mask[0];
     final String text = newValue.text.replaceAll(maskSplitCharacter, '');
     final String oldText = oldValue.text.replaceAll(maskSplitCharacter, '');
     final String newText =

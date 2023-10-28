@@ -31,7 +31,7 @@ extension EPhoneTextFielExtension on EphoneFieldType {
           useMask
               ? PhoneNumberMaskFormatter(
                   country: country, maskSplitCharacter: maskSplitCharacter)
-              : LengthLimitingTextInputFormatter(country.maxLengthInt),
+              : LengthLimitingTextInputFormatter(country.maxLength),
           PhoneNumberDigistOnlyFormatter(maskSplitCharacter: maskSplitCharacter)
         ];
       default:

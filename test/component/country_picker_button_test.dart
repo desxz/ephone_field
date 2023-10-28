@@ -16,8 +16,7 @@ void main() {
       (widgetTester) async {
     await widgetTester.pumpWidget(mockWidget);
 
-    expect(find.text("+${mockWidget.initialValue.dialCodeString}"),
-        findsOneWidget);
+    expect(find.text("+${mockWidget.initialValue.dialCode}"), findsOneWidget);
   });
 
   testWidgets('should CountryPickerButton widget renders correct icon',

@@ -33,6 +33,6 @@ void main() {
       (widgetTester) async {
     await widgetTester.pumpWidget(mockWidget);
 
-    expect(find.text('+${country.dialCodeString}'), findsOneWidget);
+    expect(find.text('+${country.dialCode}'), findsOneWidget);
   });
 }

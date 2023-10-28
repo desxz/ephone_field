@@ -185,21 +185,21 @@ class _EphoneFieldState extends State<EPhoneField> {
       onChanged: (String value) {
         if (_type == EphoneFieldType.phone) {
           value =
-              '+${_selectedCountry.dialCodeString}${value.replaceAll(widget.phoneNumberMaskSplitter.maskSplitCharacter, '')}';
+              '+${_selectedCountry.dialCode}${value.replaceAll(widget.phoneNumberMaskSplitter.maskSplitCharacter, '')}';
         }
         widget.onChanged?.call(value);
       },
       onSaved: (String? value) {
         if (_type == EphoneFieldType.phone) {
           value =
-              '+${_selectedCountry.dialCodeString}${value?.replaceAll(widget.phoneNumberMaskSplitter.maskSplitCharacter, '')}';
+              '+${_selectedCountry.dialCode}${value?.replaceAll(widget.phoneNumberMaskSplitter.maskSplitCharacter, '')}';
         }
         widget.onSaved?.call(value);
       },
       onFieldSubmitted: (String? value) {
         if (_type == EphoneFieldType.phone) {
           value =
-              '+${_selectedCountry.dialCodeString}${value?.replaceAll(widget.phoneNumberMaskSplitter.maskSplitCharacter, '')}';
+              '+${_selectedCountry.dialCode}${value?.replaceAll(widget.phoneNumberMaskSplitter.maskSplitCharacter, '')}';
         }
         widget.onFieldSubmitted?.call(value);
       },
@@ -212,7 +212,7 @@ class _EphoneFieldState extends State<EPhoneField> {
       validator: (String? value) {
         if (_type == EphoneFieldType.phone) {
           value =
-              '+${_selectedCountry.dialCodeString}${value?.replaceAll(widget.phoneNumberMaskSplitter.maskSplitCharacter, '')}';
+              '+${_selectedCountry.dialCode}${value?.replaceAll(widget.phoneNumberMaskSplitter.maskSplitCharacter, '')}';
         }
         return widget.validator?.call(value);
       },

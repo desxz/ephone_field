@@ -10,13 +10,13 @@ class CountryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Image.asset(
-        country.flagImage,
+        country.flagImagePath,
         package: 'ephone_field',
         width: 32.0,
       ),
       title: Text(country.name),
       subtitle: Text(country.alpha3),
-      trailing: Text('+${country.dialCodeString}',
+      trailing: Text('+${country.dialCode}',
           style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
     );
   }

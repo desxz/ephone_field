@@ -55,7 +55,7 @@ class CountryPickerButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                '+${initialValue.dialCodeString}',
+                '+${initialValue.dialCode}',
                 style:
                     const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
@@ -63,7 +63,7 @@ class CountryPickerButton extends StatelessWidget {
                 width: 4.0,
               ),
               Image.asset(
-                initialValue.flagImage,
+                initialValue.flagImagePath,
                 package: 'ephone_field',
                 width: 20.0,
               ),
