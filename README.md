@@ -2,8 +2,7 @@
   
   [![Github](https://img.shields.io/badge/github-desxz/ephone_field-purple.svg)](https://github.com/desxz/ephone_field)
   [![pub package](https://img.shields.io/pub/v/ephone_field.svg)](https://pub.dartlang.org/packages/ephone_field)
-  [![Build Status](https://travis-ci.org/dexz/ephone_field.svg?branch=master)](https://travis-ci.org/desxz/ephone_field)
-  [![codecov](https://codecov.io/gh/desxz/ephone_field/branch/master/graph/badge.svg)](https://codecov.io/gh/desxz/ephone_field)
+  [![Build Status](https://github.com/desxz/ephone_field/actions/workflows/main.yaml/badge.svg)](https://github.com/desxz/ephone_field/actions/workflows/main.yaml)
   [![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](https://opensource.org/licenses/MIT)
 
 A versatile Flutter TextFormField widget for handling email and phone number input with ease.
