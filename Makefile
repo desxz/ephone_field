@@ -4,4 +4,4 @@ component-test:
 unit-test:
 	flutter test test/unit/*_test.dart
 
-test: unit-test component-test
+test: flutter test --coverage
