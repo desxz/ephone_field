@@ -30,7 +30,7 @@ jobs:
             - name: Install dependencies
               run: flutter pub get
             - name: Run tests
-              run: make test
+              run: flutter test --coverage
             - name: Store coverage report
               uses: actions/upload-artifact@v2
               with:
