@@ -32,3 +32,12 @@ jobs:
             - name: Run tests
               run: make test
 
+    coverage:
+      runs-on: ubuntu-latest
+      needs: test
+      steps:
+        - name: Upload coverage reports to Codecov
+          uses: codecov/codecov-action@v3
+          env:
+            CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
