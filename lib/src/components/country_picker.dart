@@ -44,10 +44,7 @@ class _CountryPickerState extends State<CountryPicker> {
               .where((country) =>
                   country.alpha2.toLowerCase().contains(text.toLowerCase()) ||
                   country.name.toLowerCase().contains(text.toLowerCase()) ||
-                  country.dialCode
-                      .toString()
-                      .toLowerCase()
-                      .contains(text.toLowerCase()))
+                  country.dialCode.toString().toLowerCase().contains(text.toLowerCase()))
               .toList();
         });
       }
@@ -65,6 +62,7 @@ class _CountryPickerState extends State<CountryPicker> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
+        key: const Key('search-field'),
         focusNode: _focusNode,
         controller: _controller,
         decoration: widget.searchInputDecoration,
@@ -79,6 +77,7 @@ class _CountryPickerState extends State<CountryPicker> {
         if (widget.isSearchable) _buildSearchField(),
         Expanded(
           child: ListView.builder(
+            key: const Key('country-picker-list'),
             itemCount: _filteredCountries.length,
             itemBuilder: (context, index) {
               final country = _filteredCountries[index];
