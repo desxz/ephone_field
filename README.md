@@ -50,7 +50,7 @@ EPhoneField()
 
 ### EphineField Country Picker Widgets
 
-| Bottom Sheet                                           |  Dialog                                                |                   
+| Dialog                                                 | Bottom Sheet                                           |                   
 |------------------------------------------------------- | -------------------------------------------------------|
 | <img src="./ephone-field-dialog.png" width="280">      | <img src="./ephone-field-bottomsheet.png" width="280"> |
 
