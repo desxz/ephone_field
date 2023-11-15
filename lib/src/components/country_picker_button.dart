@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../enums/country.dart';
@@ -38,15 +41,7 @@ class CountryPickerButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: _openCountryPickerMenu(
-          menuType,
-          context,
-          searchInputDecoration,
-          title,
-          titlePadding,
-          pickerHeight,
-          isSearchable,
-          countries,
-          onValuePicked),
+          menuType, context, searchInputDecoration, title, titlePadding, pickerHeight, isSearchable, countries, onValuePicked),
       child: SizedBox(
         width: width,
         child: Padding(
@@ -56,8 +51,7 @@ class CountryPickerButton extends StatelessWidget {
             children: <Widget>[
               Text(
                 '+${initialValue.dialCode}',
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(
                 width: 4.0,
@@ -91,21 +85,71 @@ void Function()? _openCountryPickerMenu(
     void Function(Country) onValuePicked) {
   switch (menuType) {
     case PickerMenuType.dialog:
-      return _openCountryPickerDialog(context, searchInputDecoration, title,
-          titlePadding, isSearchable, pickerHeight, countries, onValuePicked);
+      return _openCountryPickerDialog(
+          context, searchInputDecoration, title, titlePadding, isSearchable, pickerHeight, countries, onValuePicked);
     case PickerMenuType.bottomSheet:
       return _openCountryPickerBottomSheet(
-          context,
-          searchInputDecoration,
-          title,
-          titlePadding,
-          isSearchable,
-          pickerHeight,
-          countries,
-          onValuePicked);
+          context, searchInputDecoration, title, titlePadding, isSearchable, pickerHeight, countries, onValuePicked);
+
+    case PickerMenuType.screen:
+      return _openCountryPickerScreen(
+          context, searchInputDecoration, title, titlePadding, isSearchable, pickerHeight, countries, onValuePicked);
     default:
       return null;
   }
+}
+
+void Function()? _openCountryPickerScreen(
+    BuildContext context,
+    InputDecoration searchInputDecoration,
+    String? title,
+    EdgeInsetsGeometry titlePadding,
+    bool isSearchable,
+    CountryPickerHeigth pickerHeight,
+    List<Country> countries,
+    void Function(Country) onValuePicked) {
+  return () {
+    final _pageBody = Material(
+      child: SafeArea(
+        child: CountryPickerMenu(
+          title: title,
+          titlePadding: titlePadding,
+          isSearchable: isSearchable,
+          height: MediaQuery.of(context).size.height,
+          searchInputDecoration: searchInputDecoration,
+          onValuePicked: (Country country) => onValuePicked(country),
+          itemBuilder: (Country country) => CountryCard(country: country),
+          countries: countries,
+        ),
+      ),
+    );
+    /// Navigate to the screen depending on the platform type
+    if (Platform.isIOS) {
+      Navigator.push(
+        context,
+        CupertinoPageRoute(
+          builder: (context) => CupertinoPageScaffold(
+            navigationBar: CupertinoNavigationBar(
+              brightness: Brightness.dark,
+              middle: Text(title ?? ''),
+              previousPageTitle: 'Back',
+            ),
+            child: _pageBody,
+          ),
+        ),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Scaffold(
+            appBar: AppBar(title: Text(title ?? '')),
+            body: _pageBody,
+          ),
+        ),
+      );
+    }
+  };
 }
 
 void Function()? _openCountryPickerDialog(
