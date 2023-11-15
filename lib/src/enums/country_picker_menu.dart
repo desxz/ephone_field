@@ -3,5 +3,8 @@ enum PickerMenuType {
   dialog,
 
   /// Show the picker in a bottom sheet
-  bottomSheet
+  bottomSheet,
+
+  /// Show as screen with back button
+  screen,
 }
