@@ -50,9 +50,9 @@ EPhoneField()
 
 ### EphineField Country Picker Widgets
 
-| Dialog                                                 | Bottom Sheet                                           |                   
-|------------------------------------------------------- | -------------------------------------------------------|
-| <img src="./ephone-field-dialog.png" width="280">      | <img src="./ephone-field-bottomsheet.png" width="280"> |
+| Dialog   | Bottom Sheet | Page     
+|---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------|---|
+| <img src="https://raw.githubusercontent.com/desxz/ephone_field/main/ephone-field-dialog.png" width="280"> | <img src="https://raw.githubusercontent.com/desxz/ephone_field/main/ephone-field-bottomsheet.png" width="280"> | <img src="https://raw.githubusercontent.com/desxz/ephone_field/main/ephone-field-page.png" width="280"> |
 
 
 ## Additional information
@@ -86,4 +86,4 @@ EPhoneField()
 | validator                | The validator for the input field.           | `FormValidator`            | `null`                                  |
 | onFieldSubmitted         | The callback when the input is submitted.    | `ValueChanged<String>`     | `null`                                  |
 | onCountryChanged         | The callback when the country is changed.    | `ValueChanged<Country>`    | `null`                                  |
-| inputFormatters          | The input formatters for the input field.    | `List<TextInputFormatter>` | `EphoneFieldType.inputFormatters()` |
+| inputFormatters          | The input formatters for the input field.    | `List<TextInputFormatter>` | `EphoneFieldType.inputFormatters()`     |

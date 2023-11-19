@@ -89,7 +89,7 @@ void Function()? _openCountryPickerMenu(
           context, searchInputDecoration, title, titlePadding, isSearchable, pickerHeight, countries, onValuePicked);
     case PickerMenuType.page:
       return _openCountryPickerPage(
-          context, searchInputDecoration, title, titlePadding, isSearchable, pickerHeight, countries, onValuePicked);
+          context, searchInputDecoration, title, titlePadding, isSearchable, countries, onValuePicked);
     default:
       return null;
   }
@@ -178,7 +178,6 @@ void Function()? _openCountryPickerPage(
   String? title,
   EdgeInsetsGeometry titlePadding,
   bool isSearchable,
-  CountryPickerHeigth pickerHeight,
   List<Country> countries,
   void Function(Country) onValuePicked,
 ) {
