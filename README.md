@@ -46,7 +46,7 @@ Implement the `EmailPhoneField` widget in your UI:
 EPhoneField()
 ```
 
-<img src="./ephone-field-show.gif" width="512">
+<img src="https://raw.githubusercontent.com/desxz/ephone_field/main/ephone-field-show.gif" width="512">
 
 ### EphineField Country Picker Widgets
 
