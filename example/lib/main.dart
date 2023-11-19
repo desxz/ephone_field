@@ -24,7 +24,8 @@ class MyApp extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: EPhoneField(
-                  menuType: PickerMenuType.bottomSheet,
+                  title: "Select Country",
+                  menuType: PickerMenuType.page,
                   initialCountry: Country.afghanistan,
                   pickerHeight: CountryPickerHeigth.h50,
                   onCountryChanged: (Country? country) {

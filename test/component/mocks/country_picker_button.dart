@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 class CountryPickerButtonMock extends StatelessWidget {
   const CountryPickerButtonMock({
     Key? key,
+    required this.menuType,
   }) : super(key: key);
   final List<Country> countries = Country.values;
   final String title = "Select Country";
@@ -20,7 +21,7 @@ class CountryPickerButtonMock extends StatelessWidget {
   final IconData icon = Icons.add;
   final Country initialValue = Country.afghanistan;
   final EphoneFieldType initialType = EphoneFieldType.phone;
-  final PickerMenuType menuType = PickerMenuType.dialog;
+  final PickerMenuType menuType;
   final CountryPickerHeigth pickerHeight = CountryPickerHeigth.h75;
 
   @override
@@ -39,7 +40,7 @@ class CountryPickerButtonMock extends StatelessWidget {
             onValuePicked: (Country c) {},
             initialValue: initialValue,
             menuType: menuType,
-            pickerHeight: pickerHeight,
+            pickerHeight: menuType == PickerMenuType.page ? CountryPickerHeigth.h100 : CountryPickerHeigth.h50,
           ),
         ),
       ),

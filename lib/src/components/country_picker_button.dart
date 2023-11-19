@@ -37,27 +37,18 @@ class CountryPickerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: _openCountryPickerMenu(
-          menuType,
-          context,
-          searchInputDecoration,
-          title,
-          titlePadding,
-          pickerHeight,
-          isSearchable,
-          countries,
-          onValuePicked),
-      child: SizedBox(
-        width: width,
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
+      onTap: _openCountryPickerMenu(menuType, context, searchInputDecoration, title, titlePadding, pickerHeight,
+          isSearchable, countries, onValuePicked),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8.0),
+        child: SizedBox(
+          width: width,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
                 '+${initialValue.dialCode}',
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(
                 width: 4.0,
@@ -91,18 +82,14 @@ void Function()? _openCountryPickerMenu(
     void Function(Country) onValuePicked) {
   switch (menuType) {
     case PickerMenuType.dialog:
-      return _openCountryPickerDialog(context, searchInputDecoration, title,
-          titlePadding, isSearchable, pickerHeight, countries, onValuePicked);
+      return _openCountryPickerDialog(
+          context, searchInputDecoration, title, titlePadding, isSearchable, pickerHeight, countries, onValuePicked);
     case PickerMenuType.bottomSheet:
       return _openCountryPickerBottomSheet(
-          context,
-          searchInputDecoration,
-          title,
-          titlePadding,
-          isSearchable,
-          pickerHeight,
-          countries,
-          onValuePicked);
+          context, searchInputDecoration, title, titlePadding, isSearchable, pickerHeight, countries, onValuePicked);
+    case PickerMenuType.page:
+      return _openCountryPickerPage(
+          context, searchInputDecoration, title, titlePadding, isSearchable, pickerHeight, countries, onValuePicked);
     default:
       return null;
   }
@@ -180,6 +167,48 @@ void Function()? _openCountryPickerBottomSheet(
           return CountryCard(country: country);
         },
         countries: countries,
+      ),
+    );
+  };
+}
+
+void Function()? _openCountryPickerPage(
+  BuildContext context,
+  InputDecoration searchInputDecoration,
+  String? title,
+  EdgeInsetsGeometry titlePadding,
+  bool isSearchable,
+  CountryPickerHeigth pickerHeight,
+  List<Country> countries,
+  void Function(Country) onValuePicked,
+) {
+  return () {
+    final CountryPickerMenu pickerMenu = CountryPickerMenu(
+      title: null,
+      titlePadding: titlePadding,
+      isSearchable: isSearchable,
+      height: MediaQuery.of(context).size.height,
+      searchInputDecoration: searchInputDecoration,
+      onValuePicked: (Country country) {
+        return onValuePicked(country);
+      },
+      itemBuilder: (Country country) {
+        return CountryCard(country: country);
+      },
+      countries: countries,
+    );
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => Material(
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(title ?? ""),
+              backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+            ),
+            body: pickerMenu,
+          ),
+        ),
       ),
     );
   };
