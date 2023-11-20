@@ -1,3 +1,4 @@
+import 'package:ephone_field/src/utils/ephone_field_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -41,7 +42,8 @@ class EPhoneField extends StatefulWidget {
     this.countryPickerButtonIcon = Icons.arrow_drop_down,
     this.phoneNumberMaskSplitter = MaskSplitCharacter.space,
     this.inputFormatters,
-    this.validator,
+    this.emailValidator,
+    this.phoneValidator,
     this.countryPickerButtonWidth = 100.0,
     this.autovalidateMode = AutovalidateMode.onUserInteraction,
   }) : super(key: key);
@@ -110,8 +112,15 @@ class EPhoneField extends StatefulWidget {
   /// The [ValueChanged<String>] to be used as the callback when the value of the input field is submitted.
   final void Function(String?)? onFieldSubmitted;
 
-  /// The [String? Function(String?)] to be used as the validator of the input field.
-  final String? Function(String?)? validator;
+  /// The [String? Function(String?)] to be used as the email validator of the input field.
+  /// The callback should return null if the input is valid, otherwise a String with an error message.
+  /// The [String] value passed to the callback is the email address.
+  final String? Function(String?)? emailValidator;
+
+  /// The [String? Function(String?)] to be used as the phone validator of the input field.
+  /// The callback should return null if the input is valid, otherwise a String with an error message.
+  /// The [String] value passed to the callback is the phone number with the country dial code (e.g. +441234567890).
+  final String? Function(String?)? phoneValidator;
 
   /// The [InputDecoration] to be used as the decoration of the input field. Defaults to:
   /// ```
@@ -184,19 +193,22 @@ class _EphoneFieldState extends State<EPhoneField> {
       autovalidateMode: widget.autovalidateMode,
       onChanged: (String value) {
         if (_type == EphoneFieldType.phone) {
-          value = '+${_selectedCountry.dialCode}${value.replaceAll(widget.phoneNumberMaskSplitter.value, '')}';
+          value =
+              EphoneFieldUtils.combinePrefix(_selectedCountry.dialCode, value, widget.phoneNumberMaskSplitter.value)!;
         }
         widget.onChanged?.call(value);
       },
       onSaved: (String? value) {
         if (_type == EphoneFieldType.phone) {
-          value = '+${_selectedCountry.dialCode}${value?.replaceAll(widget.phoneNumberMaskSplitter.value, '')}';
+          value =
+              EphoneFieldUtils.combinePrefix(_selectedCountry.dialCode, value, widget.phoneNumberMaskSplitter.value);
         }
         widget.onSaved?.call(value);
       },
       onFieldSubmitted: (String? value) {
         if (_type == EphoneFieldType.phone) {
-          value = '+${_selectedCountry.dialCode}${value?.replaceAll(widget.phoneNumberMaskSplitter.value, '')}';
+          value =
+              EphoneFieldUtils.combinePrefix(_selectedCountry.dialCode, value, widget.phoneNumberMaskSplitter.value);
         }
         widget.onFieldSubmitted?.call(value);
       },
@@ -207,9 +219,11 @@ class _EphoneFieldState extends State<EPhoneField> {
       keyboardType: _type.keyboardType,
       validator: (String? value) {
         if (_type == EphoneFieldType.phone) {
-          value = '+${_selectedCountry.dialCode}${value?.replaceAll(widget.phoneNumberMaskSplitter.value, '')}';
+          value =
+              EphoneFieldUtils.combinePrefix(_selectedCountry.dialCode, value, widget.phoneNumberMaskSplitter.value);
+          return widget.phoneValidator?.call(value);
         }
-        return widget.validator?.call(value);
+        return widget.emailValidator?.call(value);
       },
       inputFormatters: widget.inputFormatters ??
           _type.inputFormatters(_selectedCountry, widget.phoneNumberMaskSplitter != MaskSplitCharacter.none,
