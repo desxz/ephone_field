@@ -27,8 +27,14 @@ class MyApp extends StatelessWidget {
                   title: "Select Country",
                   menuType: PickerMenuType.page,
                   initialCountry: Country.afghanistan,
-                  emailValidator: (String? email) {},
-                  phoneValidator: (String? phone) {},
+                  emailValidator: (String? email) {
+                    if (email == null || email.isEmpty) return 'Email is required';
+                    return null;
+                  },
+                  phoneValidator: (String? phone) {
+                    if (phone == null || phone.isEmpty) return 'Phone is required';
+                    return null;
+                  },
                   pickerHeight: CountryPickerHeigth.h50,
                   onCountryChanged: (Country? country) {
                     // Add your code here after country selected
