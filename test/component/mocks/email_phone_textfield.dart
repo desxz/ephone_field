@@ -14,14 +14,11 @@ class EPhoneFieldMock extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: EPhoneField(
-            emailValidator: emailValidator,
-            phoneValidator: phoneValidator,
-            onChanged: onChanged,
-            onCountryChanged: onCountryChanged,
-          ),
+        body: EPhoneField(
+          emailValidator: emailValidator,
+          phoneValidator: phoneValidator,
+          onChanged: onChanged,
+          onCountryChanged: onCountryChanged,
         ),
       ),
     );
