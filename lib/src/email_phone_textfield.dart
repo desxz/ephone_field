@@ -85,7 +85,8 @@ class EPhoneField extends StatefulWidget {
   /// ```
   final InputDecoration searchInputDecoration;
 
-  /// The [CountryPickerHeigth] to be used as the height of the country picker menu. Defaults to [CountryPickerHeigth.half].
+  /// The [CountryPickerHeigth] to be used as the height of the country picker menu. Defaults to [CountryPickerHeigth.h50].
+  /// The [CountryPickerHeigth] is not effective when the [menuType] is [PickerMenuType.page].
   final CountryPickerHeigth pickerHeight;
 
   /// The [bool] to be used as the searchable property of the country picker menu to visible or hide the search field. Defaults to [true].

@@ -11,7 +11,7 @@ class CountryPicker extends StatefulWidget {
     required this.isSearchable,
     required this.countries,
   }) : super(key: key);
-  final Function(Country) onValuePicked;
+  final void Function(Country) onValuePicked;
   final Widget Function(Country) itemBuilder;
   final InputDecoration searchInputDecoration;
   final bool isSearchable;

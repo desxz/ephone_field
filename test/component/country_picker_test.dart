@@ -1,14 +1,14 @@
-import 'dart:async';
-
 import 'package:ephone_field/src/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'mocks/country_picker.dart';
+import 'utils/caller_checker.dart';
 
 void main() {
-  final Completer<void> completer = Completer<void>();
-  final CountryPickerMock mockWidget = CountryPickerMock(onValuePicked: completer.complete);
+  final CountryPickerMock mockWidget = CountryPickerMock(onValuePicked: EphoneFieldCallerChecker.mockOnValuePicked);
+
+  setUp(() => EphoneFieldCallerChecker.reset());
 
   testWidgets('should CountryPickerMenu widget renders successfully', (widgetTester) async {
     await widgetTester.pumpWidget(mockWidget);
@@ -56,6 +56,6 @@ void main() {
     expect(find.text("Turkey"), findsWidgets);
     expect(find.byType(CountryCard), findsWidgets);
     await widgetTester.tap(find.text("Turkey"));
-    expect(completer.isCompleted, isTrue);
+    expect(EphoneFieldCallerChecker.isOnValuePickedCalled, true);
   });
 }

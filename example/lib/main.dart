@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: EPhoneField(
                   title: "Select Country",
-                  menuType: PickerMenuType.page,
+                  menuType: PickerMenuType.bottomSheet,
                   initialCountry: Country.afghanistan,
                   emailValidator: (String? email) {
                     if (email == null || email.isEmpty) return 'Email is required';
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
                     if (phone == null || phone.isEmpty) return 'Phone is required';
                     return null;
                   },
-                  pickerHeight: CountryPickerHeigth.h50,
+                  pickerHeight: CountryPickerHeigth.h50, // Not Effective in PickerMenuType.page
                   onCountryChanged: (Country? country) {
                     // Add your code here after country selected
                   },
