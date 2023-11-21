@@ -5,6 +5,7 @@ import 'package:ephone_field/src/enums/country_picker_menu.dart';
 import 'package:ephone_field/src/enums/ephone_textfield_type.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CountryPickerButtonMock extends StatelessWidget {
   CountryPickerButtonMock({Key? key, required this.menuType, required this.pickerHeight, this.ctx}) : super(key: key);
   final List<Country> countries = Country.values;
