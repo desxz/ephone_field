@@ -48,7 +48,7 @@ EPhoneField()
 
 <img src="https://raw.githubusercontent.com/desxz/ephone_field/main/ephone-field-show.gif" width="512">
 
-### EphineField Country Picker Widgets
+### EphoneField Country Picker Widgets
 
 | Dialog   | Bottom Sheet | Page     
 |---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------|---|
