@@ -6,7 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'mocks/country_picker_button.dart';
 
 void main() {
-  const CountryPickerButtonMock mockWidget = CountryPickerButtonMock(menuType: PickerMenuType.bottomSheet);
+  CountryPickerButtonMock mockWidget =
+      CountryPickerButtonMock(menuType: PickerMenuType.bottomSheet, pickerHeight: CountryPickerHeigth.h25);
   testWidgets('should CountryPickerButton widget renders successfully', (widgetTester) async {
     await widgetTester.pumpWidget(mockWidget);
     expect(find.byType(CountryPickerButton), findsOneWidget);
@@ -36,5 +37,68 @@ void main() {
     await widgetTester.pumpAndSettle();
 
     expect(find.byType(CountryPickerMenu), findsOneWidget);
+  });
+
+  testWidgets('should country picker size as expected if pickerHeight CountryPickerHeigth.h25', (widgetTester) async {
+    await widgetTester.pumpWidget(mockWidget);
+
+    await widgetTester.tap(find.byType(CountryPickerButton));
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(CountryPickerMenu), findsOneWidget);
+
+    final CountryPickerMenu menu = widgetTester.firstWidget(find.byType(CountryPickerMenu));
+    expect(
+      menu.height,
+      MediaQuery.of(mockWidget.ctx!).size.height * .25,
+    );
+  });
+
+  testWidgets('should country picker size as expected if pickerHeight CountryPickerHeigth.h50', (widgetTester) async {
+    mockWidget = CountryPickerButtonMock(menuType: PickerMenuType.bottomSheet, pickerHeight: CountryPickerHeigth.h50);
+    await widgetTester.pumpWidget(mockWidget);
+
+    await widgetTester.tap(find.byType(CountryPickerButton));
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(CountryPickerMenu), findsOneWidget);
+
+    final CountryPickerMenu menu = widgetTester.firstWidget(find.byType(CountryPickerMenu));
+    expect(
+      menu.height,
+      MediaQuery.of(mockWidget.ctx!).size.height * .50,
+    );
+  });
+
+  testWidgets('should country picker size as expected if pickerHeight CountryPickerHeigth.h75', (widgetTester) async {
+    mockWidget = CountryPickerButtonMock(menuType: PickerMenuType.bottomSheet, pickerHeight: CountryPickerHeigth.h75);
+    await widgetTester.pumpWidget(mockWidget);
+
+    await widgetTester.tap(find.byType(CountryPickerButton));
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(CountryPickerMenu), findsOneWidget);
+
+    final CountryPickerMenu menu = widgetTester.firstWidget(find.byType(CountryPickerMenu));
+    expect(
+      menu.height,
+      MediaQuery.of(mockWidget.ctx!).size.height * .75,
+    );
+  });
+
+  testWidgets('should country picker size as expected if pickerHeight CountryPickerHeigth.h100', (widgetTester) async {
+    mockWidget = CountryPickerButtonMock(menuType: PickerMenuType.bottomSheet, pickerHeight: CountryPickerHeigth.h100);
+    await widgetTester.pumpWidget(mockWidget);
+
+    await widgetTester.tap(find.byType(CountryPickerButton));
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(CountryPickerMenu), findsOneWidget);
+
+    final CountryPickerMenu menu = widgetTester.firstWidget(find.byType(CountryPickerMenu));
+    expect(
+      menu.height,
+      MediaQuery.of(mockWidget.ctx!).size.height,
+    );
   });
 }

@@ -6,10 +6,7 @@ import 'package:ephone_field/src/enums/ephone_textfield_type.dart';
 import 'package:flutter/material.dart';
 
 class CountryPickerButtonMock extends StatelessWidget {
-  const CountryPickerButtonMock({
-    Key? key,
-    required this.menuType,
-  }) : super(key: key);
+  CountryPickerButtonMock({Key? key, required this.menuType, required this.pickerHeight, this.ctx}) : super(key: key);
   final List<Country> countries = Country.values;
   final String title = "Select Country";
   final bool isSearchable = true;
@@ -22,10 +19,12 @@ class CountryPickerButtonMock extends StatelessWidget {
   final Country initialValue = Country.afghanistan;
   final EphoneFieldType initialType = EphoneFieldType.phone;
   final PickerMenuType menuType;
-  final CountryPickerHeigth pickerHeight = CountryPickerHeigth.h75;
+  final CountryPickerHeigth pickerHeight;
+  BuildContext? ctx;
 
   @override
   Widget build(BuildContext context) {
+    ctx = context;
     return MaterialApp(
       home: Scaffold(
         body: SizedBox(
@@ -40,7 +39,7 @@ class CountryPickerButtonMock extends StatelessWidget {
             onValuePicked: (Country c) {},
             initialValue: initialValue,
             menuType: menuType,
-            pickerHeight: menuType == PickerMenuType.page ? CountryPickerHeigth.h100 : CountryPickerHeigth.h50,
+            pickerHeight: menuType == PickerMenuType.page ? CountryPickerHeigth.h100 : pickerHeight,
           ),
         ),
       ),
