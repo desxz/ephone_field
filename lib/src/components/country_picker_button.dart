@@ -37,8 +37,16 @@ class CountryPickerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: _openCountryPickerMenu(menuType, context, searchInputDecoration, title, titlePadding, pickerHeight,
-          isSearchable, countries, onValuePicked),
+      onTap: _openCountryPickerMenu(
+          menuType,
+          context,
+          searchInputDecoration,
+          title,
+          titlePadding,
+          pickerHeight,
+          isSearchable,
+          countries,
+          onValuePicked),
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0),
         child: SizedBox(
@@ -48,7 +56,8 @@ class CountryPickerButton extends StatelessWidget {
             children: <Widget>[
               Text(
                 '+${initialValue.dialCode}',
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(
                 width: 4.0,
@@ -82,14 +91,21 @@ void Function()? _openCountryPickerMenu(
     void Function(Country) onValuePicked) {
   switch (menuType) {
     case PickerMenuType.dialog:
-      return _openCountryPickerDialog(
-          context, searchInputDecoration, title, titlePadding, isSearchable, pickerHeight, countries, onValuePicked);
+      return _openCountryPickerDialog(context, searchInputDecoration, title,
+          titlePadding, isSearchable, pickerHeight, countries, onValuePicked);
     case PickerMenuType.bottomSheet:
       return _openCountryPickerBottomSheet(
-          context, searchInputDecoration, title, titlePadding, isSearchable, pickerHeight, countries, onValuePicked);
+          context,
+          searchInputDecoration,
+          title,
+          titlePadding,
+          isSearchable,
+          pickerHeight,
+          countries,
+          onValuePicked);
     case PickerMenuType.page:
-      return _openCountryPickerPage(
-          context, searchInputDecoration, title, titlePadding, isSearchable, countries, onValuePicked);
+      return _openCountryPickerPage(context, searchInputDecoration, title,
+          titlePadding, isSearchable, countries, onValuePicked);
     default:
       return null;
   }

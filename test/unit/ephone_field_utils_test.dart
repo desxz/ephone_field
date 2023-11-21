@@ -8,23 +8,30 @@ void main() {
     const int prefix = 93;
     const String maskSplitCharacter = ' ';
     const String phoneNumber = '123 456 789';
-    final String? result = EphoneFieldUtils.combinePrefix(prefix, phoneNumber, maskSplitCharacter);
+    final String? result =
+        EphoneFieldUtils.combinePrefix(prefix, phoneNumber, maskSplitCharacter);
     expect(result, '+93123456789');
   });
 
-  test('EphoneFieldUtils.combinePrefix should return null if phone number is null', () {
+  test(
+      'EphoneFieldUtils.combinePrefix should return null if phone number is null',
+      () {
     const int prefix = 93;
     const String maskSplitCharacter = ' ';
     const String? phoneNumber = null;
-    final String? result = EphoneFieldUtils.combinePrefix(prefix, phoneNumber, maskSplitCharacter);
+    final String? result =
+        EphoneFieldUtils.combinePrefix(prefix, phoneNumber, maskSplitCharacter);
     expect(result, null);
   });
 
-  test('EphoneFieldUtils.combinePrefix should return null if phone number is empty', () {
+  test(
+      'EphoneFieldUtils.combinePrefix should return null if phone number is empty',
+      () {
     const int prefix = 93;
     const String maskSplitCharacter = ' ';
     const String phoneNumber = '';
-    final String? result = EphoneFieldUtils.combinePrefix(prefix, phoneNumber, maskSplitCharacter);
+    final String? result =
+        EphoneFieldUtils.combinePrefix(prefix, phoneNumber, maskSplitCharacter);
     expect(result, null);
   });
 }

@@ -17,23 +17,27 @@ void main() {
     EphoneFieldCallerChecker.reset();
   });
 
-  testWidgets('should EPhoneFieldMock widget renders successfully', (WidgetTester tester) async {
+  testWidgets('should EPhoneFieldMock widget renders successfully',
+      (WidgetTester tester) async {
     await tester.pumpWidget(ePhoneFieldMock);
     expect(find.byType(EPhoneFieldMock), findsOneWidget);
   });
 
-  testWidgets('should EPhoneField widget renders successfully', (WidgetTester tester) async {
+  testWidgets('should EPhoneField widget renders successfully',
+      (WidgetTester tester) async {
     await tester.pumpWidget(ePhoneFieldMock);
     expect(find.byType(EPhoneField), findsOneWidget);
   });
 
-  testWidgets('should EPhoneField widget renders correct hint text', (WidgetTester tester) async {
+  testWidgets('should EPhoneField widget renders correct hint text',
+      (WidgetTester tester) async {
     await tester.pumpWidget(ePhoneFieldMock);
 
     expect(find.text('Email or phone number'), findsWidgets);
   });
 
-  testWidgets('should EPhoneField widget change type to email when enter @', (WidgetTester tester) async {
+  testWidgets('should EPhoneField widget change type to email when enter @',
+      (WidgetTester tester) async {
     await tester.pumpWidget(ePhoneFieldMock);
 
     final Finder textField = find.byType(EPhoneField);
@@ -45,7 +49,8 @@ void main() {
     expect(find.byType(CountryPickerButton), findsNothing);
   });
 
-  testWidgets('should EPhoneField widget change type to phone when enter +', (WidgetTester tester) async {
+  testWidgets('should EPhoneField widget change type to phone when enter +',
+      (WidgetTester tester) async {
     await tester.pumpWidget(ePhoneFieldMock);
 
     final Finder textField = find.byType(EPhoneField);
@@ -57,7 +62,8 @@ void main() {
     expect(find.byType(CountryPickerButton), findsOneWidget);
   });
 
-  testWidgets('should email validator called  when validate while type email', (WidgetTester widgetTester) async {
+  testWidgets('should email validator called  when validate while type email',
+      (WidgetTester widgetTester) async {
     await widgetTester.pumpWidget(ePhoneFieldMock);
 
     final Finder textField = find.byType(EPhoneField);
@@ -74,7 +80,8 @@ void main() {
     expect(EphoneFieldCallerChecker.isPhoneValidatorCalled, false);
   });
 
-  testWidgets('should phone validator called  when validate while type phone', (WidgetTester widgetTester) async {
+  testWidgets('should phone validator called  when validate while type phone',
+      (WidgetTester widgetTester) async {
     await widgetTester.pumpWidget(ePhoneFieldMock);
 
     final Finder textField = find.byType(EPhoneField);
@@ -91,7 +98,8 @@ void main() {
     expect(EphoneFieldCallerChecker.isPhoneValidatorCalled, true);
   });
 
-  testWidgets('should onChanged called when type email', (WidgetTester widgetTester) async {
+  testWidgets('should onChanged called when type email',
+      (WidgetTester widgetTester) async {
     await widgetTester.pumpWidget(ePhoneFieldMock);
 
     final Finder textField = find.byType(EPhoneField);
@@ -105,7 +113,8 @@ void main() {
     expect(EphoneFieldCallerChecker.isOnChangedCalled, true);
   });
 
-  testWidgets('should onChanged called when type phone', (WidgetTester widgetTester) async {
+  testWidgets('should onChanged called when type phone',
+      (WidgetTester widgetTester) async {
     await widgetTester.pumpWidget(ePhoneFieldMock);
 
     final Finder textField = find.byType(EPhoneField);

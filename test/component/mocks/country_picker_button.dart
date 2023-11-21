@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class CountryPickerButtonMock extends StatelessWidget {
-  CountryPickerButtonMock({Key? key, required this.menuType, required this.pickerHeight, this.ctx}) : super(key: key);
+  CountryPickerButtonMock(
+      {Key? key, required this.menuType, required this.pickerHeight, this.ctx})
+      : super(key: key);
   final List<Country> countries = Country.values;
   final String title = "Select Country";
   final bool isSearchable = true;
@@ -40,7 +42,9 @@ class CountryPickerButtonMock extends StatelessWidget {
             onValuePicked: (Country c) {},
             initialValue: initialValue,
             menuType: menuType,
-            pickerHeight: menuType == PickerMenuType.page ? CountryPickerHeigth.h100 : pickerHeight,
+            pickerHeight: menuType == PickerMenuType.page
+                ? CountryPickerHeigth.h100
+                : pickerHeight,
           ),
         ),
       ),

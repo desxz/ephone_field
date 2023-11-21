@@ -17,7 +17,8 @@ class CountryPickerMenuMock extends StatelessWidget {
     hintText: 'hintText',
   );
   // ignore: prefer_function_declarations_over_variables
-  final Widget Function(Country) itemBuilder = (Country c) => CountryCard(country: c);
+  final Widget Function(Country) itemBuilder =
+      (Country c) => CountryCard(country: c);
   // ignore: prefer_function_declarations_over_variables
   final void Function(Country) onValuePicked = (Country c) {
     if (kDebugMode) {

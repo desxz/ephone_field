@@ -28,11 +28,15 @@ class MyApp extends StatelessWidget {
                   menuType: PickerMenuType.bottomSheet,
                   initialCountry: Country.afghanistan,
                   emailValidator: (String? email) {
-                    if (email == null || email.isEmpty) return 'Email is required';
+                    if (email == null || email.isEmpty) {
+                      return 'Email is required';
+                    }
                     return null;
                   },
                   phoneValidator: (String? phone) {
-                    if (phone == null || phone.isEmpty) return 'Phone is required';
+                    if (phone == null || phone.isEmpty) {
+                      return 'Phone is required';
+                    }
                     return null;
                   },
                   pickerHeight: CountryPickerHeigth.h50, // Not Effective in PickerMenuType.page

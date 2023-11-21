@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 
 class EPhoneFieldMock extends StatelessWidget {
   const EPhoneFieldMock(
-      {Key? key, required this.emailValidator, required this.phoneValidator, this.onChanged, this.onCountryChanged})
+      {Key? key,
+      required this.emailValidator,
+      required this.phoneValidator,
+      this.onChanged,
+      this.onCountryChanged})
       : super(key: key);
   final String? Function(String?)? emailValidator;
   final String? Function(String?)? phoneValidator;
