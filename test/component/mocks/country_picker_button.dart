@@ -5,11 +5,11 @@ import 'package:ephone_field/src/enums/country_picker_menu.dart';
 import 'package:ephone_field/src/enums/ephone_textfield_type.dart';
 import 'package:flutter/material.dart';
 
+import '../utils/caller_checker.dart';
+
 // ignore: must_be_immutable
 class CountryPickerButtonMock extends StatelessWidget {
-  CountryPickerButtonMock(
-      {Key? key, required this.menuType, required this.pickerHeight, this.ctx})
-      : super(key: key);
+  CountryPickerButtonMock({Key? key, required this.menuType, required this.pickerHeight, this.ctx}) : super(key: key);
   final List<Country> countries = Country.values;
   final String title = "Select Country";
   final bool isSearchable = true;
@@ -23,6 +23,7 @@ class CountryPickerButtonMock extends StatelessWidget {
   final EphoneFieldType initialType = EphoneFieldType.phone;
   final PickerMenuType menuType;
   final CountryPickerHeigth pickerHeight;
+  final void Function(Country) onValuePicked = EphoneFieldCallerChecker.mockOnValuePicked;
   BuildContext? ctx;
 
   @override
@@ -39,12 +40,10 @@ class CountryPickerButtonMock extends StatelessWidget {
             title: title,
             isSearchable: isSearchable,
             titlePadding: titlePadding,
-            onValuePicked: (Country c) {},
+            onValuePicked: onValuePicked,
             initialValue: initialValue,
             menuType: menuType,
-            pickerHeight: menuType == PickerMenuType.page
-                ? CountryPickerHeigth.h100
-                : pickerHeight,
+            pickerHeight: menuType == PickerMenuType.page ? CountryPickerHeigth.h100 : pickerHeight,
           ),
         ),
       ),
