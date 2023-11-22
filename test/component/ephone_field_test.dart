@@ -1,43 +1,44 @@
 import 'package:ephone_field/src/components/components.dart';
 import 'package:ephone_field/src/email_phone_textfield.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'mocks/email_phone_textfield.dart';
 import 'utils/caller_checker.dart';
 
 void main() {
-  const EPhoneFieldMock ePhoneFieldMock = EPhoneFieldMock(
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  EPhoneFieldMock ePhoneFieldMock = EPhoneFieldMock(
     emailValidator: EphoneFieldCallerChecker.mockEmailValidator,
     phoneValidator: EphoneFieldCallerChecker.mockPhoneValidator,
     onChanged: EphoneFieldCallerChecker.mockOnChanged,
     onCountryChanged: EphoneFieldCallerChecker.mockOnCountryChanged,
+    onSaved: EphoneFieldCallerChecker.mockOnSaved,
+    onFieldSubmitted: EphoneFieldCallerChecker.mockOnFieldSubmitted,
+    formKey: formKey,
   );
 
   setUp(() {
     EphoneFieldCallerChecker.reset();
   });
 
-  testWidgets('should EPhoneFieldMock widget renders successfully',
-      (WidgetTester tester) async {
+  testWidgets('should EPhoneFieldMock widget renders successfully', (WidgetTester tester) async {
     await tester.pumpWidget(ePhoneFieldMock);
     expect(find.byType(EPhoneFieldMock), findsOneWidget);
   });
 
-  testWidgets('should EPhoneField widget renders successfully',
-      (WidgetTester tester) async {
+  testWidgets('should EPhoneField widget renders successfully', (WidgetTester tester) async {
     await tester.pumpWidget(ePhoneFieldMock);
     expect(find.byType(EPhoneField), findsOneWidget);
   });
 
-  testWidgets('should EPhoneField widget renders correct hint text',
-      (WidgetTester tester) async {
+  testWidgets('should EPhoneField widget renders correct hint text', (WidgetTester tester) async {
     await tester.pumpWidget(ePhoneFieldMock);
 
     expect(find.text('Email or phone number'), findsWidgets);
   });
 
-  testWidgets('should EPhoneField widget change type to email when enter @',
-      (WidgetTester tester) async {
+  testWidgets('should EPhoneField widget change type to email when enter @', (WidgetTester tester) async {
     await tester.pumpWidget(ePhoneFieldMock);
 
     final Finder textField = find.byType(EPhoneField);
@@ -49,8 +50,7 @@ void main() {
     expect(find.byType(CountryPickerButton), findsNothing);
   });
 
-  testWidgets('should EPhoneField widget change type to phone when enter +',
-      (WidgetTester tester) async {
+  testWidgets('should EPhoneField widget change type to phone when enter +', (WidgetTester tester) async {
     await tester.pumpWidget(ePhoneFieldMock);
 
     final Finder textField = find.byType(EPhoneField);
@@ -62,8 +62,7 @@ void main() {
     expect(find.byType(CountryPickerButton), findsOneWidget);
   });
 
-  testWidgets('should email validator called  when validate while type email',
-      (WidgetTester widgetTester) async {
+  testWidgets('should email validator called  when validate while type email', (WidgetTester widgetTester) async {
     await widgetTester.pumpWidget(ePhoneFieldMock);
 
     final Finder textField = find.byType(EPhoneField);
@@ -80,8 +79,7 @@ void main() {
     expect(EphoneFieldCallerChecker.isPhoneValidatorCalled, false);
   });
 
-  testWidgets('should phone validator called  when validate while type phone',
-      (WidgetTester widgetTester) async {
+  testWidgets('should phone validator called  when validate while type phone', (WidgetTester widgetTester) async {
     await widgetTester.pumpWidget(ePhoneFieldMock);
 
     final Finder textField = find.byType(EPhoneField);
@@ -98,8 +96,7 @@ void main() {
     expect(EphoneFieldCallerChecker.isPhoneValidatorCalled, true);
   });
 
-  testWidgets('should onChanged called when type email',
-      (WidgetTester widgetTester) async {
+  testWidgets('should onChanged called when type email', (WidgetTester widgetTester) async {
     await widgetTester.pumpWidget(ePhoneFieldMock);
 
     final Finder textField = find.byType(EPhoneField);
@@ -113,8 +110,7 @@ void main() {
     expect(EphoneFieldCallerChecker.isOnChangedCalled, true);
   });
 
-  testWidgets('should onChanged called when type phone',
-      (WidgetTester widgetTester) async {
+  testWidgets('should onChanged called when type phone', (WidgetTester widgetTester) async {
     await widgetTester.pumpWidget(ePhoneFieldMock);
 
     final Finder textField = find.byType(EPhoneField);
@@ -128,13 +124,80 @@ void main() {
     expect(EphoneFieldCallerChecker.isOnChangedCalled, true);
   });
 
-  // Fix this some problem in pipeline about A RenderFlex overflowed by 0.750 pixels on the right.
-  /*testWidgets('should onCountryChanged called when select country', (WidgetTester widgetTester) async {
+  testWidgets('should onSaved called onSaved while state is phone', (widgetTester) async {
     await widgetTester.pumpWidget(ePhoneFieldMock);
 
     final Finder textField = find.byType(EPhoneField);
     await widgetTester.enterText(textField, '1');
-    await widgetTester.pump();
+    await widgetTester.pumpAndSettle();
+
+    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Phone number'), findsOneWidget);
+    expect(find.byType(CountryPickerButton), findsOneWidget);
+
+    final FormState form = formKey.currentState!;
+    form.save();
+
+    expect(EphoneFieldCallerChecker.isOnSavedCalled, true);
+  });
+
+  testWidgets('should onSaved called onSaved while state is email', (widgetTester) async {
+    await widgetTester.pumpWidget(ePhoneFieldMock);
+
+    final Finder textField = find.byType(EPhoneField);
+    await widgetTester.enterText(textField, '@');
+    await widgetTester.pumpAndSettle();
+
+    expect(find.text('@'), findsOneWidget);
+    expect(find.text('Email'), findsOneWidget);
+    expect(find.byType(CountryPickerButton), findsNothing);
+
+    final FormState form = formKey.currentState!;
+    form.save();
+
+    expect(EphoneFieldCallerChecker.isOnSavedCalled, true);
+  });
+
+  testWidgets('should onFieldSubmitted called onFieldSubmitted while state is phone', (widgetTester) async {
+    await widgetTester.pumpWidget(ePhoneFieldMock);
+
+    final Finder textField = find.byType(EPhoneField);
+    await widgetTester.enterText(textField, '1');
+    await widgetTester.pumpAndSettle();
+
+    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Phone number'), findsOneWidget);
+    expect(find.byType(CountryPickerButton), findsOneWidget);
+
+    await widgetTester.testTextInput.receiveAction(TextInputAction.done);
+    await widgetTester.pumpAndSettle();
+
+    expect(EphoneFieldCallerChecker.isOnFieldSubmittedCalled, true);
+  });
+
+  testWidgets('should onFieldSubmitted called onFieldSubmitted while state is email', (widgetTester) async {
+    await widgetTester.pumpWidget(ePhoneFieldMock);
+
+    final Finder textField = find.byType(EPhoneField);
+    await widgetTester.enterText(textField, '@');
+    await widgetTester.pumpAndSettle();
+
+    expect(find.text('@'), findsOneWidget);
+    expect(find.text('Email'), findsOneWidget);
+    expect(find.byType(CountryPickerButton), findsNothing);
+
+    await widgetTester.testTextInput.receiveAction(TextInputAction.done);
+    await widgetTester.pumpAndSettle();
+
+    expect(EphoneFieldCallerChecker.isOnFieldSubmittedCalled, true);
+  });
+
+  testWidgets('should onCountryChanged called when select country', (WidgetTester widgetTester) async {
+    await widgetTester.pumpWidget(ePhoneFieldMock);
+
+    final Finder textField = find.byType(EPhoneField);
+    await widgetTester.enterText(textField, '1');
+    await widgetTester.pumpAndSettle();
 
     expect(find.text('1'), findsOneWidget);
     expect(find.text('Phone number'), findsOneWidget);
@@ -149,5 +212,5 @@ void main() {
     await widgetTester.pumpAndSettle();
 
     expect(EphoneFieldCallerChecker.isOnCountryChangedCalled, true);
-  });*/
+  });
 }

@@ -6,6 +6,8 @@ class EphoneFieldCallerChecker {
   static bool isOnValuePickedCalled = false;
   static bool isOnChangedCalled = false;
   static bool isOnCountryChangedCalled = false;
+  static bool isOnSavedCalled = false;
+  static bool isOnFieldSubmittedCalled = false;
 
   static void reset() {
     isEmailValidatorCalled = false;
@@ -13,6 +15,8 @@ class EphoneFieldCallerChecker {
     isOnValuePickedCalled = false;
     isOnChangedCalled = false;
     isOnCountryChangedCalled = false;
+    isOnSavedCalled = false;
+    isOnFieldSubmittedCalled = false;
   }
 
   static String? mockEmailValidator(String? value) {
@@ -35,5 +39,13 @@ class EphoneFieldCallerChecker {
 
   static void mockOnCountryChanged(Country value) {
     isOnCountryChangedCalled = true;
+  }
+
+  static void mockOnSaved(String? value) {
+    isOnSavedCalled = true;
+  }
+
+  static void mockOnFieldSubmitted(String? value) {
+    isOnFieldSubmittedCalled = true;
   }
 }

@@ -7,22 +7,33 @@ class EPhoneFieldMock extends StatelessWidget {
       required this.emailValidator,
       required this.phoneValidator,
       this.onChanged,
-      this.onCountryChanged})
+      this.onCountryChanged,
+      this.onSaved,
+      this.onFieldSubmitted,
+      required this.formKey})
       : super(key: key);
   final String? Function(String?)? emailValidator;
   final String? Function(String?)? phoneValidator;
   final void Function(String)? onChanged;
   final void Function(Country)? onCountryChanged;
+  final void Function(String?)? onSaved;
+  final void Function(String?)? onFieldSubmitted;
+  final GlobalKey<FormState> formKey;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: EPhoneField(
-          emailValidator: emailValidator,
-          phoneValidator: phoneValidator,
-          onChanged: onChanged,
-          onCountryChanged: onCountryChanged,
+        body: Form(
+          key: formKey,
+          child: EPhoneField(
+            emailValidator: emailValidator,
+            phoneValidator: phoneValidator,
+            onChanged: onChanged,
+            onCountryChanged: onCountryChanged,
+            onSaved: onSaved,
+            onFieldSubmitted: onFieldSubmitted,
+          ),
         ),
       ),
     );
