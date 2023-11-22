@@ -44,7 +44,7 @@ class EPhoneField extends StatefulWidget {
     this.inputFormatters,
     this.emailValidator,
     this.phoneValidator,
-    this.countryPickerButtonWidth = 100.0,
+    this.countryPickerButtonWidth = 108.0,
     this.autovalidateMode = AutovalidateMode.onUserInteraction,
   }) : super(key: key);
 
@@ -194,43 +194,40 @@ class _EphoneFieldState extends State<EPhoneField> {
       autovalidateMode: widget.autovalidateMode,
       onChanged: (String value) {
         if (_type == EphoneFieldType.phone) {
-          value = EphoneFieldUtils.combinePrefix(_selectedCountry.dialCode,
-              value, widget.phoneNumberMaskSplitter.value)!;
+          value =
+              EphoneFieldUtils.combinePrefix(_selectedCountry.dialCode, value, widget.phoneNumberMaskSplitter.value)!;
         }
         widget.onChanged?.call(value);
       },
       onSaved: (String? value) {
         if (_type == EphoneFieldType.phone) {
-          value = EphoneFieldUtils.combinePrefix(_selectedCountry.dialCode,
-              value, widget.phoneNumberMaskSplitter.value);
+          value =
+              EphoneFieldUtils.combinePrefix(_selectedCountry.dialCode, value, widget.phoneNumberMaskSplitter.value);
         }
         widget.onSaved?.call(value);
       },
       onFieldSubmitted: (String? value) {
         if (_type == EphoneFieldType.phone) {
-          value = EphoneFieldUtils.combinePrefix(_selectedCountry.dialCode,
-              value, widget.phoneNumberMaskSplitter.value);
+          value =
+              EphoneFieldUtils.combinePrefix(_selectedCountry.dialCode, value, widget.phoneNumberMaskSplitter.value);
         }
         widget.onFieldSubmitted?.call(value);
       },
       initialValue: widget.initialValue,
       decoration: widget.decoration.copyWith(
           prefixIcon: _buildCountryPicker(_type == EphoneFieldType.phone),
-          labelText: _type.labelText(widget.emptyLabelText,
-              widget.emailLabelText, widget.phoneLabelText)),
+          labelText: _type.labelText(widget.emptyLabelText, widget.emailLabelText, widget.phoneLabelText)),
       keyboardType: _type.keyboardType,
       validator: (String? value) {
         if (_type == EphoneFieldType.phone) {
-          value = EphoneFieldUtils.combinePrefix(_selectedCountry.dialCode,
-              value, widget.phoneNumberMaskSplitter.value);
+          value =
+              EphoneFieldUtils.combinePrefix(_selectedCountry.dialCode, value, widget.phoneNumberMaskSplitter.value);
           return widget.phoneValidator?.call(value);
         }
         return widget.emailValidator?.call(value);
       },
       inputFormatters: widget.inputFormatters ??
-          _type.inputFormatters(
-              _selectedCountry,
-              widget.phoneNumberMaskSplitter != MaskSplitCharacter.none,
+          _type.inputFormatters(_selectedCountry, widget.phoneNumberMaskSplitter != MaskSplitCharacter.none,
               widget.phoneNumberMaskSplitter.value),
     );
   }
@@ -262,8 +259,7 @@ class _EphoneFieldState extends State<EPhoneField> {
 
   /// Updates the [_type] of the input field based on the [_controller] text.
   void _updateTextFieldType() {
-    final text =
-        _controller.text.replaceAll(widget.phoneNumberMaskSplitter.value, '');
+    final text = _controller.text.replaceAll(widget.phoneNumberMaskSplitter.value, '');
     if (text.isEmpty) {
       setState(() {
         _type = widget.initialType;
