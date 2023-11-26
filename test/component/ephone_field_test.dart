@@ -8,7 +8,8 @@ import 'utils/caller_checker.dart';
 
 void main() {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  EPhoneFieldMock ePhoneFieldMock = EPhoneFieldMock(
+  final EPhoneFieldMock ePhoneFieldMock = EPhoneFieldMock(
+    emptyErrorText: EphoneFieldCallerChecker.mockEmptyError,
     emailValidator: EphoneFieldCallerChecker.mockEmailValidator,
     phoneValidator: EphoneFieldCallerChecker.mockPhoneValidator,
     onChanged: EphoneFieldCallerChecker.mockOnChanged,
@@ -62,24 +63,61 @@ void main() {
     expect(find.byType(CountryPickerButton), findsOneWidget);
   });
 
-  testWidgets('should email validator called  when validate while type email', (WidgetTester widgetTester) async {
+  testWidgets('should empty validator called when field is empty', (WidgetTester tester) async {
+    await tester.pumpWidget(ePhoneFieldMock);
+
+    formKey.currentState!.validate();
+    await tester.pumpAndSettle();
+
+    expect(find.byType(EPhoneField), findsOneWidget);
+    expect(find.text('Email or phone number'), findsWidgets);
+    expect(find.text(EphoneFieldCallerChecker.mockEmptyError), findsOneWidget);
+  });
+
+  testWidgets('should email validator called when validate while type email with invalid email',
+      (WidgetTester widgetTester) async {
     await widgetTester.pumpWidget(ePhoneFieldMock);
 
     final Finder textField = find.byType(EPhoneField);
-    await widgetTester.enterText(textField, '@');
+    await widgetTester.enterText(textField, 'invalidmail');
     await widgetTester.pump();
 
-    expect(find.text('@'), findsOneWidget);
+    expect(find.text('invalidmail'), findsOneWidget);
     expect(find.text('Email'), findsOneWidget);
     expect(find.byType(CountryPickerButton), findsNothing);
 
+    formKey.currentState!.validate();
+
     await widgetTester.pump();
 
+    expect(find.text(EphoneFieldCallerChecker.mockEmailValidatorError), findsOneWidget);
     expect(EphoneFieldCallerChecker.isEmailValidatorCalled, true);
     expect(EphoneFieldCallerChecker.isPhoneValidatorCalled, false);
   });
 
-  testWidgets('should phone validator called  when validate while type phone', (WidgetTester widgetTester) async {
+  testWidgets('should email validator called when validate while type email with valid email',
+      (WidgetTester widgetTester) async {
+    await widgetTester.pumpWidget(ePhoneFieldMock);
+
+    final Finder textField = find.byType(EPhoneField);
+    await widgetTester.enterText(textField, 'testmail@gmail.com');
+    await widgetTester.pump();
+
+    expect(find.text('testmail@gmail.com'), findsOneWidget);
+    expect(find.text('Email'), findsOneWidget);
+    expect(find.byType(CountryPickerButton), findsNothing);
+
+    formKey.currentState!.validate();
+
+    await widgetTester.pump();
+
+    expect(find.text(EphoneFieldCallerChecker.mockEmailValidatorError), findsNothing);
+    expect(EphoneFieldCallerChecker.isEmailValidatorCalled, true);
+    expect(EphoneFieldCallerChecker.isPhoneValidatorCalled, false);
+  });
+
+  testWidgets('should phone validator called when validate while type phone with invalid phone number',
+      (WidgetTester widgetTester) async {
     await widgetTester.pumpWidget(ePhoneFieldMock);
 
     final Finder textField = find.byType(EPhoneField);
@@ -90,8 +128,32 @@ void main() {
     expect(find.text('Phone number'), findsOneWidget);
     expect(find.byType(CountryPickerButton), findsOneWidget);
 
+    formKey.currentState!.validate();
+
     await widgetTester.pump();
 
+    expect(find.text(EphoneFieldCallerChecker.mockPhoneValidatorError), findsOneWidget);
+    expect(EphoneFieldCallerChecker.isEmailValidatorCalled, false);
+    expect(EphoneFieldCallerChecker.isPhoneValidatorCalled, true);
+  });
+
+  testWidgets('should phone validator called when validate while type phone with valid phone number',
+      (WidgetTester widgetTester) async {
+    await widgetTester.pumpWidget(ePhoneFieldMock);
+
+    final Finder textField = find.byType(EPhoneField);
+    await widgetTester.enterText(textField, '123456');
+    await widgetTester.pump();
+
+    expect(find.text('123456'), findsOneWidget);
+    expect(find.text('Phone number'), findsOneWidget);
+    expect(find.byType(CountryPickerButton), findsOneWidget);
+
+    formKey.currentState!.validate();
+
+    await widgetTester.pump();
+
+    expect(find.text(EphoneFieldCallerChecker.mockPhoneValidatorError), findsNothing);
     expect(EphoneFieldCallerChecker.isEmailValidatorCalled, false);
     expect(EphoneFieldCallerChecker.isPhoneValidatorCalled, true);
   });

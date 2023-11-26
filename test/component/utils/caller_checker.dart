@@ -9,6 +9,10 @@ class EphoneFieldCallerChecker {
   static bool isOnSavedCalled = false;
   static bool isOnFieldSubmittedCalled = false;
 
+  static String mockEmptyError = 'Field cannot be empty';
+  static String mockEmailValidatorError = 'Invalid email address';
+  static String mockPhoneValidatorError = 'Invalid phone number';
+
   static void reset() {
     isEmailValidatorCalled = false;
     isPhoneValidatorCalled = false;
@@ -21,11 +25,13 @@ class EphoneFieldCallerChecker {
 
   static String? mockEmailValidator(String? value) {
     isEmailValidatorCalled = true;
+    if (!value!.contains('@')) return mockEmailValidatorError;
     return null;
   }
 
   static String? mockPhoneValidator(String? value) {
     isPhoneValidatorCalled = true;
+    if (value!.length < 6) return mockPhoneValidatorError;
     return null;
   }
 

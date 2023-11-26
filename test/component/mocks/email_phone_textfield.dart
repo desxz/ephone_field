@@ -10,7 +10,8 @@ class EPhoneFieldMock extends StatelessWidget {
       this.onCountryChanged,
       this.onSaved,
       this.onFieldSubmitted,
-      required this.formKey})
+      required this.formKey,
+      required this.emptyErrorText})
       : super(key: key);
   final String? Function(String?)? emailValidator;
   final String? Function(String?)? phoneValidator;
@@ -18,6 +19,7 @@ class EPhoneFieldMock extends StatelessWidget {
   final void Function(Country)? onCountryChanged;
   final void Function(String?)? onSaved;
   final void Function(String?)? onFieldSubmitted;
+  final String emptyErrorText;
   final GlobalKey<FormState> formKey;
 
   @override
@@ -27,6 +29,7 @@ class EPhoneFieldMock extends StatelessWidget {
         body: Form(
           key: formKey,
           child: EPhoneField(
+            emptyErrorText: emptyErrorText,
             emailValidator: emailValidator,
             phoneValidator: phoneValidator,
             onChanged: onChanged,

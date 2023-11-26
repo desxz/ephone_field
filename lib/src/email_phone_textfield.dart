@@ -1,4 +1,3 @@
-import 'package:ephone_field/src/utils/ephone_field_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -44,8 +43,9 @@ class EPhoneField extends StatefulWidget {
     this.inputFormatters,
     this.emailValidator,
     this.phoneValidator,
+    this.emptyErrorText,
     this.countryPickerButtonWidth = 108.0,
-    this.autovalidateMode = AutovalidateMode.onUserInteraction,
+    this.autovalidateMode,
   }) : super(key: key);
 
   /// The [FocusNode] of the input field.
@@ -123,6 +123,10 @@ class EPhoneField extends StatefulWidget {
   /// The [String] value passed to the callback is the phone number with the country dial code (e.g. +441234567890).
   final String? Function(String?)? phoneValidator;
 
+  /// The [String? Function(String?)] to be used as the empty validator of the input field.
+  /// The callback should return null if the input is valid, otherwise a String with an error message.
+  final String? emptyErrorText;
+
   /// The [InputDecoration] to be used as the decoration of the input field. Defaults to:
   /// ```
   /// InputDecoration(
@@ -157,7 +161,7 @@ class EPhoneField extends StatefulWidget {
   final double countryPickerButtonWidth;
 
   /// The [AutovalidateMode] to be used as the autovalidate mode of the input field. Defaults to [AutovalidateMode.onUserInteraction].
-  final AutovalidateMode autovalidateMode;
+  final AutovalidateMode? autovalidateMode;
 
   @override
   State<EPhoneField> createState() => _EphoneFieldState();
@@ -168,15 +172,18 @@ class _EphoneFieldState extends State<EPhoneField> {
   late TextEditingController _controller;
   late FocusNode _focusNode;
   late Country _selectedCountry;
+  late String? Function(String?)? _selectedValidator;
 
   @override
   void initState() {
     super.initState();
     _type = widget.initialType;
+    _updateSelectedValidator();
     _selectedCountry = widget.initialCountry;
     _controller = widget.controller ?? TextEditingController();
     _focusNode = widget.focusNode ?? FocusNode();
     _controller.addListener(() => _updateTextFieldType());
+    _controller.addListener(() => _updateSelectedValidator());
   }
 
   @override
@@ -192,40 +199,23 @@ class _EphoneFieldState extends State<EPhoneField> {
       controller: _controller,
       focusNode: _focusNode,
       autovalidateMode: widget.autovalidateMode,
-      onChanged: (String value) {
-        if (_type == EphoneFieldType.phone) {
-          value =
-              EphoneFieldUtils.combinePrefix(_selectedCountry.dialCode, value, widget.phoneNumberMaskSplitter.value)!;
-        }
-        widget.onChanged?.call(value);
-      },
-      onSaved: (String? value) {
-        if (_type == EphoneFieldType.phone) {
-          value =
-              EphoneFieldUtils.combinePrefix(_selectedCountry.dialCode, value, widget.phoneNumberMaskSplitter.value);
-        }
-        widget.onSaved?.call(value);
-      },
-      onFieldSubmitted: (String? value) {
-        if (_type == EphoneFieldType.phone) {
-          value =
-              EphoneFieldUtils.combinePrefix(_selectedCountry.dialCode, value, widget.phoneNumberMaskSplitter.value);
-        }
-        widget.onFieldSubmitted?.call(value);
-      },
+      onChanged: _type.onChanged(_selectedCountry, widget.phoneNumberMaskSplitter.value, widget.onChanged),
+      onSaved: _type.onSaved(_selectedCountry, widget.phoneNumberMaskSplitter.value, widget.onSaved),
+      onFieldSubmitted: _type.onFieldSubmitted(
+        _selectedCountry,
+        widget.phoneNumberMaskSplitter.value,
+        widget.onFieldSubmitted,
+      ),
       initialValue: widget.initialValue,
       decoration: widget.decoration.copyWith(
           prefixIcon: _buildCountryPicker(_type == EphoneFieldType.phone),
           labelText: _type.labelText(widget.emptyLabelText, widget.emailLabelText, widget.phoneLabelText)),
       keyboardType: _type.keyboardType,
-      validator: (String? value) {
-        if (_type == EphoneFieldType.phone) {
-          value =
-              EphoneFieldUtils.combinePrefix(_selectedCountry.dialCode, value, widget.phoneNumberMaskSplitter.value);
-          return widget.phoneValidator?.call(value);
-        }
-        return widget.emailValidator?.call(value);
-      },
+      validator: _type.validator(
+        _selectedValidator,
+        _selectedCountry,
+        widget.phoneNumberMaskSplitter.value,
+      ),
       inputFormatters: widget.inputFormatters ??
           _type.inputFormatters(_selectedCountry, widget.phoneNumberMaskSplitter != MaskSplitCharacter.none,
               widget.phoneNumberMaskSplitter.value),
@@ -272,6 +262,24 @@ class _EphoneFieldState extends State<EPhoneField> {
       setState(() {
         _type = EphoneFieldType.phone;
       });
+    }
+  }
+
+  void _updateSelectedValidator() {
+    switch (_type) {
+      case EphoneFieldType.initial:
+        _selectedValidator = widget.emptyErrorText == null
+            ? null
+            : (value) => value == null || value.isEmpty ? widget.emptyErrorText : null;
+        break;
+      case EphoneFieldType.email:
+        _selectedValidator = widget.emailValidator;
+        break;
+      case EphoneFieldType.phone:
+        _selectedValidator = widget.phoneValidator;
+        break;
+      default:
+        _selectedValidator = null;
     }
   }
 }
