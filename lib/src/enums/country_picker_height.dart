@@ -15,7 +15,7 @@ enum CountryPickerHeigth {
 }
 
 extension CountryPickerHeigthExtension on CountryPickerHeigth {
-  double height(context) {
+  double height(BuildContext context) {
     switch (this) {
       case CountryPickerHeigth.h100:
         return MediaQuery.of(context).size.height;
