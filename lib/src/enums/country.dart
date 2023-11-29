@@ -1,3 +1,5 @@
+/// This class is used to get the country data
+/// It staticly contains all the countries in the world with their data
 class Country {
   final String name;
   final String alpha2;
@@ -20,6 +22,7 @@ class Country {
       required this.maxLength,
       required this.mask});
 
+  /// Returns the all the countries in the world that are supported by this package
   static const List<Country> values = <Country>[
     Country.afghanistan,
     Country.albania,

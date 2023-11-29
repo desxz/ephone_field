@@ -6,7 +6,6 @@ import 'enums/country.dart';
 import 'enums/country_picker_height.dart';
 import 'enums/country_picker_menu.dart';
 import 'enums/ephone_textfield_type.dart';
-import 'enums/mask_split_character.dart';
 
 class EPhoneField extends StatefulWidget {
   const EPhoneField({
@@ -39,7 +38,7 @@ class EPhoneField extends StatefulWidget {
       hintText: 'Email or phone number',
     ),
     this.countryPickerButtonIcon = Icons.arrow_drop_down,
-    this.phoneNumberMaskSplitter = MaskSplitCharacter.space,
+    this.phoneNumberMaskSplitter,
     this.inputFormatters,
     this.emailValidator,
     this.phoneValidator,
@@ -149,7 +148,7 @@ class EPhoneField extends StatefulWidget {
   /// If the [MaskSplitCharacter] is [MaskSplitCharacter.none], the [PhoneNumberMaskFormatter] is not used.
   /// If the [MaskSplitCharacter] is [MaskSplitCharacter.space], the [PhoneNumberMaskFormatter] is used with the space character as the mask splitter.
   /// If the [MaskSplitCharacter] is [MaskSplitCharacter.dash], the [PhoneNumberMaskFormatter] is used with the dash character as the mask splitter.
-  final MaskSplitCharacter phoneNumberMaskSplitter;
+  final String? phoneNumberMaskSplitter;
 
   /// The [List<TextInputFormatter>] to be used as the input formatters of the input field.
   /// As default, the [PhoneNumberMaskFormatter] and [PhoneNumberDigistOnlyFormatter] are used when the [EphoneFieldType] is [EphoneFieldType.phone].
@@ -199,11 +198,11 @@ class _EphoneFieldState extends State<EPhoneField> {
       controller: _controller,
       focusNode: _focusNode,
       autovalidateMode: widget.autovalidateMode,
-      onChanged: _type.onChanged(_selectedCountry, widget.phoneNumberMaskSplitter.value, widget.onChanged),
-      onSaved: _type.onSaved(_selectedCountry, widget.phoneNumberMaskSplitter.value, widget.onSaved),
+      onChanged: _type.onChanged(_selectedCountry, widget.phoneNumberMaskSplitter, widget.onChanged),
+      onSaved: _type.onSaved(_selectedCountry, widget.phoneNumberMaskSplitter, widget.onSaved),
       onFieldSubmitted: _type.onFieldSubmitted(
         _selectedCountry,
-        widget.phoneNumberMaskSplitter.value,
+        widget.phoneNumberMaskSplitter,
         widget.onFieldSubmitted,
       ),
       initialValue: widget.initialValue,
@@ -214,11 +213,10 @@ class _EphoneFieldState extends State<EPhoneField> {
       validator: _type.validator(
         _selectedValidator,
         _selectedCountry,
-        widget.phoneNumberMaskSplitter.value,
+        widget.phoneNumberMaskSplitter,
       ),
-      inputFormatters: widget.inputFormatters ??
-          _type.inputFormatters(_selectedCountry, widget.phoneNumberMaskSplitter != MaskSplitCharacter.none,
-              widget.phoneNumberMaskSplitter.value),
+      inputFormatters:
+          widget.inputFormatters ?? _type.inputFormatters(_selectedCountry, widget.phoneNumberMaskSplitter),
     );
   }
 
@@ -249,7 +247,10 @@ class _EphoneFieldState extends State<EPhoneField> {
 
   /// Updates the [_type] of the input field based on the [_controller] text.
   void _updateTextFieldType() {
-    final text = _controller.text.replaceAll(widget.phoneNumberMaskSplitter.value, '');
+    String text = _controller.text;
+    if (widget.phoneNumberMaskSplitter != null) {
+      text.replaceAll(widget.phoneNumberMaskSplitter!, '');
+    }
     if (text.isEmpty) {
       setState(() {
         _type = widget.initialType;

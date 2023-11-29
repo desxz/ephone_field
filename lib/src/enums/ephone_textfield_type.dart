@@ -4,9 +4,13 @@ import 'package:flutter/services.dart';
 import '../formatters/formatters.dart';
 import 'country.dart';
 
+/// This enum is used to set the type of the [EphoneField]
 enum EphoneFieldType { initial, email, phone }
 
+/// This extension is used to get the type of the [EphoneField]
+/// based on the [EphoneFieldType] enum
 extension EPhoneTextFielExtension on EphoneFieldType {
+  /// Returns the keyboard type of the [EphoneField] based on the [EphoneFieldType] enum
   TextInputType get keyboardType {
     switch (this) {
       case EphoneFieldType.initial:
@@ -18,7 +22,12 @@ extension EPhoneTextFielExtension on EphoneFieldType {
     }
   }
 
-  List<TextInputFormatter> inputFormatters(Country country, bool useMask, String maskSplitCharacter) {
+  /// Returns the input formatters of the [EphoneField] based on the [EphoneFieldType] enum
+  /// Given the [Country] and the [useMask] boolean
+  /// If [useMask] is true, the [PhoneNumberMaskFormatter] will be used
+  /// If [useMask] is false, the [LengthLimitingTextInputFormatter] will be used
+  /// In both cases, the [PhoneNumberDigistOnlyFormatter] will be used
+  List<TextInputFormatter> inputFormatters(Country country, String? maskSplitCharacter) {
     switch (this) {
       case EphoneFieldType.initial:
         return [];
@@ -26,7 +35,7 @@ extension EPhoneTextFielExtension on EphoneFieldType {
         return [];
       case EphoneFieldType.phone:
         return [
-          useMask
+          maskSplitCharacter != null
               ? PhoneNumberMaskFormatter(country: country, maskSplitCharacter: maskSplitCharacter)
               : LengthLimitingTextInputFormatter(country.maxLength),
           PhoneNumberDigistOnlyFormatter(maskSplitCharacter: maskSplitCharacter)
@@ -34,6 +43,8 @@ extension EPhoneTextFielExtension on EphoneFieldType {
     }
   }
 
+  /// Returns the label text of the [EphoneField] based on the [EphoneFieldType] enum
+  /// Given the [emptyLabelText], [emailLabelText] and [phoneLabelText]
   String labelText(String emptyLabelText, String emailLabelText, String phoneLabelText) {
     switch (this) {
       case EphoneFieldType.initial:
@@ -45,8 +56,10 @@ extension EPhoneTextFielExtension on EphoneFieldType {
     }
   }
 
+  /// Returns the hint text of the [EphoneField] based on the [EphoneFieldType] enum
+  /// Given the [validator], [Country] and [maskSplitCharacter]
   String? Function(String?)? validator(
-      String? Function(String?)? typeValidator, Country country, String maskSplitCharacter) {
+      String? Function(String?)? typeValidator, Country country, String? maskSplitCharacter) {
     switch (this) {
       case EphoneFieldType.initial:
         return typeValidator;
@@ -58,8 +71,10 @@ extension EPhoneTextFielExtension on EphoneFieldType {
     }
   }
 
+  /// Returns the hint text of the [EphoneField] based on the [EphoneFieldType] enum
+  /// Given the [Country], [maskSplitCharacter] and [onFieldSubmitted]
   void Function(String?)? onFieldSubmitted(
-      Country country, String maskSplitCharacter, void Function(String?)? onFieldSubmitted) {
+      Country country, String? maskSplitCharacter, void Function(String?)? onFieldSubmitted) {
     switch (this) {
       case EphoneFieldType.initial:
         return onFieldSubmitted;
@@ -71,7 +86,9 @@ extension EPhoneTextFielExtension on EphoneFieldType {
     }
   }
 
-  void Function(String?)? onSaved(Country country, String maskSplitCharacter, void Function(String?)? onSaved) {
+  /// Returns the hint text of the [EphoneField] based on the [EphoneFieldType] enum
+  /// Given the [Country], [maskSplitCharacter] and [onSaved]
+  void Function(String?)? onSaved(Country country, String? maskSplitCharacter, void Function(String?)? onSaved) {
     switch (this) {
       case EphoneFieldType.initial:
         return onSaved;
@@ -82,7 +99,9 @@ extension EPhoneTextFielExtension on EphoneFieldType {
     }
   }
 
-  void Function(String)? onChanged(Country country, String maskSplitCharacter, void Function(String)? onChanged) {
+  /// Returns the hint text of the [EphoneField] based on the [EphoneFieldType] enum
+  /// Given the [Country], [maskSplitCharacter] and [onChanged]
+  void Function(String)? onChanged(Country country, String? maskSplitCharacter, void Function(String)? onChanged) {
     switch (this) {
       case EphoneFieldType.initial:
         return onChanged;

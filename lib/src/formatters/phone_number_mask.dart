@@ -4,20 +4,21 @@ import '../enums/enums.dart';
 
 class PhoneNumberMaskFormatter extends TextInputFormatter {
   final Country country;
-  final String maskSplitCharacter;
+  final String? maskSplitCharacter;
 
-  const PhoneNumberMaskFormatter(
-      {required this.country, required this.maskSplitCharacter});
+  const PhoneNumberMaskFormatter({required this.country, required this.maskSplitCharacter});
 
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     final String mask = country.mask;
     final String maskCharacter = country.mask[0];
-    final String text = newValue.text.replaceAll(maskSplitCharacter, '');
-    final String oldText = oldValue.text.replaceAll(maskSplitCharacter, '');
-    final String newText =
-        _applyMask(mask, maskCharacter, maskSplitCharacter, text, oldText);
+    String text = newValue.text;
+    String oldText = oldValue.text;
+    if (maskSplitCharacter != null) {
+      text = text.replaceAll(maskSplitCharacter!, '');
+      oldText = oldText.replaceAll(maskSplitCharacter!, '');
+    }
+    final String newText = _applyMask(mask, maskCharacter, maskSplitCharacter, text, oldText);
     final int selectionIndex = newText.length;
 
     return TextEditingValue(
@@ -29,10 +30,11 @@ class PhoneNumberMaskFormatter extends TextInputFormatter {
   String _applyMask(
     String mask,
     String maskCharacter,
-    String maskSplitCharacter,
+    String? maskSplitCharacter,
     String text,
     String oldText,
   ) {
+    if (maskSplitCharacter == null) return text;
     final StringBuffer newText = StringBuffer();
 
     int textIndex = 0;
@@ -50,8 +52,7 @@ class PhoneNumberMaskFormatter extends TextInputFormatter {
       }
     }
 
-    if (oldText.length > text.length &&
-        newText.toString().endsWith(maskSplitCharacter)) {
+    if (oldText.length > text.length && newText.toString().endsWith(maskSplitCharacter)) {
       newText.write(oldText[oldText.length - 1]);
     }
 

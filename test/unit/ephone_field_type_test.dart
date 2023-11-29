@@ -13,19 +13,19 @@ void main() {
     'should EphoneFieldType inputFormatters match successfully',
     () {
       expect(
-        EphoneFieldType.email.inputFormatters(Country.unitedStates, true, " "),
+        EphoneFieldType.email.inputFormatters(Country.unitedStates, " "),
         [],
       );
       expect(
-        EphoneFieldType.phone.inputFormatters(Country.unitedStates, true, " ").length,
+        EphoneFieldType.phone.inputFormatters(Country.unitedStates, " ").length,
         2,
       );
       expect(
-        EphoneFieldType.phone.inputFormatters(Country.unitedStates, false, "").length,
+        EphoneFieldType.phone.inputFormatters(Country.unitedStates, "").length,
         2,
       );
       expect(
-        EphoneFieldType.initial.inputFormatters(Country.unitedStates, true, " "),
+        EphoneFieldType.initial.inputFormatters(Country.unitedStates, " "),
         [],
       );
     },
