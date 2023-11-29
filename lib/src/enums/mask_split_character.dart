@@ -13,8 +13,6 @@ extension MaskSplitCharacterExtension on MaskSplitCharacter {
         return '-';
       case MaskSplitCharacter.space:
         return ' ';
-      default:
-        return '';
     }
   }
 }

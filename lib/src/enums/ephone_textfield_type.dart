@@ -15,8 +15,6 @@ extension EPhoneTextFielExtension on EphoneFieldType {
         return TextInputType.emailAddress;
       case EphoneFieldType.phone:
         return TextInputType.phone;
-      default:
-        return TextInputType.emailAddress;
     }
   }
 
@@ -33,8 +31,6 @@ extension EPhoneTextFielExtension on EphoneFieldType {
               : LengthLimitingTextInputFormatter(country.maxLength),
           PhoneNumberDigistOnlyFormatter(maskSplitCharacter: maskSplitCharacter)
         ];
-      default:
-        return [];
     }
   }
 
@@ -46,8 +42,6 @@ extension EPhoneTextFielExtension on EphoneFieldType {
         return emailLabelText;
       case EphoneFieldType.phone:
         return phoneLabelText;
-      default:
-        return emptyLabelText;
     }
   }
 
@@ -61,8 +55,6 @@ extension EPhoneTextFielExtension on EphoneFieldType {
       case EphoneFieldType.phone:
         return (value) =>
             typeValidator?.call(EphoneFieldUtils.combinePrefix(country.dialCode, value, maskSplitCharacter));
-      default:
-        return null;
     }
   }
 
@@ -76,8 +68,6 @@ extension EPhoneTextFielExtension on EphoneFieldType {
       case EphoneFieldType.phone:
         return (value) =>
             onFieldSubmitted?.call(EphoneFieldUtils.combinePrefix(country.dialCode, value, maskSplitCharacter));
-      default:
-        return onFieldSubmitted;
     }
   }
 
@@ -89,8 +79,6 @@ extension EPhoneTextFielExtension on EphoneFieldType {
         return onSaved;
       case EphoneFieldType.phone:
         return (value) => onSaved?.call(EphoneFieldUtils.combinePrefix(country.dialCode, value, maskSplitCharacter));
-      default:
-        return onSaved;
     }
   }
 
@@ -102,8 +90,6 @@ extension EPhoneTextFielExtension on EphoneFieldType {
         return onChanged;
       case EphoneFieldType.phone:
         return (value) => onChanged?.call(EphoneFieldUtils.combinePrefix(country.dialCode, value, maskSplitCharacter)!);
-      default:
-        return onChanged;
     }
   }
 }

@@ -91,8 +91,6 @@ void Function()? _openCountryPickerMenu(
     case PickerMenuType.page:
       return _openCountryPickerPage(
           context, searchInputDecoration, title, titlePadding, isSearchable, countries, onValuePicked);
-    default:
-      return null;
   }
 }
 

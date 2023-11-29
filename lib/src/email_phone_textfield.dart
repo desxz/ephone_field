@@ -278,8 +278,6 @@ class _EphoneFieldState extends State<EPhoneField> {
       case EphoneFieldType.phone:
         _selectedValidator = widget.phoneValidator;
         break;
-      default:
-        _selectedValidator = null;
     }
   }
 }
