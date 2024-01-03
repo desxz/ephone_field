@@ -6,7 +6,7 @@ void main() {
     'should PhoneNumberDigitsOnlyFormatter formats all numeric string',
     () {
       expect(
-          const PhoneNumberDigistOnlyFormatter(maskSplitCharacter: '')
+          PhoneNumberDigistOnlyFormatter(maskSplitCharacter: '')
               .formatEditUpdate(
                 TextEditingValue.empty,
                 const TextEditingValue(text: "1234567890"),
@@ -20,7 +20,7 @@ void main() {
     'should PhoneNumberDigitsOnlyFormatter formats all numeric string and remove others',
     () {
       expect(
-          const PhoneNumberDigistOnlyFormatter(maskSplitCharacter: '')
+          PhoneNumberDigistOnlyFormatter(maskSplitCharacter: '')
               .formatEditUpdate(
                 TextEditingValue.empty,
                 const TextEditingValue(text: "1234567890abc"),
@@ -34,7 +34,7 @@ void main() {
     'should PhoneNumberDigitsOnlyFormatter formats with empty value',
     () {
       expect(
-          const PhoneNumberDigistOnlyFormatter(maskSplitCharacter: '')
+          PhoneNumberDigistOnlyFormatter(maskSplitCharacter: '')
               .formatEditUpdate(
                 TextEditingValue.empty,
                 const TextEditingValue(text: ""),
@@ -48,7 +48,7 @@ void main() {
     'should PhoneNumberDigitsOnlyFormatter formats numeric values with mask split character',
     () {
       expect(
-          const PhoneNumberDigistOnlyFormatter(maskSplitCharacter: '-')
+          PhoneNumberDigistOnlyFormatter(maskSplitCharacter: '-')
               .formatEditUpdate(
                 TextEditingValue.empty,
                 const TextEditingValue(text: "123456-7890asd"),
@@ -62,7 +62,7 @@ void main() {
     'should PhoneNumberDigitsOnlyFormatter formats numeric values with missing mask split character',
     () {
       expect(
-          const PhoneNumberDigistOnlyFormatter(maskSplitCharacter: ' ')
+          PhoneNumberDigistOnlyFormatter(maskSplitCharacter: ' ')
               .formatEditUpdate(
                 TextEditingValue.empty,
                 const TextEditingValue(text: "123456-7890asd"),

@@ -5,8 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test('should PhoneNumberMaskFormatter formats number with whitespace', () {
     expect(
-        const PhoneNumberMaskFormatter(
-                country: Country.unitedStates, maskSplitCharacter: ' ')
+        PhoneNumberMaskFormatter(country: Country.unitedStates, maskSplitCharacter: ' ')
             .formatEditUpdate(
               TextEditingValue.empty,
               const TextEditingValue(text: "1234567890"),
@@ -17,8 +16,7 @@ void main() {
 
   test('should PhoneNumberMaskFormatter formats number with dash', () {
     expect(
-        const PhoneNumberMaskFormatter(
-                country: Country.unitedStates, maskSplitCharacter: '-')
+        PhoneNumberMaskFormatter(country: Country.unitedStates, maskSplitCharacter: '-')
             .formatEditUpdate(
               TextEditingValue.empty,
               const TextEditingValue(text: "1234567890"),
@@ -29,8 +27,7 @@ void main() {
 
   test('should PhoneNumberMaskFormatter formats number and remove others', () {
     expect(
-        const PhoneNumberMaskFormatter(
-                country: Country.unitedStates, maskSplitCharacter: ' ')
+        PhoneNumberMaskFormatter(country: Country.unitedStates, maskSplitCharacter: ' ')
             .formatEditUpdate(
               TextEditingValue.empty,
               const TextEditingValue(text: "1234567890123456"),
@@ -41,8 +38,7 @@ void main() {
 
   test('should PhoneNumberMaskFormatter formats with missing values', () {
     expect(
-        const PhoneNumberMaskFormatter(
-                country: Country.unitedStates, maskSplitCharacter: ' ')
+        PhoneNumberMaskFormatter(country: Country.unitedStates, maskSplitCharacter: ' ')
             .formatEditUpdate(
               TextEditingValue.empty,
               const TextEditingValue(text: "12345"),
@@ -53,8 +49,7 @@ void main() {
 
   test('should PhoneNumberMaskFormatter formats with empty value', () {
     expect(
-        const PhoneNumberMaskFormatter(
-                country: Country.unitedStates, maskSplitCharacter: ' ')
+        PhoneNumberMaskFormatter(country: Country.unitedStates, maskSplitCharacter: ' ')
             .formatEditUpdate(
               TextEditingValue.empty,
               const TextEditingValue(text: ""),
@@ -65,8 +60,7 @@ void main() {
 
   test('should PhoneNumberMaskFormatter formats with nonnumeric value', () {
     expect(
-        const PhoneNumberMaskFormatter(
-                country: Country.unitedStates, maskSplitCharacter: ' ')
+        PhoneNumberMaskFormatter(country: Country.unitedStates, maskSplitCharacter: ' ')
             .formatEditUpdate(
               TextEditingValue.empty,
               const TextEditingValue(text: "123asd123"),

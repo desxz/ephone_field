@@ -6,7 +6,7 @@ class PhoneNumberMaskFormatter extends TextInputFormatter {
   final Country country;
   final String? maskSplitCharacter;
 
-  const PhoneNumberMaskFormatter({required this.country, required this.maskSplitCharacter});
+  PhoneNumberMaskFormatter({required this.country, required this.maskSplitCharacter});
 
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {

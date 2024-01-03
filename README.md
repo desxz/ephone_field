@@ -30,7 +30,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 ```yaml
 dependencies:
   ...
-  ephone_field: ^0.0.1
+  ephone_field: ^0.0.2
 ```
 
 Import it:
@@ -78,12 +78,13 @@ EPhoneField()
 | emailLabelText           | The label text when the field type is email. | `String`                   | `Email`                                 |
 | phoneLabelText           | The label text when the field type is phone. | `String`                   | `Phone`                                 |
 | countryPickerButtonIcon  | The icon for the country picker button.      | `Icon`                     | `Icon(Icons.arrow_drop_down)`           |
-| phoneNumberMaskSplitter  | The splitter for the phone number mask.      | `MaskSplitCharacter`       | `MaskSplitCharacter.space`              |
+| phoneNumberMaskSplitter  | The splitter for the phone number mask.      | `String`                   | `null`                                  |
 | countryPickerButtonWidth | The width of the country picker button.      | `double`                   | `100.0`                                 |
 | autovalidateMode         | The autovalidate mode of the input field.    | `AutovalidateMode`         | `AutovalidateMode.onUserInteraction`    |
 | onChanged                | The callback when the input value changes.   | `ValueChanged<String>`     | `null`                                  |
 | onSaved                  | The callback when the input is saved.        | `ValueChanged<String>`     | `null`                                  |
-| validator                | The validator for the input field.           | `FormValidator`            | `null`                                  |
+| emailValidator           | The validator for the email input field.     | `FormValidator`            | `null`                                  |
+| phoneValidator           | The validator for the phone input field.     | `FormValidator`            | `null`                                  |
 | onFieldSubmitted         | The callback when the input is submitted.    | `ValueChanged<String>`     | `null`                                  |
 | onCountryChanged         | The callback when the country is changed.    | `ValueChanged<Country>`    | `null`                                  |
 | inputFormatters          | The input formatters for the input field.    | `List<TextInputFormatter>` | `EphoneFieldType.inputFormatters()`     |

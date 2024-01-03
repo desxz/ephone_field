@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 class PhoneNumberDigistOnlyFormatter extends TextInputFormatter {
   final String? maskSplitCharacter;
 
-  const PhoneNumberDigistOnlyFormatter({required this.maskSplitCharacter});
+  PhoneNumberDigistOnlyFormatter({required this.maskSplitCharacter});
+
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     // Remove all non-digits characters without mask split character from the input string
