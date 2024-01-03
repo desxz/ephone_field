@@ -148,7 +148,7 @@ void main() {
     final CountryPickerMenu menu = widgetTester.firstWidget(find.byType(CountryPickerMenu));
     expect(
       menu.height,
-      MediaQuery.of(mockWidget.ctx!).size.height * .25,
+      mockWidget.ctx!.size!.height * .25,
     );
   });
 
@@ -164,7 +164,7 @@ void main() {
     final CountryPickerMenu menu = widgetTester.firstWidget(find.byType(CountryPickerMenu));
     expect(
       menu.height,
-      MediaQuery.of(mockWidget.ctx!).size.height * .50,
+      mockWidget.ctx!.size!.height * .50,
     );
   });
 
@@ -180,7 +180,7 @@ void main() {
     final CountryPickerMenu menu = widgetTester.firstWidget(find.byType(CountryPickerMenu));
     expect(
       menu.height,
-      MediaQuery.of(mockWidget.ctx!).size.height * .75,
+      mockWidget.ctx!.size!.height * .75,
     );
   });
 
@@ -196,7 +196,7 @@ void main() {
     final CountryPickerMenu menu = widgetTester.firstWidget(find.byType(CountryPickerMenu));
     expect(
       menu.height,
-      MediaQuery.of(mockWidget.ctx!).size.height,
+      mockWidget.ctx!.size!.height,
     );
   });
 }
