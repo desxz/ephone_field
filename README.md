@@ -25,6 +25,8 @@ and effort by handling the intricacies of email and phone number input for you.
 
 ## Getting started
 
+**Requirements:** Flutter 3.10+ and Dart 3.0+.
+
 In the `pubspec.yaml` of your flutter project, add the following dependency:
 
 ```yaml
@@ -40,10 +42,14 @@ import 'package:ephone_field/ephone_field.dart';
 ```
 ## Usage
 
-Implement the `EmailPhoneField` widget in your UI:
+Implement the `EPhoneField` widget in your UI:
 
 ```dart
-EPhoneField()
+EPhoneField(
+  phoneNumberMaskSplitter: ' ',
+  emailValidator: EphoneFieldValidators.email,
+  phoneValidator: EphoneFieldValidators.phone(Country.unitedStates),
+)
 ```
 
 <img src="https://raw.githubusercontent.com/desxz/ephone_field/main/ephone-field-show.gif" width="512">
@@ -57,34 +63,36 @@ EPhoneField()
 
 ## Additional information
 
-| Property                 | Description                                  | Type                       | Default                                 |
-| ------------------------ | -------------------------------------------- | -------------------------- | --------------------------------------- |
-| key                      | The key for the input field.                 | `Key`                      | `null`                                  |
-| initialType              | The initial type of the input field.         | `EphoneFieldType`          | `EphoneFieldType.initial`               |
-| countries                | The list of countries to display.            | `List<Country>`            | `Country.all`                           |
-| controller               | The controller for the input field.          | `TextEditingController`    | `TextEditingController()`               |
-| focusNode                | The focus node for the input field.          | `FocusNode`                | `FocusNode()`                           |
-| decoration               | The decoration for the input field.          | `InputDecoration`          | `InputDecoration()`                     |
-| keyboardType             | The keyboard type for the input field.       | `TextInputType`            | `EphoneFieldType.keyboardType`          |
-| searchInputDecoration    | The decoration for the search input field.   | `InputDecoration`          | `InputDecoration()`                     |
-| isSearchable             | Whether the search input is enabled.         | `bool`                     | `true`                                  |
-| title                    | The title for the country picker.            | `String`                   | `null`                                  |
-| titlePadding             | The padding for the title of country picker. | `EdgeInsetsGeometry`       | `EdgeInsets.all(8.0)`                   |
-| pickerHeight             | The height of the country picker.            | `CountryPickerHeigth`      | `CountryPickerHeigth.h50`               |
-| menuType                 | The type of the picker menu.                 | `PickerMenuType`           | `PickerMenuType.bottomSheet`            |
-| initialCountry           | The initial country of country picker.       | `Country`                  | `Country.unitedStates`                  |
-| initialValue             | The initial value of the input field.        | `String`                   | `null`                                  |
-| emptyLabelText           | The label text when the input is empty.      | `String`                   | `Email or phone number`                 |
-| emailLabelText           | The label text when the field type is email. | `String`                   | `Email`                                 |
-| phoneLabelText           | The label text when the field type is phone. | `String`                   | `Phone`                                 |
-| countryPickerButtonIcon  | The icon for the country picker button.      | `Icon`                     | `Icon(Icons.arrow_drop_down)`           |
-| phoneNumberMaskSplitter  | The splitter for the phone number mask.      | `String`                   | `null`                                  |
-| countryPickerButtonWidth | The width of the country picker button.      | `double`                   | `100.0`                                 |
-| autovalidateMode         | The autovalidate mode of the input field.    | `AutovalidateMode`         | `AutovalidateMode.onUserInteraction`    |
-| onChanged                | The callback when the input value changes.   | `ValueChanged<String>`     | `null`                                  |
-| onSaved                  | The callback when the input is saved.        | `ValueChanged<String>`     | `null`                                  |
-| emailValidator           | The validator for the email input field.     | `FormValidator`            | `null`                                  |
-| phoneValidator           | The validator for the phone input field.     | `FormValidator`            | `null`                                  |
-| onFieldSubmitted         | The callback when the input is submitted.    | `ValueChanged<String>`     | `null`                                  |
-| onCountryChanged         | The callback when the country is changed.    | `ValueChanged<Country>`    | `null`                                  |
-| inputFormatters          | The input formatters for the input field.    | `List<TextInputFormatter>` | `EphoneFieldType.inputFormatters()`     |
+| Property                 | Description                                  | Type                              | Default                                 |
+| ------------------------ | -------------------------------------------- | --------------------------------- | --------------------------------------- |
+| key                      | The key for the input field.                 | `Key?`                            | `null`                                  |
+| initialType              | The initial type of the input field.         | `EphoneFieldType`                 | `EphoneFieldType.initial`               |
+| countries                | The list of countries to display.            | `List<Country>`                   | `Country.values`                        |
+| controller               | The controller for the input field.          | `TextEditingController?`          | `null`                                  |
+| focusNode                | The focus node for the input field.          | `FocusNode?`                      | `null`                                  |
+| decoration               | The decoration for the input field.          | `InputDecoration`                 | `InputDecoration(border: OutlineInputBorder())` |
+| searchInputDecoration    | The decoration for the search input field.   | `InputDecoration`                 | search field defaults                   |
+| isSearchable             | Whether the search input is enabled.         | `bool`                            | `true`                                  |
+| title                    | The title for the country picker.            | `String?`                         | `null`                                  |
+| titlePadding             | The padding for the title of country picker. | `EdgeInsetsGeometry`              | `EdgeInsets.all(8.0)`                   |
+| pickerHeight             | The height of the country picker.            | `CountryPickerHeight`             | `CountryPickerHeight.h50`               |
+| menuType                 | The type of the picker menu.                 | `PickerMenuType`                  | `PickerMenuType.bottomSheet`            |
+| initialCountry           | The initial country of country picker.       | `Country`                         | `Country.unitedStates`                  |
+| initialValue             | The initial value when no controller is set. | `String?`                         | `null`                                  |
+| emptyLabelText           | The label text when the input is empty.      | `String`                          | `Email or phone number`                 |
+| emailLabelText           | The label text when the field type is email. | `String`                          | `Email`                                 |
+| phoneLabelText           | The label text when the field type is phone. | `String`                          | `Phone number`                          |
+| countryPickerButtonIcon  | The icon for the country picker button.      | `IconData`                        | `Icons.arrow_drop_down`                 |
+| phoneNumberMaskSplitter  | The splitter for the phone number mask.      | `String?`                         | `' '`                                   |
+| countryPickerButtonWidth | The minimum width of the country picker button. | `double`                       | `108.0`                                 |
+| autovalidateMode         | The autovalidate mode of the input field.    | `AutovalidateMode?`               | `null`                                  |
+| emptyErrorText           | Error text for empty initial-state input.    | `String?`                         | `null`                                  |
+| onChanged                | The callback when the input value changes.   | `void Function(String)?`          | `null`                                  |
+| onSaved                  | The callback when the input is saved.        | `void Function(String?)?`         | `null`                                  |
+| onFieldSubmitted         | The callback when the input is submitted.    | `void Function(String?)?`         | `null`                                  |
+| onCountryChanged         | The callback when the country is changed.    | `ValueChanged<Country>?`          | `null`                                  |
+| onTypeChanged            | The callback when the detected type changes. | `ValueChanged<EphoneFieldType>?`  | `null`                                  |
+| emailValidator           | The validator for the email input field.     | `String? Function(String?)?`     | `null`                                  |
+| phoneValidator           | The validator for the phone input field.     | `String? Function(String?)?`     | `null`                                  |
+| inputFormatters          | The input formatters for the input field.    | `List<TextInputFormatter>?`      | phone/email defaults                    |
+| typeResolver             | Custom email/phone detection strategy.       | `EphoneFieldTypeResolver`         | `defaultEphoneFieldTypeResolver`        |

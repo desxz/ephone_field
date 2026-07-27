@@ -1,29 +1,30 @@
-import 'package:ephone_field/src/components/country_picker_button.dart';
-import 'package:ephone_field/src/enums/country.dart';
-import 'package:ephone_field/src/enums/country_picker_height.dart';
-import 'package:ephone_field/src/enums/country_picker_menu.dart';
-import 'package:ephone_field/src/enums/ephone_textfield_type.dart';
+import 'package:ephone_field/ephone_field.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/caller_checker.dart';
 
 // ignore: must_be_immutable
 class CountryPickerButtonMock extends StatelessWidget {
-  CountryPickerButtonMock({Key? key, required this.menuType, required this.pickerHeight, this.ctx}) : super(key: key);
+  CountryPickerButtonMock({
+    super.key,
+    required this.menuType,
+    required this.pickerHeight,
+    this.ctx,
+  });
   final List<Country> countries = Country.values;
-  final String title = "Select Country";
+  final String title = 'Select Country';
   final bool isSearchable = true;
-  final double width = 150.0;
-  final EdgeInsetsGeometry titlePadding = const EdgeInsets.all(8.0);
+  final double minWidth = 150;
+  final EdgeInsetsGeometry titlePadding = const EdgeInsets.all(8);
   final InputDecoration searchInputDecoration = const InputDecoration(
     hintText: 'hintText',
   );
   final IconData icon = Icons.add;
   final Country initialValue = Country.afghanistan;
-  final EphoneFieldType initialType = EphoneFieldType.phone;
   final PickerMenuType menuType;
-  final CountryPickerHeigth pickerHeight;
-  final void Function(Country) onValuePicked = EphoneFieldCallerChecker.mockOnValuePicked;
+  final CountryPickerHeight pickerHeight;
+  final void Function(Country) onValuePicked =
+      EphoneFieldCallerChecker.mockOnValuePicked;
   BuildContext? ctx;
 
   @override
@@ -34,7 +35,7 @@ class CountryPickerButtonMock extends StatelessWidget {
         body: SizedBox(
           child: CountryPickerButton(
             countries: countries,
-            width: width,
+            minWidth: minWidth,
             icon: icon,
             searchInputDecoration: searchInputDecoration,
             title: title,
@@ -43,7 +44,9 @@ class CountryPickerButtonMock extends StatelessWidget {
             onValuePicked: onValuePicked,
             initialValue: initialValue,
             menuType: menuType,
-            pickerHeight: menuType == PickerMenuType.page ? CountryPickerHeigth.h100 : pickerHeight,
+            pickerHeight: menuType == PickerMenuType.page
+                ? CountryPickerHeight.h100
+                : pickerHeight,
           ),
         ),
       ),

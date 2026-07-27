@@ -1,12 +1,38 @@
 name: ephone_field
 description: A versatile Flutter TextFormField widget for handling email and phone number input with ease.
-version: 0.0.2
+version: 0.1.0
 repository: https://github.com/desxz/ephone_field
 homepage: https://github.com/desxz/ephone_field
 issue_tracker: https://github.com/desxz/ephone_field/issues
 
+topics:
+  - form
+  - phone
+  - email
+  - input
+  - country-picker
+
+screenshots:
+  - description: 'Email and phone field type switching demo.'
+    path: ephone-field-show.gif
+  - description: 'Country picker shown as a dialog.'
+    path: ephone-field-dialog.png
+  - description: 'Country picker shown as a bottom sheet.'
+    path: ephone-field-bottomsheet.png
+  - description: 'Country picker shown as a full page.'
+    path: ephone-field-page.png
+
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
+
 environment:
-  sdk: '>=2.12.0 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.10.0'
 
 dependencies:
   flutter:
@@ -15,6 +41,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^3.0.0
 
 flutter:
   assets:

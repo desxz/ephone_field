@@ -2,17 +2,21 @@ import 'package:ephone_field/ephone_field.dart';
 import 'package:flutter/material.dart';
 
 class EPhoneFieldMock extends StatelessWidget {
-  const EPhoneFieldMock(
-      {Key? key,
-      required this.emailValidator,
-      required this.phoneValidator,
-      this.onChanged,
-      this.onCountryChanged,
-      this.onSaved,
-      this.onFieldSubmitted,
-      required this.formKey,
-      required this.emptyErrorText})
-      : super(key: key);
+  const EPhoneFieldMock({
+    super.key,
+    required this.emailValidator,
+    required this.phoneValidator,
+    this.onChanged,
+    this.onCountryChanged,
+    this.onSaved,
+    this.onFieldSubmitted,
+    required this.formKey,
+    required this.emptyErrorText,
+    this.controller,
+    this.initialValue,
+    this.isSearchable = true,
+  });
+
   final String? Function(String?)? emailValidator;
   final String? Function(String?)? phoneValidator;
   final void Function(String)? onChanged;
@@ -21,6 +25,9 @@ class EPhoneFieldMock extends StatelessWidget {
   final void Function(String?)? onFieldSubmitted;
   final String emptyErrorText;
   final GlobalKey<FormState> formKey;
+  final TextEditingController? controller;
+  final String? initialValue;
+  final bool isSearchable;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +36,9 @@ class EPhoneFieldMock extends StatelessWidget {
         body: Form(
           key: formKey,
           child: EPhoneField(
+            controller: controller,
+            initialValue: initialValue,
+            isSearchable: isSearchable,
             emptyErrorText: emptyErrorText,
             emailValidator: emailValidator,
             phoneValidator: phoneValidator,

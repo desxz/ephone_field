@@ -1,71 +1,95 @@
 import 'package:ephone_field/ephone_field.dart';
-import 'package:ephone_field/src/formatters/formatters.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('should PhoneNumberMaskFormatter formats number with whitespace', () {
+  test('formats number with whitespace', () {
     expect(
-        PhoneNumberMaskFormatter(country: Country.unitedStates, maskSplitCharacter: ' ')
-            .formatEditUpdate(
-              TextEditingValue.empty,
-              const TextEditingValue(text: "1234567890"),
-            )
-            .text,
-        "123 4567 890");
+      PhoneNumberMaskFormatter(
+        country: Country.unitedStates,
+        maskSplitCharacter: ' ',
+      )
+          .formatEditUpdate(
+            TextEditingValue.empty,
+            const TextEditingValue(text: '1234567890'),
+          )
+          .text,
+      '123 456 7890',
+    );
   });
 
-  test('should PhoneNumberMaskFormatter formats number with dash', () {
+  test('formats number with dash', () {
     expect(
-        PhoneNumberMaskFormatter(country: Country.unitedStates, maskSplitCharacter: '-')
-            .formatEditUpdate(
-              TextEditingValue.empty,
-              const TextEditingValue(text: "1234567890"),
-            )
-            .text,
-        "123-4567-890");
+      PhoneNumberMaskFormatter(
+        country: Country.unitedStates,
+        maskSplitCharacter: '-',
+      )
+          .formatEditUpdate(
+            TextEditingValue.empty,
+            const TextEditingValue(text: '1234567890'),
+          )
+          .text,
+      '123-456-7890',
+    );
   });
 
-  test('should PhoneNumberMaskFormatter formats number and remove others', () {
+  test('truncates extra digits', () {
     expect(
-        PhoneNumberMaskFormatter(country: Country.unitedStates, maskSplitCharacter: ' ')
-            .formatEditUpdate(
-              TextEditingValue.empty,
-              const TextEditingValue(text: "1234567890123456"),
-            )
-            .text,
-        "123 4567 890");
+      PhoneNumberMaskFormatter(
+        country: Country.unitedStates,
+        maskSplitCharacter: ' ',
+      )
+          .formatEditUpdate(
+            TextEditingValue.empty,
+            const TextEditingValue(text: '1234567890123456'),
+          )
+          .text,
+      '123 456 7890',
+    );
   });
 
-  test('should PhoneNumberMaskFormatter formats with missing values', () {
+  test('formats partial numbers', () {
     expect(
-        PhoneNumberMaskFormatter(country: Country.unitedStates, maskSplitCharacter: ' ')
-            .formatEditUpdate(
-              TextEditingValue.empty,
-              const TextEditingValue(text: "12345"),
-            )
-            .text,
-        "123 45");
+      PhoneNumberMaskFormatter(
+        country: Country.unitedStates,
+        maskSplitCharacter: ' ',
+      )
+          .formatEditUpdate(
+            TextEditingValue.empty,
+            const TextEditingValue(text: '12345'),
+          )
+          .text,
+      '123 45',
+    );
   });
 
-  test('should PhoneNumberMaskFormatter formats with empty value', () {
+  test('returns empty for empty input', () {
     expect(
-        PhoneNumberMaskFormatter(country: Country.unitedStates, maskSplitCharacter: ' ')
-            .formatEditUpdate(
-              TextEditingValue.empty,
-              const TextEditingValue(text: ""),
-            )
-            .text,
-        "");
+      PhoneNumberMaskFormatter(
+        country: Country.unitedStates,
+        maskSplitCharacter: ' ',
+      )
+          .formatEditUpdate(
+            TextEditingValue.empty,
+            const TextEditingValue(text: ''),
+          )
+          .text,
+      '',
+    );
   });
 
-  test('should PhoneNumberMaskFormatter formats with nonnumeric value', () {
+  test('strips non-numeric characters before masking', () {
     expect(
-        PhoneNumberMaskFormatter(country: Country.unitedStates, maskSplitCharacter: ' ')
-            .formatEditUpdate(
-              TextEditingValue.empty,
-              const TextEditingValue(text: "123asd123"),
-            )
-            .text,
-        "123 asd1 23");
+      PhoneNumberMaskFormatter(
+        country: Country.unitedStates,
+        maskSplitCharacter: ' ',
+      )
+          .formatEditUpdate(
+            TextEditingValue.empty,
+            const TextEditingValue(text: '123asd4567890'),
+          )
+          .text,
+      '123 456 7890',
+    );
   });
 }

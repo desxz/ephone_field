@@ -1,19 +1,61 @@
 import 'package:flutter/services.dart';
 
-class PhoneNumberDigistOnlyFormatter extends TextInputFormatter {
+/// Allows only digits and an optional mask separator in phone input.
+class PhoneNumberDigitsOnlyFormatter extends TextInputFormatter {
+  /// Creates a digits-only formatter.
+  ///
+  /// When [maskSplitCharacter] is provided, that character is also permitted.
+  PhoneNumberDigitsOnlyFormatter({this.maskSplitCharacter});
+
+  /// Optional mask separator character to preserve while filtering.
   final String? maskSplitCharacter;
 
-  PhoneNumberDigistOnlyFormatter({required this.maskSplitCharacter});
-
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
-    // Remove all non-digits characters without mask split character from the input string
-    final String newText = newValue.text.replaceAll(RegExp('[^0-9$maskSplitCharacter]'), '');
-    final int selectionIndex = newText.length;
-
-    return TextEditingValue(
-      text: newText,
-      selection: TextSelection.collapsed(offset: selectionIndex),
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final allowed = maskSplitCharacter == null
+        ? RegExp(r'[^0-9]')
+        : RegExp('[^0-9${RegExp.escape(maskSplitCharacter!)}]');
+    final newText = newValue.text.replaceAll(allowed, '');
+    final selection = _preserveSelection(
+      oldValue: oldValue,
+      newText: newText,
     );
+
+    return TextEditingValue(text: newText, selection: selection);
+  }
+
+  TextSelection _preserveSelection({
+    required TextEditingValue oldValue,
+    required String newText,
+  }) {
+    final oldOffset =
+        oldValue.selection.baseOffset.clamp(0, oldValue.text.length);
+    final removedBefore = oldValue.text.substring(0, oldOffset).length -
+        oldValue.text
+            .substring(0, oldOffset)
+            .replaceAll(
+              maskSplitCharacter == null
+                  ? RegExp(r'[^0-9]')
+                  : RegExp('[^0-9${RegExp.escape(maskSplitCharacter!)}]'),
+              '',
+            )
+            .length;
+
+    var offset = oldOffset - removedBefore;
+    if (offset > newText.length) {
+      offset = newText.length;
+    }
+    if (offset < 0) {
+      offset = 0;
+    }
+
+    return TextSelection.collapsed(offset: offset);
   }
 }
+
+/// Deprecated alias for [PhoneNumberDigitsOnlyFormatter].
+@Deprecated('Use PhoneNumberDigitsOnlyFormatter instead.')
+typedef PhoneNumberDigistOnlyFormatter = PhoneNumberDigitsOnlyFormatter;

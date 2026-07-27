@@ -7,9 +7,11 @@ import 'enums/country_picker_height.dart';
 import 'enums/country_picker_menu.dart';
 import 'enums/ephone_textfield_type.dart';
 
+/// A versatile [TextFormField] for email and phone number input.
 class EPhoneField extends StatefulWidget {
+  /// Creates an email/phone input field.
   const EPhoneField({
-    Key? key,
+    super.key,
     this.controller,
     this.focusNode,
     this.initialType = EphoneFieldType.initial,
@@ -22,11 +24,12 @@ class EPhoneField extends StatefulWidget {
     this.isSearchable = true,
     this.title,
     this.titlePadding = const EdgeInsets.all(8.0),
-    this.pickerHeight = CountryPickerHeigth.h50,
+    this.pickerHeight = CountryPickerHeight.h50,
     this.menuType = PickerMenuType.bottomSheet,
     this.initialCountry = Country.unitedStates,
     this.onChanged,
     this.onCountryChanged,
+    this.onTypeChanged,
     this.initialValue,
     this.emptyLabelText = 'Email or phone number',
     this.emailLabelText = 'Email',
@@ -35,250 +38,358 @@ class EPhoneField extends StatefulWidget {
     this.onFieldSubmitted,
     this.decoration = const InputDecoration(
       border: OutlineInputBorder(),
-      hintText: 'Email or phone number',
     ),
     this.countryPickerButtonIcon = Icons.arrow_drop_down,
-    this.phoneNumberMaskSplitter,
+    this.phoneNumberMaskSplitter = ' ',
     this.inputFormatters,
     this.emailValidator,
     this.phoneValidator,
     this.emptyErrorText,
     this.countryPickerButtonWidth = 108.0,
     this.autovalidateMode,
-  }) : super(key: key);
+    this.typeResolver = defaultEphoneFieldTypeResolver,
+  });
 
-  /// The [FocusNode] of the input field.
+  /// Focus node for the input field.
   final FocusNode? focusNode;
 
-  /// The [TextEditingController] of the input field.
+  /// Text editing controller for the input field.
   final TextEditingController? controller;
 
-  /// The [List<Country>] to be used in the country picker. Defaults to [Country.values].
+  /// Countries shown in the picker.
   final List<Country> countries;
 
-  /// The [Country] to be selected when the widget is initialized. Defaults to [Country.unitedStates].
+  /// Initial selected country.
   final Country initialCountry;
 
-  /// The [EphoneFieldType] to be selected when the widget is initialized. Defaults to [EphoneFieldType.initial].
+  /// Initial field type when empty.
   final EphoneFieldType initialType;
 
-  /// The [String] to be used as the initial value of the input field.
+  /// Initial text value when no [controller] is supplied.
   final String? initialValue;
 
-  /// The [String] to be used as title of the country picker menu.
+  /// Optional title for the country picker.
   final String? title;
 
-  /// The [EdgeInsetsGeometry] to be used as padding of the title of the country picker menu. Defaults to [EdgeInsets.all(8.0)].
+  /// Padding around the picker title.
   final EdgeInsetsGeometry titlePadding;
 
-  /// The [PickerMenuType] to be used as the type of the country picker menu. Defaults to [PickerMenuType.bottomSheet].
+  /// Presentation style for the country picker.
   final PickerMenuType menuType;
 
-  /// The [InputDecoration] to be used as the decoration of the search field of the country picker menu. Defaults to:
-  /// ```
-  /// InputDecoration(
-  ///  hintText: 'Search your country',
-  /// border: OutlineInputBorder(),
-  /// suffixIcon: Icon(Icons.search),
-  /// )
-  /// ```
+  /// Decoration for the country search field.
   final InputDecoration searchInputDecoration;
 
-  /// The [CountryPickerHeigth] to be used as the height of the country picker menu. Defaults to [CountryPickerHeigth.h50].
-  /// The [CountryPickerHeigth] is not effective when the [menuType] is [PickerMenuType.page].
-  final CountryPickerHeigth pickerHeight;
+  /// Height of dialog and bottom-sheet pickers.
+  final CountryPickerHeight pickerHeight;
 
-  /// The [bool] to be used as the searchable property of the country picker menu to visible or hide the search field. Defaults to [true].
+  /// Whether the country picker includes a search field.
   final bool isSearchable;
 
-  /// The [String] to be used as the empty label text of the input field. Defaults to 'Email or phone number'.
+  /// Label when the field is empty.
   final String emptyLabelText;
 
-  /// The [String] to be used as the email label text of the input field. Defaults to 'Email'.
+  /// Label when the field is in email mode.
   final String emailLabelText;
 
-  /// The [String] to be used as the phone label text of the input field. Defaults to 'Phone number'.
+  /// Label when the field is in phone mode.
   final String phoneLabelText;
 
-  /// The [ValueChanged<Country>] to be used as the callback when the country is changed.
+  /// Called when the selected country changes.
   final ValueChanged<Country>? onCountryChanged;
 
-  /// The [ValueChanged<String>] to be used as the callback when the value of the input field is changed.
+  /// Called when the detected field type changes.
+  final ValueChanged<EphoneFieldType>? onTypeChanged;
+
+  /// Called when the text changes.
   final void Function(String)? onChanged;
 
-  /// The [ValueChanged<String>] to be used as the callback when the value of the input field is saved.
+  /// Called when the field is saved.
   final void Function(String?)? onSaved;
 
-  /// The [ValueChanged<String>] to be used as the callback when the value of the input field is submitted.
+  /// Called when the field is submitted.
   final void Function(String?)? onFieldSubmitted;
 
-  /// The [String? Function(String?)] to be used as the email validator of the input field.
-  /// The callback should return null if the input is valid, otherwise a String with an error message.
-  /// The [String] value passed to the callback is the email address.
+  /// Validator for email input.
   final String? Function(String?)? emailValidator;
 
-  /// The [String? Function(String?)] to be used as the phone validator of the input field.
-  /// The callback should return null if the input is valid, otherwise a String with an error message.
-  /// The [String] value passed to the callback is the phone number with the country dial code (e.g. +441234567890).
+  /// Validator for phone input (receives full international number).
   final String? Function(String?)? phoneValidator;
 
-  /// The [String? Function(String?)] to be used as the empty validator of the input field.
-  /// The callback should return null if the input is valid, otherwise a String with an error message.
+  /// Error text shown when the field is empty in initial mode.
   final String? emptyErrorText;
 
-  /// The [InputDecoration] to be used as the decoration of the input field. Defaults to:
-  /// ```
-  /// InputDecoration(
-  /// border: OutlineInputBorder(),
-  /// hintText: 'Phone number or email',
-  /// )
-  /// ```
-  /// The [prefixIcon] of the input field is replaced by the country picker button when the [EphoneFieldType] is [EphoneFieldType.phone].
-  /// The [labelText] of the input field is replaced by the [EphoneFieldType] label text when the [EphoneFieldType] is [EphoneFieldType.phone] or [EphoneFieldType.email].
-  /// The [labelText] of the input field is replaced by the [emptyLabelText] when the [EphoneFieldType] is [EphoneFieldType.initial].
-  /// The [labelText] of the input field is replaced by the [emailLabelText] when the [EphoneFieldType] is [EphoneFieldType.email].
-  /// The [labelText] of the input field is replaced by the [phoneLabelText] when the [EphoneFieldType] is [EphoneFieldType.phone].
+  /// Decoration for the main input field.
   final InputDecoration decoration;
 
-  /// The [IconData] to be used as the icon of the country picker button. Defaults to [Icons.arrow_drop_down
+  /// Icon shown on the country picker button.
   final IconData countryPickerButtonIcon;
 
-  /// The [MaskSplitCharacter] to be used as the mask splitter of the phone number input field. Defaults to [MaskSplitCharacter.space].
-  /// The [MaskSplitCharacter] is only used when the [EphoneFieldType] is [EphoneFieldType.phone].
-  /// If the [MaskSplitCharacter] is [MaskSplitCharacter.none], the [PhoneNumberMaskFormatter] is not used.
-  /// If the [MaskSplitCharacter] is [MaskSplitCharacter.space], the [PhoneNumberMaskFormatter] is used with the space character as the mask splitter.
-  /// If the [MaskSplitCharacter] is [MaskSplitCharacter.dash], the [PhoneNumberMaskFormatter] is used with the dash character as the mask splitter.
+  /// Mask separator used while formatting phone numbers.
   final String? phoneNumberMaskSplitter;
 
-  /// The [List<TextInputFormatter>] to be used as the input formatters of the input field.
-  /// As default, the [PhoneNumberMaskFormatter] and [PhoneNumberDigistOnlyFormatter] are used when the [EphoneFieldType] is [EphoneFieldType.phone].
-  /// If the [phoneNumberMaskSplitter] is [MaskSplitCharacter.none], the [PhoneNumberMaskFormatter] is not used.
-  /// If don't want to use the [PhoneNumberMaskFormatter], you can pass an empty list to the [inputFormatters].
+  /// Optional custom input formatters.
   final List<TextInputFormatter>? inputFormatters;
 
-  /// The [double] to be used as the width of the country picker button. Defaults to 100.0.
+  /// Minimum width of the country picker button.
   final double countryPickerButtonWidth;
 
-  /// The [AutovalidateMode] to be used as the autovalidate mode of the input field. Defaults to [AutovalidateMode.onUserInteraction].
+  /// Autovalidate mode for the form field.
   final AutovalidateMode? autovalidateMode;
 
+  /// Custom resolver for email vs phone detection.
+  final EphoneFieldTypeResolver typeResolver;
+
   @override
-  State<EPhoneField> createState() => _EphoneFieldState();
+  State<EPhoneField> createState() => _EPhoneFieldState();
 }
 
-class _EphoneFieldState extends State<EPhoneField> {
+class _EPhoneFieldState extends State<EPhoneField> {
   late EphoneFieldType _type;
   late TextEditingController _controller;
   late FocusNode _focusNode;
   late Country _selectedCountry;
-  late String? Function(String?)? _selectedValidator;
+  late bool _ownsController;
+  late bool _ownsFocusNode;
+  late VoidCallback _controllerListener;
+
+  List<TextInputFormatter>? _cachedFormatters;
+  EphoneFieldType? _cachedFormatterType;
+  Country? _cachedFormatterCountry;
+  String? _cachedFormatterSplitter;
 
   @override
   void initState() {
     super.initState();
     _type = widget.initialType;
-    _updateSelectedValidator();
     _selectedCountry = widget.initialCountry;
-    _controller = widget.controller ?? TextEditingController();
-    _focusNode = widget.focusNode ?? FocusNode();
-    _controller.addListener(() => _updateTextFieldType());
-    _controller.addListener(() => _updateSelectedValidator());
+    _bindController(widget.controller);
+    _bindFocusNode(widget.focusNode);
+    _controllerListener = _handleControllerChanged;
+    _controller.addListener(_controllerListener);
+    if (widget.controller == null && widget.initialValue != null) {
+      _controller.text = widget.initialValue!;
+    }
+    _syncTypeFromText(notify: false);
+  }
+
+  @override
+  void didUpdateWidget(covariant EPhoneField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.controller != oldWidget.controller) {
+      _controller.removeListener(_controllerListener);
+      if (_ownsController) {
+        _controller.dispose();
+      }
+      _bindController(widget.controller);
+      _controller.addListener(_controllerListener);
+    }
+
+    if (widget.focusNode != oldWidget.focusNode) {
+      if (_ownsFocusNode) {
+        _focusNode.dispose();
+      }
+      _bindFocusNode(widget.focusNode);
+    }
+
+    if (widget.initialCountry != oldWidget.initialCountry) {
+      _selectedCountry = widget.initialCountry;
+    }
+
+    if (widget.initialType != oldWidget.initialType &&
+        _controller.text.isEmpty) {
+      _type = widget.initialType;
+    }
+  }
+
+  void _bindController(TextEditingController? controller) {
+    _ownsController = controller == null;
+    _controller = controller ?? TextEditingController();
+  }
+
+  void _bindFocusNode(FocusNode? focusNode) {
+    _ownsFocusNode = focusNode == null;
+    _focusNode = focusNode ?? FocusNode();
   }
 
   @override
   void dispose() {
+    _controller.removeListener(_controllerListener);
+    if (_ownsController) {
+      _controller.dispose();
+    }
+    if (_ownsFocusNode) {
+      _focusNode.dispose();
+    }
     super.dispose();
-    _controller.dispose();
-    _focusNode.dispose();
   }
+
+  void _handleControllerChanged() {
+    if (!mounted) {
+      return;
+    }
+    _syncTypeFromText();
+  }
+
+  void _syncTypeFromText({bool notify = true}) {
+    final resolved = widget.typeResolver(_controller.text, widget.initialType);
+    if (resolved == _type) {
+      return;
+    }
+    if (!notify) {
+      _type = resolved;
+      return;
+    }
+    setState(() {
+      _type = resolved;
+    });
+    widget.onTypeChanged?.call(resolved);
+  }
+
+  EphoneFieldType get _resolvedType =>
+      widget.typeResolver(_controller.text, widget.initialType);
 
   @override
   Widget build(BuildContext context) {
+    final type = _resolvedType;
     return TextFormField(
       controller: _controller,
       focusNode: _focusNode,
       autovalidateMode: widget.autovalidateMode,
-      onChanged: _type.onChanged(_selectedCountry, widget.phoneNumberMaskSplitter, widget.onChanged),
-      onSaved: _type.onSaved(_selectedCountry, widget.phoneNumberMaskSplitter, widget.onSaved),
-      onFieldSubmitted: _type.onFieldSubmitted(
-        _selectedCountry,
-        widget.phoneNumberMaskSplitter,
-        widget.onFieldSubmitted,
-      ),
-      initialValue: widget.initialValue,
+      autofillHints: type.autofillHints,
+      onChanged: (value) {
+        widget
+            .typeResolver(value, widget.initialType)
+            .onChanged(
+              _selectedCountry,
+              widget.phoneNumberMaskSplitter,
+              widget.onChanged,
+            )
+            ?.call(value);
+      },
+      onSaved: (value) {
+        widget
+            .typeResolver(value ?? '', widget.initialType)
+            .onSaved(
+              _selectedCountry,
+              widget.phoneNumberMaskSplitter,
+              widget.onSaved,
+            )
+            ?.call(value);
+      },
+      onFieldSubmitted: (value) {
+        widget
+            .typeResolver(value, widget.initialType)
+            .onFieldSubmitted(
+              _selectedCountry,
+              widget.phoneNumberMaskSplitter,
+              widget.onFieldSubmitted,
+            )
+            ?.call(value);
+      },
       decoration: widget.decoration.copyWith(
-          prefixIcon: _buildCountryPicker(_type == EphoneFieldType.phone),
-          labelText: _type.labelText(widget.emptyLabelText, widget.emailLabelText, widget.phoneLabelText)),
-      keyboardType: _type.keyboardType,
-      validator: _type.validator(
-        _selectedValidator,
+        prefixIcon: _buildPrefixIcon(type),
+        labelText: type.labelText(
+          widget.emptyLabelText,
+          widget.emailLabelText,
+          widget.phoneLabelText,
+        ),
+      ),
+      keyboardType: type.keyboardType,
+      validator: type.validator(
+        _validatorForType(type),
         _selectedCountry,
         widget.phoneNumberMaskSplitter,
       ),
-      inputFormatters:
-          widget.inputFormatters ?? _type.inputFormatters(_selectedCountry, widget.phoneNumberMaskSplitter),
+      inputFormatters: _formattersForType(type),
     );
   }
 
-  /// Builds the [CountryPickerButton] if the [_type] is [EphoneFieldType.phone].
-  Widget? _buildCountryPicker(bool isPhoneFieldSelected) {
-    return isPhoneFieldSelected
-        ? CountryPickerButton(
-            initialValue: _selectedCountry,
-            onValuePicked: (Country country) {
-              setState(() {
-                _selectedCountry = country;
-                widget.onCountryChanged?.call(country);
-                _focusNode.requestFocus();
-              });
-            },
-            menuType: widget.menuType,
-            isSearchable: widget.isSearchable,
-            searchInputDecoration: widget.searchInputDecoration,
-            titlePadding: widget.titlePadding,
-            title: widget.title,
-            countries: widget.countries,
-            width: widget.countryPickerButtonWidth,
-            icon: widget.countryPickerButtonIcon,
-            pickerHeight: widget.pickerHeight,
-          )
-        : null;
-  }
-
-  /// Updates the [_type] of the input field based on the [_controller] text.
-  void _updateTextFieldType() {
-    String text = _controller.text;
-    if (widget.phoneNumberMaskSplitter != null) {
-      text.replaceAll(widget.phoneNumberMaskSplitter!, '');
-    }
-    if (text.isEmpty) {
-      setState(() {
-        _type = widget.initialType;
-      });
-    } else if (text.contains('@') || int.tryParse(text) == null) {
-      setState(() {
-        _type = EphoneFieldType.email;
-      });
-    } else {
-      setState(() {
-        _type = EphoneFieldType.phone;
-      });
-    }
-  }
-
-  void _updateSelectedValidator() {
-    switch (_type) {
+  String? Function(String?)? _validatorForType(EphoneFieldType type) {
+    switch (type) {
       case EphoneFieldType.initial:
-        _selectedValidator = widget.emptyErrorText == null
+        return widget.emptyErrorText == null
             ? null
-            : (value) => value == null || value.isEmpty ? widget.emptyErrorText : null;
-        break;
+            : (value) =>
+                value == null || value.isEmpty ? widget.emptyErrorText : null;
       case EphoneFieldType.email:
-        _selectedValidator = widget.emailValidator;
-        break;
+        return widget.emailValidator;
       case EphoneFieldType.phone:
-        _selectedValidator = widget.phoneValidator;
-        break;
+        return widget.phoneValidator;
     }
+  }
+
+  List<TextInputFormatter> _formattersForType(EphoneFieldType type) {
+    if (widget.inputFormatters != null) {
+      return widget.inputFormatters!;
+    }
+
+    final splitter = widget.phoneNumberMaskSplitter;
+    if (_cachedFormatters != null &&
+        _cachedFormatterType == type &&
+        _cachedFormatterCountry == _selectedCountry &&
+        _cachedFormatterSplitter == splitter) {
+      return _cachedFormatters!;
+    }
+
+    _cachedFormatters = type.inputFormatters(_selectedCountry, splitter);
+    _cachedFormatterType = type;
+    _cachedFormatterCountry = _selectedCountry;
+    _cachedFormatterSplitter = splitter;
+    return _cachedFormatters!;
+  }
+
+  Widget? _buildPrefixIcon(EphoneFieldType type) {
+    if (type != EphoneFieldType.phone) {
+      return widget.decoration.prefixIcon;
+    }
+
+    final countryButton = CountryPickerButton(
+      selectedCountry: _selectedCountry,
+      onValuePicked: _handleCountryPicked,
+      menuType: widget.menuType,
+      isSearchable: widget.isSearchable,
+      searchInputDecoration: widget.searchInputDecoration,
+      titlePadding: widget.titlePadding,
+      title: widget.title,
+      countries: widget.countries,
+      minWidth: widget.countryPickerButtonWidth,
+      icon: widget.countryPickerButtonIcon,
+      pickerHeight: widget.pickerHeight,
+    );
+
+    final userPrefix = widget.decoration.prefixIcon;
+    if (userPrefix == null) {
+      return countryButton;
+    }
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        userPrefix,
+        countryButton,
+      ],
+    );
+  }
+
+  void _handleCountryPicked(Country country) {
+    setState(() {
+      _selectedCountry = country;
+      _invalidateFormatterCache();
+    });
+    widget.onCountryChanged?.call(country);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _focusNode.requestFocus();
+      }
+    });
+  }
+
+  void _invalidateFormatterCache() {
+    _cachedFormatters = null;
+    _cachedFormatterType = null;
+    _cachedFormatterCountry = null;
+    _cachedFormatterSplitter = null;
   }
 }

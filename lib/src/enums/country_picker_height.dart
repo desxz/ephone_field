@@ -1,41 +1,38 @@
 import 'package:flutter/widgets.dart';
 
-/// This enum is used to set the height of the country picker
-enum CountryPickerHeigth {
-  /// 100% of screen height
+/// Height presets for dialog and bottom-sheet country pickers.
+enum CountryPickerHeight {
+  /// Full screen height.
   h100,
 
-  /// 75% of screen height
+  /// 75% of screen height.
   h75,
 
-  /// 50% of screen height
+  /// 50% of screen height.
   h50,
 
-  /// 25% of screen height
-  h25
+  /// 25% of screen height.
+  h25,
 }
 
-/// This extension is used to get the height of the country picker
-/// based on the [CountryPickerHeigth] enum
-extension CountryPickerHeigthExtension on CountryPickerHeigth {
-  /// Returns the height of the country picker based on the [CountryPickerHeigth] enum
+/// Extension that resolves picker heights from screen size.
+extension CountryPickerHeightExtension on CountryPickerHeight {
+  /// Returns the picker height for the current screen.
   double height(BuildContext context) {
+    final screenHeight = MediaQuery.sizeOf(context).height;
     switch (this) {
-      /// 100% of screen height
-      case CountryPickerHeigth.h100:
-        return MediaQuery.of(context).size.height;
-
-      /// 75% of screen height
-      case CountryPickerHeigth.h50:
-        return MediaQuery.of(context).size.height / 2;
-
-      /// 50% of screen height
-      case CountryPickerHeigth.h75:
-        return MediaQuery.of(context).size.height * 0.75;
-
-      /// 25% of screen height
-      case CountryPickerHeigth.h25:
-        return MediaQuery.of(context).size.height * 0.25;
+      case CountryPickerHeight.h100:
+        return screenHeight;
+      case CountryPickerHeight.h50:
+        return screenHeight / 2;
+      case CountryPickerHeight.h75:
+        return screenHeight * 0.75;
+      case CountryPickerHeight.h25:
+        return screenHeight * 0.25;
     }
   }
 }
+
+/// Deprecated alias for [CountryPickerHeight].
+@Deprecated('Use CountryPickerHeight instead.')
+typedef CountryPickerHeigth = CountryPickerHeight;
