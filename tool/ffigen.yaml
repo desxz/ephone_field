@@ -1,0 +1,19 @@
+# Run with: dart run ffigen --config tool/ffigen.yaml
+name: EphonePhoneBindings
+description: |
+  Bindings for src/ephone_phonenumber_c.h.
+  Regenerate with: dart run ffigen --config tool/ffigen.yaml
+output: 'lib/src/infrastructure/phone/ffi/phone_number_bindings.dart'
+headers:
+  entry-points:
+    - 'src/ephone_phonenumber_c.h'
+  include-directives:
+    - 'src/ephone_phonenumber_c.h'
+comments:
+  style: any
+  length: full
+preamble: |
+  // ignore_for_file: always_specify_types, type_annotate_public_apis
+  // ignore_for_file: camel_case_types, non_constant_identifier_names
+  // ignore_for_file: unused_element, unused_field
+  // GENERATED — do not edit by hand.

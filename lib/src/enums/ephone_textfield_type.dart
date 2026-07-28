@@ -1,4 +1,4 @@
-import '../utils/ephone_field_utils.dart';
+import '../application/phone/phone_output_mapper.dart';
 import 'package:flutter/services.dart';
 
 import '../formatters/formatters.dart';
@@ -55,7 +55,7 @@ extension EphoneFieldTypeExtension on EphoneFieldType {
     }
   }
 
-  /// Returns input formatters for this field type.
+  /// Returns input formatters for this field type (legacy mask path).
   List<TextInputFormatter> inputFormatters(
     Country country,
     String? maskSplitCharacter,
@@ -108,10 +108,12 @@ extension EphoneFieldTypeExtension on EphoneFieldType {
   }
 
   /// Returns the validator for this field type.
+  ///
+  /// Phone validators receive the mapped international value from [mapper].
   String? Function(String?)? validator(
     String? Function(String?)? typeValidator,
     Country country,
-    String? maskSplitCharacter,
+    PhoneOutputMapper mapper,
   ) {
     switch (this) {
       case EphoneFieldType.initial:
@@ -119,10 +121,10 @@ extension EphoneFieldTypeExtension on EphoneFieldType {
         return typeValidator;
       case EphoneFieldType.phone:
         return (value) => typeValidator?.call(
-              EphoneFieldUtils.combinePrefix(
-                country.dialCode,
-                value,
-                maskSplitCharacter,
+              mapper.mapForCallback(
+                raw: value,
+                regionCode: country.alpha2,
+                dialCode: country.dialCode,
               ),
             );
     }
@@ -131,7 +133,7 @@ extension EphoneFieldTypeExtension on EphoneFieldType {
   /// Returns the onFieldSubmitted callback for this field type.
   void Function(String?)? onFieldSubmitted(
     Country country,
-    String? maskSplitCharacter,
+    PhoneOutputMapper mapper,
     void Function(String?)? onFieldSubmitted,
   ) {
     switch (this) {
@@ -140,10 +142,10 @@ extension EphoneFieldTypeExtension on EphoneFieldType {
         return onFieldSubmitted;
       case EphoneFieldType.phone:
         return (value) => onFieldSubmitted?.call(
-              EphoneFieldUtils.combinePrefix(
-                country.dialCode,
-                value,
-                maskSplitCharacter,
+              mapper.mapForCallback(
+                raw: value,
+                regionCode: country.alpha2,
+                dialCode: country.dialCode,
               ),
             );
     }
@@ -152,7 +154,7 @@ extension EphoneFieldTypeExtension on EphoneFieldType {
   /// Returns the onSaved callback for this field type.
   void Function(String?)? onSaved(
     Country country,
-    String? maskSplitCharacter,
+    PhoneOutputMapper mapper,
     void Function(String?)? onSaved,
   ) {
     switch (this) {
@@ -161,10 +163,10 @@ extension EphoneFieldTypeExtension on EphoneFieldType {
         return onSaved;
       case EphoneFieldType.phone:
         return (value) => onSaved?.call(
-              EphoneFieldUtils.combinePrefix(
-                country.dialCode,
-                value,
-                maskSplitCharacter,
+              mapper.mapForCallback(
+                raw: value,
+                regionCode: country.alpha2,
+                dialCode: country.dialCode,
               ),
             );
     }
@@ -173,7 +175,7 @@ extension EphoneFieldTypeExtension on EphoneFieldType {
   /// Returns the onChanged callback for this field type.
   void Function(String)? onChanged(
     Country country,
-    String? maskSplitCharacter,
+    PhoneOutputMapper mapper,
     void Function(String)? onChanged,
   ) {
     switch (this) {
@@ -182,10 +184,10 @@ extension EphoneFieldTypeExtension on EphoneFieldType {
         return onChanged;
       case EphoneFieldType.phone:
         return (value) {
-          final combined = EphoneFieldUtils.combinePrefix(
-            country.dialCode,
-            value,
-            maskSplitCharacter,
+          final combined = mapper.mapForCallback(
+            raw: value,
+            regionCode: country.alpha2,
+            dialCode: country.dialCode,
           );
           onChanged?.call(combined ?? '');
         };

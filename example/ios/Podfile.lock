@@ -1,0 +1,22 @@
+PODS:
+  - ephone_field (0.2.0):
+    - Flutter
+  - Flutter (1.0.0)
+
+DEPENDENCIES:
+  - ephone_field (from `.symlinks/plugins/ephone_field/ios`)
+  - Flutter (from `Flutter`)
+
+EXTERNAL SOURCES:
+  ephone_field:
+    :path: ".symlinks/plugins/ephone_field/ios"
+  Flutter:
+    :path: Flutter
+
+SPEC CHECKSUMS:
+  ephone_field: ad185197030caacd94b7b9d3f95d6952b3ded254
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+
+PODFILE CHECKSUM: 4f1c12611da7338d21589c0b2ecd6bd20b109694
+
+COCOAPODS: 1.16.2

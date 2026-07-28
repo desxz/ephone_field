@@ -1,0 +1,59 @@
+# Copyright (C) 2013 The Libphonenumber Authors
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+# http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+59157|Entel
+59160|Nuevatel
+59161|Nuevatel
+59162|Tigo
+59163|Entel
+59164|Entel
+59165|Nuevatel
+59167|Entel
+59168|Entel
+59169|Tigo
+59170|Nuevatel
+59171|Entel
+59172|Entel
+59173|Entel
+59174|Entel
+5917416|Tigo
+5917417|Tigo
+5917418|Tigo
+5917419|Nuevatel
+5917426|Tigo
+5917427|Tigo
+5917428|Tigo
+5917429|Nuevatel
+5917438|Nuevatel
+5917439|Nuevatel
+5917446|Tigo
+5917447|Tigo
+5917448|Tigo
+5917449|Nuevatel
+5917456|Tigo
+5917457|Tigo
+5917458|Tigo
+5917459|Nuevatel
+5917473|Tigo
+5917474|Nuevatel
+5917478|Tigo
+5917479|Nuevatel
+5917487|Nuevatel
+5917488|Nuevatel
+5917489|Nuevatel
+59175|Tigo
+59176|Tigo
+59177|Tigo
+59178|Tigo
+59179|Nuevatel

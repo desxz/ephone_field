@@ -1,6 +1,6 @@
 name: ephone_field
 description: A versatile Flutter TextFormField widget for handling email and phone number input with ease.
-version: 0.1.0
+version: 0.2.0
 repository: https://github.com/desxz/ephone_field
 homepage: https://github.com/desxz/ephone_field
 issue_tracker: https://github.com/desxz/ephone_field/issues
@@ -37,12 +37,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  ffi: ^2.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  ffigen: ^11.0.0
 
 flutter:
+  plugin:
+    platforms:
+      android:
+        ffiPlugin: true
+      ios:
+        ffiPlugin: true
   assets:
     - assets/flags/

@@ -98,9 +98,22 @@ class _EphoneFieldDemoPageState extends State<EphoneFieldDemoPage> {
                 pickerHeight: CountryPickerHeight.h50,
                 initialCountry: Country.turkey,
                 phoneNumberMaskSplitter: ' ',
-                emailValidator: EphoneFieldValidators.email,
-                phoneValidator: (value) =>
-                    EphoneFieldValidators.phone(_selectedCountry)(value),
+                emailValidator: Validators.compose([
+                  EmailValidators.email,
+                  (value) => value != null && value.endsWith('@blocked.com')
+                      ? 'Domain not allowed'
+                      : null,
+                ]),
+                phoneValidator: Validators.compose([
+                  PhoneValidators.phone,
+                  (value) {
+                    final digits = value?.replaceAll(RegExp(r'\D'), '') ?? '';
+                    if (digits.endsWith('55544445544')) {
+                      return 'This number is not allowed';
+                    }
+                    return null;
+                  },
+                ]),
                 onTypeChanged: (type) => setState(() => _detectedType = type),
                 onCountryChanged: (country) {
                   setState(() => _selectedCountry = country);

@@ -1,32 +1,27 @@
 import 'package:ephone_field/ephone_field.dart';
 
-/// Optional built-in validators for [EPhoneField].
+import '../infrastructure/phone/stub/unsupported_phone_number_service.dart';
+
+/// Deprecated facade over [EmailValidators] / [PhoneValidators].
+@Deprecated(
+  'Use EmailValidators and PhoneValidators from the validation module. '
+  'EphoneFieldValidators will be removed in a future release.',
+)
 abstract final class EphoneFieldValidators {
   /// Validates a basic email shape.
-  static String? email(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Email is required';
-    }
-    final emailPattern = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
-    if (!emailPattern.hasMatch(value)) {
-      return 'Enter a valid email address';
-    }
-    return null;
-  }
+  @Deprecated('Use EmailValidators.email.')
+  static String? email(String? value) => EmailValidators.email(value);
 
-  /// Validates phone length against [country] constraints.
+  /// Length-based phone validator (legacy). Prefer [PhoneValidators.phone].
+  @Deprecated(
+      'Use PhoneValidators.phone inside EPhoneField / ValidationBinding.')
   static String? Function(String?) phone(Country country) {
-    return (String? value) {
-      if (value == null || value.isEmpty) {
-        return 'Phone number is required';
-      }
-      final digits = value.replaceAll(RegExp(r'\D'), '');
-      final nationalLength = digits.length - country.dialCode.toString().length;
-      if (nationalLength < country.minLength ||
-          nationalLength > country.maxLength) {
-        return 'Enter a valid phone number';
-      }
-      return null;
-    };
+    return (String? value) => PhoneValidators.phoneWith(
+          value,
+          ValidationContext(
+            phoneService: const UnsupportedPhoneNumberService(),
+            country: country,
+          ),
+        );
   }
 }

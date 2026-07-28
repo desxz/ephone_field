@@ -6,6 +6,12 @@ import '../enums/country.dart';
 const String kPhoneMaskPlaceholder = '#';
 
 /// Formats phone numbers according to a country mask.
+///
+/// Prefer [LibPhoneAsYouTypeFormatter] with a [PhoneNumberService].
+@Deprecated(
+  'Use LibPhoneAsYouTypeFormatter with PhoneNumberService instead. '
+  'PhoneNumberMaskFormatter will be removed in a future release.',
+)
 class PhoneNumberMaskFormatter extends TextInputFormatter {
   /// Creates a mask formatter for [country] using [maskSplitCharacter].
   PhoneNumberMaskFormatter({

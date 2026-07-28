@@ -41,6 +41,11 @@ jobs:
         run: flutter test
         working-directory: example
 
+      - name: Example Android assemble (native libphonenumber smoke)
+        if: matrix.flutter == 'stable'
+        run: flutter build apk --debug
+        working-directory: example
+
       - name: Publish dry-run
         if: matrix.flutter == 'stable'
         run: flutter pub publish --dry-run

@@ -25,14 +25,13 @@ and effort by handling the intricacies of email and phone number input for you.
 
 ## Getting started
 
-**Requirements:** Flutter 3.10+ and Dart 3.0+.
+**Requirements:** Flutter 3.10+ and Dart 3.0+. This package is a **Flutter plugin** (FFI on Android/iOS).
 
 In the `pubspec.yaml` of your flutter project, add the following dependency:
 
 ```yaml
 dependencies:
-  ...
-  ephone_field: ^0.0.2
+  ephone_field: ^0.2.0
 ```
 
 Import it:
@@ -40,16 +39,42 @@ Import it:
 ```dart
 import 'package:ephone_field/ephone_field.dart';
 ```
+
 ## Usage
 
-Implement the `EPhoneField` widget in your UI:
+When `emailValidator` / `phoneValidator` are omitted, **package defaults** run.
 
 ```dart
+// Defaults on
+EPhoneField()
+
+// Package rules + your extra conditions (compose) — no PhoneNumberService to set
 EPhoneField(
-  phoneNumberMaskSplitter: ' ',
-  emailValidator: EphoneFieldValidators.email,
-  phoneValidator: EphoneFieldValidators.phone(Country.unitedStates),
+  emailValidator: Validators.compose([
+    EmailValidators.email,
+    (value) => value != null && value.endsWith('@blocked.com')
+        ? 'Domain not allowed'
+        : null,
+  ]),
+  phoneValidator: Validators.compose([
+    PhoneValidators.phone,
+    (value) => value == '05554445544' ? 'This number is not allowed' : null,
+  ]),
 )
+
+// Disable validation for a mode
+EPhoneField(
+  emailValidator: (_) => null,
+  phoneValidator: (_) => null,
+)
+```
+
+Phone formatting uses Google **libphonenumber** AsYouType on Android/iOS (bundled with the plugin). Legacy mask formatting is used only when native libphonenumber is unavailable (for example unit tests without the plugin, or web).
+
+Maintainers can bump the vendored slim sources with:
+
+```bash
+./tool/upgrade_libphonenumber.sh
 ```
 
 <img src="https://raw.githubusercontent.com/desxz/ephone_field/main/ephone-field-show.gif" width="512">

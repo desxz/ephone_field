@@ -1,15 +1,37 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'application/phone/phone_output_mapper.dart';
 import 'components/country_picker_button.dart';
+import 'domain/phone/phone_number_service.dart';
 import 'enums/country.dart';
 import 'enums/country_picker_height.dart';
 import 'enums/country_picker_menu.dart';
 import 'enums/ephone_textfield_type.dart';
+import 'formatters/formatters.dart';
+import 'infrastructure/phone/phone_number_service_factory.dart';
+import 'infrastructure/phone/stub/unsupported_phone_number_service.dart';
+import 'validation/field_validation_policy.dart';
+import 'validation/field_validation_strategy.dart';
+import 'validation/validation_binding.dart';
 
 /// A versatile [TextFormField] for email and phone number input.
 class EPhoneField extends StatefulWidget {
   /// Creates an email/phone input field.
+  ///
+  /// When [emailValidator] / [phoneValidator] are omitted, package defaults
+  /// run. Pass a custom validator to override, or use [Validators.compose] to
+  /// combine package rules with extra conditions:
+  ///
+  /// ```dart
+  /// phoneValidator: Validators.compose([
+  ///   PhoneValidators.phone,
+  ///   (value) => value == '05554445544' ? 'Not allowed' : null,
+  /// ]),
+  /// ```
+  ///
+  /// Pass `(value) => null` to disable validation for that mode.
   const EPhoneField({
     super.key,
     this.controller,
@@ -48,6 +70,8 @@ class EPhoneField extends StatefulWidget {
     this.countryPickerButtonWidth = 108.0,
     this.autovalidateMode,
     this.typeResolver = defaultEphoneFieldTypeResolver,
+    this.useLibPhoneFormatting = true,
+    @visibleForTesting this.debugPhoneNumberService,
   });
 
   /// Focus node for the input field.
@@ -125,7 +149,7 @@ class EPhoneField extends StatefulWidget {
   /// Icon shown on the country picker button.
   final IconData countryPickerButtonIcon;
 
-  /// Mask separator used while formatting phone numbers.
+  /// Mask separator used while formatting phone numbers (legacy mask path).
   final String? phoneNumberMaskSplitter;
 
   /// Optional custom input formatters.
@@ -140,6 +164,15 @@ class EPhoneField extends StatefulWidget {
   /// Custom resolver for email vs phone detection.
   final EphoneFieldTypeResolver typeResolver;
 
+  /// When true and a native-capable service is available, use AsYouType.
+  ///
+  /// Falls back to the legacy mask formatter when the service is unsupported.
+  final bool useLibPhoneFormatting;
+
+  /// Test-only phone capability override. Not part of the public plugin API.
+  @visibleForTesting
+  final PhoneNumberService? debugPhoneNumberService;
+
   @override
   State<EPhoneField> createState() => _EPhoneFieldState();
 }
@@ -152,17 +185,26 @@ class _EPhoneFieldState extends State<EPhoneField> {
   late bool _ownsController;
   late bool _ownsFocusNode;
   late VoidCallback _controllerListener;
+  late PhoneNumberService _phoneService;
+  late PhoneOutputMapper _outputMapper;
+  late FieldValidationPolicy _validationPolicy;
+  LibPhoneAsYouTypeFormatter? _libPhoneFormatter;
 
   List<TextInputFormatter>? _cachedFormatters;
   EphoneFieldType? _cachedFormatterType;
   Country? _cachedFormatterCountry;
   String? _cachedFormatterSplitter;
+  PhoneNumberService? _cachedFormatterService;
 
   @override
   void initState() {
     super.initState();
     _type = widget.initialType;
     _selectedCountry = widget.initialCountry;
+    _phoneService =
+        widget.debugPhoneNumberService ?? PhoneNumberServiceFactory.create();
+    _outputMapper = PhoneOutputMapper(_phoneService);
+    _validationPolicy = FieldValidationPolicy();
     _bindController(widget.controller);
     _bindFocusNode(widget.focusNode);
     _controllerListener = _handleControllerChanged;
@@ -201,6 +243,13 @@ class _EPhoneFieldState extends State<EPhoneField> {
         _controller.text.isEmpty) {
       _type = widget.initialType;
     }
+
+    if (widget.debugPhoneNumberService != oldWidget.debugPhoneNumberService) {
+      _phoneService =
+          widget.debugPhoneNumberService ?? PhoneNumberServiceFactory.create();
+      _outputMapper = PhoneOutputMapper(_phoneService);
+      _invalidateFormatterCache();
+    }
   }
 
   void _bindController(TextEditingController? controller) {
@@ -216,6 +265,7 @@ class _EPhoneFieldState extends State<EPhoneField> {
   @override
   void dispose() {
     _controller.removeListener(_controllerListener);
+    _libPhoneFormatter?.dispose();
     if (_ownsController) {
       _controller.dispose();
     }
@@ -263,7 +313,7 @@ class _EPhoneFieldState extends State<EPhoneField> {
             .typeResolver(value, widget.initialType)
             .onChanged(
               _selectedCountry,
-              widget.phoneNumberMaskSplitter,
+              _outputMapper,
               widget.onChanged,
             )
             ?.call(value);
@@ -273,7 +323,7 @@ class _EPhoneFieldState extends State<EPhoneField> {
             .typeResolver(value ?? '', widget.initialType)
             .onSaved(
               _selectedCountry,
-              widget.phoneNumberMaskSplitter,
+              _outputMapper,
               widget.onSaved,
             )
             ?.call(value);
@@ -283,7 +333,7 @@ class _EPhoneFieldState extends State<EPhoneField> {
             .typeResolver(value, widget.initialType)
             .onFieldSubmitted(
               _selectedCountry,
-              widget.phoneNumberMaskSplitter,
+              _outputMapper,
               widget.onFieldSubmitted,
             )
             ?.call(value);
@@ -297,28 +347,36 @@ class _EPhoneFieldState extends State<EPhoneField> {
         ),
       ),
       keyboardType: type.keyboardType,
-      validator: type.validator(
-        _validatorForType(type),
-        _selectedCountry,
-        widget.phoneNumberMaskSplitter,
-      ),
+      validator: (value) {
+        final validationContext = ValidationContext(
+          phoneService: _phoneService,
+          country: _selectedCountry,
+          emptyErrorText: widget.emptyErrorText,
+        );
+        return ValidationBinding.run(validationContext, () {
+          final resolved = _validationPolicy.resolve(
+            type,
+            userValidator: _userValidators[type],
+            context: validationContext,
+          );
+          final wrapped = type.validator(
+            resolved,
+            _selectedCountry,
+            _outputMapper,
+          );
+          return wrapped?.call(value);
+        });
+      },
       inputFormatters: _formattersForType(type),
     );
   }
 
-  String? Function(String?)? _validatorForType(EphoneFieldType type) {
-    switch (type) {
-      case EphoneFieldType.initial:
-        return widget.emptyErrorText == null
-            ? null
-            : (value) =>
-                value == null || value.isEmpty ? widget.emptyErrorText : null;
-      case EphoneFieldType.email:
-        return widget.emailValidator;
-      case EphoneFieldType.phone:
-        return widget.phoneValidator;
-    }
-  }
+  Map<EphoneFieldType, FormFieldValidator<String>?> get _userValidators =>
+      <EphoneFieldType, FormFieldValidator<String>?>{
+        EphoneFieldType.initial: null,
+        EphoneFieldType.email: widget.emailValidator,
+        EphoneFieldType.phone: widget.phoneValidator,
+      };
 
   List<TextInputFormatter> _formattersForType(EphoneFieldType type) {
     if (widget.inputFormatters != null) {
@@ -329,16 +387,37 @@ class _EPhoneFieldState extends State<EPhoneField> {
     if (_cachedFormatters != null &&
         _cachedFormatterType == type &&
         _cachedFormatterCountry == _selectedCountry &&
-        _cachedFormatterSplitter == splitter) {
+        _cachedFormatterSplitter == splitter &&
+        identical(_cachedFormatterService, _phoneService)) {
       return _cachedFormatters!;
     }
 
-    _cachedFormatters = type.inputFormatters(_selectedCountry, splitter);
+    _libPhoneFormatter?.dispose();
+    _libPhoneFormatter = null;
+
+    if (type == EphoneFieldType.phone && _shouldUseLibPhoneFormatting) {
+      _libPhoneFormatter = LibPhoneAsYouTypeFormatter(
+        service: _phoneService,
+        regionCode: _selectedCountry.alpha2,
+      );
+      _cachedFormatters = <TextInputFormatter>[
+        _libPhoneFormatter!,
+        PhoneNumberDigitsOnlyFormatter(maskSplitCharacter: splitter),
+      ];
+    } else {
+      _cachedFormatters = type.inputFormatters(_selectedCountry, splitter);
+    }
+
     _cachedFormatterType = type;
     _cachedFormatterCountry = _selectedCountry;
     _cachedFormatterSplitter = splitter;
+    _cachedFormatterService = _phoneService;
     return _cachedFormatters!;
   }
+
+  bool get _shouldUseLibPhoneFormatting =>
+      widget.useLibPhoneFormatting &&
+      _phoneService.supportsAsYouTypeFormatting;
 
   Widget? _buildPrefixIcon(EphoneFieldType type) {
     if (type != EphoneFieldType.phone) {
@@ -387,9 +466,12 @@ class _EPhoneFieldState extends State<EPhoneField> {
   }
 
   void _invalidateFormatterCache() {
+    _libPhoneFormatter?.dispose();
+    _libPhoneFormatter = null;
     _cachedFormatters = null;
     _cachedFormatterType = null;
     _cachedFormatterCountry = null;
     _cachedFormatterSplitter = null;
+    _cachedFormatterService = null;
   }
 }
