@@ -16,32 +16,30 @@ install alongside other Flutter plugins. Prefer small PRs over one mega-change.
 | --- | --- | --- |
 | 0 Commits for 0.2.0 DX | Done | Compact API, full-width picker, clearErrorOnChange |
 | 1 Install honesty | Done | pubspec Android/iOS only; iOS CI smoke; README + this doc |
-| 2 Native install reliability | In progress | ICU removed; prebuild path; iOS `ld -r` keeps only C API globals; CI/Releases prebuilt + collision smoke still open |
+| 2 Native install reliability | Done | ICU removed; prebuild path; C API-only globals; CI FetchContent cache + prebuilt artifact |
 | 3 Dart compact structure | Done (pass 1) | Capability flag; formatter merge; session inline; resolver in Validators; FFI dispose |
-| 4 Country/assets footprint | Partial | Emoji flags by default; PNGs not bundled; mask/min/max marked fallback-only (physical catalog split still optional) |
-| 5 Test/docs hygiene | Partial | Prefer public API; expand contract tests as Phase 2 lands |
+| 4 Country/assets footprint | Done | Emoji default; PNGs not bundled; `Country` keeps mask/min/max inline |
+| 5 Test/docs hygiene | Done | Export assert in CI; public API-oriented tests; architecture doc |
 
 ## Phase 2 detail (native)
 
-Current risk: iOS `pod install` may still run CMake + FetchContent and force-load a
-static archive (Abseil + protobuf-lite + RE2 + libphonenumber) when no prebuilt
-is present.
+Done:
 
-Done in this pass:
-
-1. Dropped full ICU FetchContent (~22 MB/arch); Nd digit normalize uses a local shim
+1. Dropped full ICU FetchContent; Nd digit normalize uses a local shim
    (`tool/patches/libphonenumber-no-icu.patch`).
 2. Hybrid prebuild: `ios/prebuilt/libephone_phonenumber_stack-*.a` preferred by
-   `ios/cmake_build.sh` (no CMake / no network). Produce with `./tool/prebuild_ios.sh`.
+   `ios/cmake_build.sh`. Produce with `./tool/prebuild_ios.sh`.
 3. iOS merge localizes non-C-API symbols via `ld -r -exported_symbols_list`
-   ([`ios/ephone_exports.txt`](../ios/ephone_exports.txt)); only `ephone_*` stay global under
-   `-force_load`.
+   ([`ios/ephone_exports.txt`](../ios/ephone_exports.txt)).
+4. CI caches FetchContent `_deps` and uploads the simulator prebuilt archive on
+   `main` pushes (14-day artifact). Collision surface is covered by the export
+   assert rather than a second protobuf plugin fixture.
 
-Still open:
+Deferred (not needed for 0.2.0):
 
-1. Ship prebuilt archives via CI/Releases (not git-tracked by default).
-2. Add iOS link smoke (example app + optional second plugin with protobuf) in CI.
-3. Optionally vendor Abseil/protobuf/RE2 to shrink FetchContent at first build.
+- Vendoring Abseil/protobuf/RE2 into git (large; FetchContent + CI cache is enough).
+- Publishing prebuilts to GitHub Releases for tagged versions (artifact upload is
+  the first step; Releases can wrap the same files later).
 
 ## Non-goals (for now)
 

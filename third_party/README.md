@@ -22,5 +22,8 @@ required once; then cached in the CMake build directory). ICU is **not** fetched
 digit normalization uses a local Nd→ASCII shim
 (`tool/patches/libphonenumber-no-icu.patch`).
 
+Vendoring Abseil/protobuf/RE2 into this repository is deferred — CI caches
+`ios/build/*/_deps` instead (see `.github/workflows/main.yaml`).
+
 For iOS consumer installs without CMake, place prebuilt stacks under
 `ios/prebuilt/` (see `tool/prebuild_ios.sh` and `docs/ARCHITECTURE.md`).
