@@ -135,4 +135,4 @@ Maintainers can bump the vendored slim sources with:
 | inputFormatters | Override formatters | `List<TextInputFormatter>?` | phone/email defaults |
 | typeResolver | Email vs phone detection | `EphoneFieldTypeResolver` | built-in |
 
-`CountryPickerConfig` groups `menuType`, `pickerHeight`, `isSearchable`, `title`, `buttonIcon`, `buttonWidth`, `countries`, and `useFlagImages` (PNG assets vs emoji).
+`CountryPickerConfig` groups `menuType`, `pickerHeight`, `isSearchable`, `title`, `buttonIcon`, `buttonWidth`, `countries`, and `useFlagImages` (default emoji; set `true` only if PNG assets are declared in the package pubspec).
