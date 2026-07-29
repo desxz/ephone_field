@@ -12,13 +12,15 @@
 * **Performance:** incremental AsYouType formatting (no full clear+re-feed on every keystroke); phone `onChanged` passes national display text instead of calling E.164 FFI per keystroke.
 * **iOS:** universal static archive build, protobuf lite/lited selection, simulator link fixes.
 * Deprecated `PhoneNumberMaskFormatter` (legacy mask path kept as fallback when native is unavailable).
-* Added slim libphonenumber upgrade script (`tool/upgrade_libphonenumber.sh`) and version pin (`third_party/LIBPHONENUMBER_VERSION`). Android/iOS production builds **link Google libphonenumber by default** (`EPHONE_USE_LIBPHONENUMBER=ON`).
+* Added slim libphonenumber upgrade script (`tool/upgrade_libphonenumber.sh`) and version pin (`third_party/LIBPHONENUMBER_VERSION`). Android/iOS production builds **always link Google libphonenumber**.
 * **Compact API:** `CountryPickerConfig` and `EPhoneFieldLabels` group picker/label settings; practical `TextFormField` params (`enabled`, `readOnly`, `textInputAction`, cursor, etc.) exposed flat.
 * **Country picker UI:** denser country rows, themed search field, rounded dialog; full-width bottom sheet on all screen sizes.
 * **TextFormField parity:** extended pass-through (`autofocus`, `textDirection`, `forceErrorText`, `contextMenuBuilder`, scroll/cursor/tap params); phone-mode defaults disable autocorrect/suggestions; validator now resolves type from submitted value.
 * **Validation UX:** `clearErrorOnChange` (default `true`) clears the error as soon as the user edits text or changes country after a failed validate; set `false` for sticky errors until the next `Form.validate()`.
 * **Install honesty:** public platforms limited to Android/iOS; README documents native CMake requirements; architecture roadmap in `docs/ARCHITECTURE.md`; iOS smoke job in CI.
 * **Internal cleanup:** `supportsNativeValidation` port flag (no stub type checks in validation); AsYouType session inlined into formatter; `resolveFieldValidator` lives in `Validators`; FFI util disposed with the widget.
+* **Native graph:** removed unused `EPHONE_USE_LIBPHONENUMBER=OFF` stub path (single production CMake path).
+* **Flags:** `CountryPickerConfig.useFlagImages` (default `true`); set `false` for emoji-only flags.
 
 ## 0.1.0
 

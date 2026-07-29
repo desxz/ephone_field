@@ -16,9 +16,9 @@ install alongside other Flutter plugins. Prefer small PRs over one mega-change.
 | --- | --- | --- |
 | 0 Commits for 0.2.0 DX | Done | Compact API, full-width picker, clearErrorOnChange |
 | 1 Install honesty | Done | pubspec Android/iOS only; iOS CI smoke; README + this doc |
-| 2 Native install reliability | Next | Prebuild iOS artifacts, shrink ICU, vendor FetchContent deps |
+| 2 Native install reliability | In progress | Stub path removed; prebuild script scaffold; ICU shrink + prebuilt artifacts still open |
 | 3 Dart compact structure | Done (pass 1) | Capability flag; formatter merge; session inline; resolver in Validators; FFI dispose |
-| 4 Country/assets footprint | Planned | Split display vs fallback metadata; optional emoji flags |
+| 4 Country/assets footprint | Partial | `useFlagImages` emoji option; catalog/mask split still open |
 | 5 Test/docs hygiene | Partial | Prefer public API; expand contract tests as Phase 2 lands |
 
 ## Phase 2 detail (native)

@@ -107,7 +107,6 @@ build_slice() {
     -DCMAKE_OSX_ARCHITECTURES="${arch}" \
     -DCMAKE_OSX_DEPLOYMENT_TARGET="${IPHONEOS_DEPLOYMENT_TARGET}" \
     -DCMAKE_BUILD_TYPE="${CONFIGURATION}" \
-    -DEPHONE_USE_LIBPHONENUMBER=ON \
     -DEPHONE_BUILD_SHARED_PLUGIN=OFF
 
   "${CMAKE_BIN}" --build "${build_dir}" --target ephone_phonenumber_stack -j "${JOBS}"

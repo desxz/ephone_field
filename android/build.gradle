@@ -39,10 +39,5 @@ android {
 
     defaultConfig {
         minSdk = 21
-        externalNativeBuild {
-            cmake {
-                arguments "-DEPHONE_USE_LIBPHONENUMBER=ON"
-            }
-        }
     }
 }

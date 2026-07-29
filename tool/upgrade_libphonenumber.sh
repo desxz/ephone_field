@@ -65,4 +65,4 @@ if [[ -d "${PATCH_DIR}" ]]; then
 fi
 
 echo "Vendored slim libphonenumber ${VERSION} → third_party/libphonenumber"
-echo "Native builds link it by default (EPHONE_USE_LIBPHONENUMBER=ON)."
+echo "Native builds always link Google libphonenumber."

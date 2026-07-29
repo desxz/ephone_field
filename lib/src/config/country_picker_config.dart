@@ -17,6 +17,7 @@ class CountryPickerConfig {
     this.buttonIcon = Icons.arrow_drop_down,
     this.buttonWidth = 108.0,
     this.countries = Country.values,
+    this.useFlagImages = true,
   });
 
   /// How the picker is presented.
@@ -45,6 +46,10 @@ class CountryPickerConfig {
 
   /// Countries available for selection.
   final List<Country> countries;
+
+  /// When true (default), load PNG flag assets. When false, use emoji only
+  /// (lighter UI; package still ships assets for default consumers).
+  final bool useFlagImages;
 
   /// Themed default search field decoration.
   static InputDecoration themedSearchDecoration(BuildContext context) {

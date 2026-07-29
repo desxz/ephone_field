@@ -66,6 +66,7 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
     return CountryCard(
       country: country,
       isSelected: country == widget.selectedCountry,
+      useFlagImages: _config.useFlagImages,
     );
   }
 
@@ -218,7 +219,10 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
                     ),
                   ),
                   const SizedBox(width: 4),
-                  CountryFlag(country: widget.selectedCountry),
+                  CountryFlag(
+                    country: widget.selectedCountry,
+                    useImage: _config.useFlagImages,
+                  ),
                   const SizedBox(width: 4),
                   Icon(_config.buttonIcon, size: 20),
                 ],

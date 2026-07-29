@@ -10,6 +10,7 @@ class CountryCard extends StatelessWidget {
     super.key,
     required this.country,
     this.isSelected = false,
+    this.useFlagImages = true,
   });
 
   /// Country displayed in the row.
@@ -17,6 +18,9 @@ class CountryCard extends StatelessWidget {
 
   /// Whether this country is currently selected.
   final bool isSelected;
+
+  /// Whether to load PNG flag assets (vs emoji).
+  final bool useFlagImages;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +45,11 @@ class CountryCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
         child: Row(
           children: [
-            CountryFlag(country: country, size: 28),
+            CountryFlag(
+              country: country,
+              size: 28,
+              useImage: useFlagImages,
+            ),
             const SizedBox(width: 12),
             Expanded(
               child: Column(

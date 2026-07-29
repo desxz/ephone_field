@@ -16,6 +16,6 @@ The upgrade script:
 2. Regenerates protobuf C++ sources with **protoc 25.3** (matches CMake FetchContent)
 3. Applies patches under `tool/patches/`
 
-Native builds set `EPHONE_USE_LIBPHONENUMBER=ON` by default. Abseil, protobuf-lite,
+Native builds always link Google libphonenumber. Abseil, protobuf-lite,
 RE2, and ICU are pulled via CMake `FetchContent` during the first native build
 (network required once; then cached in the CMake build directory).
