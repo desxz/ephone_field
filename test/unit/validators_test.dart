@@ -1,5 +1,5 @@
 import 'package:ephone_field/ephone_field.dart';
-import 'package:ephone_field/src/validation/field_validator_resolver.dart';
+import 'package:ephone_field/src/validation/validators.dart';
 import 'package:ephone_field/src/validation/validation_binding.dart';
 import 'package:ephone_field/src/validation/validation_context.dart';
 import 'package:ephone_field/src/infrastructure/phone/stub/unsupported_phone_number_service.dart';

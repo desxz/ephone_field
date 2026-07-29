@@ -67,6 +67,9 @@ class FfiPhoneNumberService implements PhoneNumberService {
   bool get supportsAsYouTypeFormatting => _usesLibPhoneNumber;
 
   @override
+  bool get supportsNativeValidation => _usesLibPhoneNumber;
+
+  @override
   bool isValid(String raw, {required String regionCode}) {
     return _withUtf8(raw, regionCode, (rawPtr, regionPtr) {
       return _bindings.ephone_phone_is_valid(_util, rawPtr, regionPtr) == 1;
@@ -161,6 +164,7 @@ class FfiPhoneNumberService implements PhoneNumberService {
   }
 
   /// Releases the native util handle.
+  @override
   void dispose() {
     _bindings.ephone_phone_util_destroy(_util);
   }

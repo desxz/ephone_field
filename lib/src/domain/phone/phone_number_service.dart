@@ -12,8 +12,16 @@ abstract class PhoneNumberService {
   /// [createAsYouType].
   bool get supportsAsYouTypeFormatting;
 
+  /// Whether [isValid] is backed by native libphonenumber.
+  ///
+  /// When `false`, callers should use country length fallbacks.
+  bool get supportsNativeValidation;
+
   /// Whether [raw] is a valid number for [regionCode] (ISO 3166-1 alpha-2).
   bool isValid(String raw, {required String regionCode});
+
+  /// Releases native resources when applicable.
+  void dispose() {}
 
   /// Lenient length-based check for [raw] in [regionCode].
   bool isPossible(String raw, {required String regionCode});

@@ -56,3 +56,21 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: false
+
+  ios:
+    name: iOS native smoke
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install CMake
+        run: brew install cmake
+
+      - name: Example iOS build (native libphonenumber smoke)
+        run: flutter build ios --debug --no-codesign --simulator
+        working-directory: example

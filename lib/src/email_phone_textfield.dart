@@ -9,7 +9,7 @@ import 'enums/country.dart';
 import 'enums/ephone_textfield_type.dart';
 import 'formatters/formatters.dart';
 import 'infrastructure/phone/phone_number_service_factory.dart';
-import 'validation/field_validator_resolver.dart';
+import 'validation/validators.dart';
 import 'validation/validation_binding.dart';
 import 'validation/validation_context.dart';
 
@@ -296,6 +296,7 @@ class _EPhoneFieldState extends State<EPhoneField> {
   late bool _ownsFocusNode;
   late VoidCallback _controllerListener;
   late PhoneNumberService _phoneService;
+  late bool _ownsPhoneService;
   late PhoneOutputMapper _outputMapper;
   LibPhoneAsYouTypeFormatter? _libPhoneFormatter;
   final GlobalKey<FormFieldState<String>> _fieldKey =
@@ -313,6 +314,7 @@ class _EPhoneFieldState extends State<EPhoneField> {
     super.initState();
     _type = widget.initialType;
     _selectedCountry = widget.initialCountry;
+    _ownsPhoneService = widget.debugPhoneNumberService == null;
     _phoneService =
         widget.debugPhoneNumberService ?? PhoneNumberServiceFactory.create();
     _outputMapper = PhoneOutputMapper(_phoneService);
@@ -356,6 +358,10 @@ class _EPhoneFieldState extends State<EPhoneField> {
     }
 
     if (widget.debugPhoneNumberService != oldWidget.debugPhoneNumberService) {
+      if (_ownsPhoneService) {
+        _phoneService.dispose();
+      }
+      _ownsPhoneService = widget.debugPhoneNumberService == null;
       _phoneService =
           widget.debugPhoneNumberService ?? PhoneNumberServiceFactory.create();
       _outputMapper = PhoneOutputMapper(_phoneService);
@@ -377,6 +383,9 @@ class _EPhoneFieldState extends State<EPhoneField> {
   void dispose() {
     _controller.removeListener(_controllerListener);
     _libPhoneFormatter?.dispose();
+    if (_ownsPhoneService) {
+      _phoneService.dispose();
+    }
     if (_ownsController) {
       _controller.dispose();
     }

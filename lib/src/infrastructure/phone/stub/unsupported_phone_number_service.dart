@@ -11,6 +11,9 @@ class UnsupportedPhoneNumberService implements PhoneNumberService {
   @override
   bool get supportsAsYouTypeFormatting => false;
 
+  @override
+  bool get supportsNativeValidation => false;
+
   static const String _message =
       'PhoneNumberService requires the native ephone_field plugin '
       '(Android/iOS). This platform has no libphonenumber binding.';
@@ -34,6 +37,9 @@ class UnsupportedPhoneNumberService implements PhoneNumberService {
   AsYouTypeSession createAsYouType(String regionCode) {
     throw const UnsupportedPhoneNumberException(_message);
   }
+
+  @override
+  void dispose() {}
 }
 
 /// Thrown when phone formatting/validation requires native support.

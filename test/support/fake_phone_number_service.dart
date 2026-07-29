@@ -10,7 +10,9 @@ class FakePhoneNumberService implements PhoneNumberService {
     this.nationalByRaw = const <String, String>{},
     this.parseResults = const <String, PhoneParseResult>{},
     this.supportsAsYouTypeFormatting = true,
-  });
+    bool? supportsNativeValidation,
+  }) : supportsNativeValidation =
+            supportsNativeValidation ?? supportsAsYouTypeFormatting;
 
   /// Raws (normalized key: digits only + region) treated as valid.
   final Set<String> validNumbers;
@@ -32,6 +34,9 @@ class FakePhoneNumberService implements PhoneNumberService {
 
   @override
   final bool supportsAsYouTypeFormatting;
+
+  @override
+  final bool supportsNativeValidation;
 
   String _key(String raw, String regionCode) =>
       '${regionCode.toUpperCase()}|${raw.replaceAll(RegExp(r'\D'), '')}';
@@ -64,6 +69,9 @@ class FakePhoneNumberService implements PhoneNumberService {
     createdSessions.add(session);
     return session;
   }
+
+  @override
+  void dispose() {}
 }
 
 /// Fake as-you-type session that concatenates digits with spaces every 3.

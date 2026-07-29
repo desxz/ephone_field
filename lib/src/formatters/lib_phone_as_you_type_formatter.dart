@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
 
-import '../application/phone/phone_input_session.dart';
 import '../domain/phone/as_you_type_session.dart';
 import '../domain/phone/phone_number_service.dart';
 
@@ -10,18 +9,34 @@ class LibPhoneAsYouTypeFormatter extends TextInputFormatter {
   LibPhoneAsYouTypeFormatter({
     required PhoneNumberService service,
     required String regionCode,
-  })  : _sessionManager = PhoneInputSession(service),
+  })  : _service = service,
         _regionCode = regionCode.toUpperCase();
 
-  final PhoneInputSession _sessionManager;
+  final PhoneNumberService _service;
   String _regionCode;
+  AsYouTypeSession? _session;
   String _trackedDigits = '';
+
+  AsYouTypeSession _sessionForRegion() {
+    if (_session != null) {
+      return _session!;
+    }
+    _session = _service.createAsYouType(_regionCode);
+    return _session!;
+  }
 
   /// Updates the region and resets the as-you-type session.
   void updateRegion(String regionCode) {
-    _regionCode = regionCode.toUpperCase();
+    final normalized = regionCode.toUpperCase();
+    if (normalized == _regionCode) {
+      _trackedDigits = '';
+      _session?.clear();
+      return;
+    }
+    _session?.dispose();
+    _session = null;
+    _regionCode = normalized;
     _trackedDigits = '';
-    _sessionManager.forRegion(_regionCode).clear();
   }
 
   @override
@@ -36,7 +51,7 @@ class LibPhoneAsYouTypeFormatter extends TextInputFormatter {
       return newValue;
     }
 
-    final session = _sessionManager.forRegion(_regionCode);
+    final session = _sessionForRegion();
     final formatted = _formatDigits(
       session: session,
       oldDigits: oldDigits,
@@ -73,13 +88,6 @@ class LibPhoneAsYouTypeFormatter extends TextInputFormatter {
       return formatted;
     }
 
-    final canBackspace = newDigits.length < oldDigits.length &&
-        oldDigits.startsWith(newDigits) &&
-        _trackedDigits == oldDigits;
-    if (canBackspace) {
-      return _rebuildSession(session, newDigits);
-    }
-
     return _rebuildSession(session, newDigits);
   }
 
@@ -101,7 +109,8 @@ class LibPhoneAsYouTypeFormatter extends TextInputFormatter {
 
   /// Releases the native/session resources.
   void dispose() {
-    _sessionManager.dispose();
+    _session?.dispose();
+    _session = null;
     _trackedDigits = '';
   }
 }

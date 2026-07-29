@@ -1,6 +1,5 @@
 import '../domain/phone/phone_number_service.dart';
 import '../enums/country.dart';
-import '../infrastructure/phone/stub/unsupported_phone_number_service.dart';
 
 /// Decides whether a phone string is acceptable for a region/country.
 abstract class PhoneValidityCheck {
@@ -12,7 +11,7 @@ abstract class PhoneValidityCheck {
     required PhoneNumberService service,
     required Country country,
   }) {
-    if (service is UnsupportedPhoneNumberService) {
+    if (!service.supportsNativeValidation) {
       return CountryLengthValidityCheck(country);
     }
     return LibPhoneValidityCheck(service, country.alpha2);

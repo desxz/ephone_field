@@ -25,7 +25,16 @@ and effort by handling the intricacies of email and phone number input for you.
 
 ## Getting started
 
-**Requirements:** Flutter 3.10+ and Dart 3.0+. This package is a **Flutter plugin** (FFI on Android/iOS).
+**Requirements:** Flutter 3.10+ and Dart 3.0+.
+
+**Supported platforms:** Android and iOS only (FFI plugin). Web/desktop are not
+supported — phone validation/formatting falls back to length checks without native
+libphonenumber.
+
+**Native note:** First Android/iOS builds compile bundled libphonenumber (CMake;
+iOS may need CMake on `PATH`, e.g. `brew install cmake`). See
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the roadmap to prebuilt native
+artifacts and smaller install/link risk.
 
 In the `pubspec.yaml` of your flutter project, add the following dependency:
 

@@ -1,7 +1,7 @@
 ## 0.2.0
 
 * Converted the package into a Flutter FFI plugin (`android` / `ios`) with a C API around phone capabilities.
-* Introduced Ports & Adapters layout: `domain/phone`, `application/phone`, `infrastructure/phone`, `validation/`, `formatting/`.
+* Introduced Ports & Adapters layout: `domain/phone`, `application/phone`, `infrastructure/phone`, `validation/`, `formatters/`.
 * Added internal `PhoneNumberService` port, factory, and FFI/unsupported stubs (not part of the consumer validation API).
 * Default email/phone validators when custom validators are omitted (HTML5/WHATWG email; phone via internal `PhoneNumberService` with country-length fallback).
 * Added `Validators.compose` / `andThen` so package rules can be combined with user conditions.
@@ -17,6 +17,8 @@
 * **Country picker UI:** denser country rows, themed search field, rounded dialog; full-width bottom sheet on all screen sizes.
 * **TextFormField parity:** extended pass-through (`autofocus`, `textDirection`, `forceErrorText`, `contextMenuBuilder`, scroll/cursor/tap params); phone-mode defaults disable autocorrect/suggestions; validator now resolves type from submitted value.
 * **Validation UX:** `clearErrorOnChange` (default `true`) clears the error as soon as the user edits text or changes country after a failed validate; set `false` for sticky errors until the next `Form.validate()`.
+* **Install honesty:** public platforms limited to Android/iOS; README documents native CMake requirements; architecture roadmap in `docs/ARCHITECTURE.md`; iOS smoke job in CI.
+* **Internal cleanup:** `supportsNativeValidation` port flag (no stub type checks in validation); AsYouType session inlined into formatter; `resolveFieldValidator` lives in `Validators`; FFI util disposed with the widget.
 
 ## 0.1.0
 

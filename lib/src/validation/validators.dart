@@ -1,5 +1,10 @@
 import 'package:flutter/widgets.dart';
 
+import '../enums/ephone_textfield_type.dart';
+import 'email_validators.dart';
+import 'phone_validators.dart';
+import 'validation_context.dart';
+
 /// Chain-of-responsibility helpers for [FormFieldValidator]s.
 abstract final class Validators {
   /// Runs [validators] in order; returns the first non-null error.
@@ -23,4 +28,29 @@ abstract final class Validators {
     FormFieldValidator<String> extra,
   ) =>
       compose(<FormFieldValidator<String>>[base, extra]);
+}
+
+/// Resolves the effective [FormFieldValidator] for an [EphoneFieldType].
+///
+/// Phone defaults use [PhoneValidators.phoneWith] with [context] so package
+/// defaults do not require [ValidationBinding]. User-supplied
+/// [PhoneValidators.phone] still needs binding when composed.
+FormFieldValidator<String>? resolveFieldValidator(
+  EphoneFieldType type, {
+  required FormFieldValidator<String>? userValidator,
+  required ValidationContext context,
+}) {
+  switch (type) {
+    case EphoneFieldType.initial:
+      final message = context.emptyErrorText;
+      if (message == null) {
+        return null;
+      }
+      return (value) => value == null || value.isEmpty ? message : null;
+    case EphoneFieldType.email:
+      return userValidator ?? EmailValidators.email;
+    case EphoneFieldType.phone:
+      return userValidator ??
+          (value) => PhoneValidators.phoneWith(value, context);
+  }
 }

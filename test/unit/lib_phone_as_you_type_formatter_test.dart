@@ -1,5 +1,5 @@
 import 'package:ephone_field/src/domain/phone/phone.dart';
-import 'package:ephone_field/src/formatting/lib_phone_as_you_type_formatter.dart';
+import 'package:ephone_field/src/formatters/lib_phone_as_you_type_formatter.dart';
 import 'package:ephone_field/src/formatters/phone_number_digits_only_formatter.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
