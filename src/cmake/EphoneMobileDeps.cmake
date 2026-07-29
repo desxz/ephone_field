@@ -1,4 +1,6 @@
-# Fetches mobile-native deps for Google libphonenumber (abseil, protobuf-lite, RE2, ICU).
+# Fetches mobile-native deps for Google libphonenumber (abseil, protobuf-lite, RE2).
+# ICU is intentionally not fetched: digit normalization uses a local shim
+# (see tool/patches/libphonenumber-no-icu.patch).
 # Pre-generated .pb.cc/.pb.h ship in third_party — host protoc is not required at build time.
 
 include(FetchContent)
@@ -63,40 +65,4 @@ FetchContent_MakeAvailable(ephone_re2)
 
 if(NOT TARGET re2)
   message(FATAL_ERROR "ephone_field: re2 target missing after FetchContent")
-endif()
-
-# ---------------------------------------------------------------------------
-# ICU — always build a static icuuc+stubdata from source so mobile SDKs that
-# lack full unicode/*.h headers (notably iOS) still compile.
-# ---------------------------------------------------------------------------
-FetchContent_Declare(
-  ephone_icu
-  GIT_REPOSITORY https://github.com/unicode-org/icu.git
-  GIT_TAG release-74-2
-  GIT_SHALLOW TRUE
-)
-FetchContent_GetProperties(ephone_icu)
-if(NOT ephone_icu_POPULATED)
-  FetchContent_Populate(ephone_icu)
-endif()
-
-set(_icu_common "${ephone_icu_SOURCE_DIR}/icu4c/source/common")
-set(_icu_stub "${ephone_icu_SOURCE_DIR}/icu4c/source/stubdata")
-
-file(GLOB _icu_common_sources CONFIGURE_DEPENDS "${_icu_common}/*.cpp")
-list(APPEND _icu_common_sources "${_icu_stub}/stubdata.cpp")
-
-add_library(ephone_icu STATIC ${_icu_common_sources})
-target_include_directories(ephone_icu PUBLIC "${_icu_common}")
-target_compile_definitions(ephone_icu
-  PUBLIC
-    U_COMMON_IMPLEMENTATION
-    U_STATIC_IMPLEMENTATION
-    U_USING_ICU_NAMESPACE=0
-  PRIVATE
-    U_ATTRIBUTE_DEPRECATED=
-)
-# ICU common is large; keep warnings from stopping the plugin build.
-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
-  target_compile_options(ephone_icu PRIVATE -Wno-error -w)
 endif()

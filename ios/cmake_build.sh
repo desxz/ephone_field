@@ -27,6 +27,17 @@ case "${CONFIGURATION}" in
   *) CONFIGURATION=Release ;;
 esac
 
+OUT_LIB="${SCRIPT_DIR}/build/libephone_phonenumber_stack-${PLATFORM_NAME}.a"
+PREBUILT_LIB="${SCRIPT_DIR}/prebuilt/libephone_phonenumber_stack-${PLATFORM_NAME}.a"
+mkdir -p "${SCRIPT_DIR}/build"
+
+# Prefer maintainer-produced archives (tool/prebuild_ios.sh) so consumers skip CMake.
+if [[ -f "${PREBUILT_LIB}" ]]; then
+  cp -f "${PREBUILT_LIB}" "${OUT_LIB}"
+  echo "ephone_field: using prebuilt ${PREBUILT_LIB} ($(wc -c < "${OUT_LIB}") bytes)"
+  exit 0
+fi
+
 SDKROOT="$(xcrun --sdk "${SDK}" --show-sdk-path)"
 CMAKE_BIN="${CMAKE_BIN:-$(command -v cmake || true)}"
 if [[ -z "${CMAKE_BIN}" ]]; then
@@ -42,7 +53,7 @@ if [[ -z "${CMAKE_BIN}" ]]; then
   done
 fi
 if [[ -z "${CMAKE_BIN}" ]]; then
-  echo "cmake not found; install CMake or set CMAKE_BIN" >&2
+  echo "cmake not found; install CMake, set CMAKE_BIN, or place a prebuilt archive in ios/prebuilt/ (see tool/prebuild_ios.sh)" >&2
   exit 1
 fi
 
@@ -50,8 +61,6 @@ LIBTOOL="${LIBTOOL:-/usr/bin/libtool}"
 LIPO="${LIPO:-/usr/bin/lipo}"
 JOBS="$(sysctl -n hw.ncpu 2>/dev/null || echo 4)"
 
-OUT_LIB="${SCRIPT_DIR}/build/libephone_phonenumber_stack-${PLATFORM_NAME}.a"
-mkdir -p "${SCRIPT_DIR}/build"
 rm -f "${OUT_LIB}"
 
 SLICE_LIBS=()

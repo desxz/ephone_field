@@ -43,7 +43,6 @@ set(LPN_SOURCES
   "${LPN_SRC}/phonenumbers/regexp_cache.cc"
   "${LPN_SRC}/phonenumbers/short_metadata.cc"
   "${LPN_SRC}/phonenumbers/shortnumberinfo.cc"
-  "${LPN_SRC}/phonenumbers/string_byte_sink.cc"
   "${LPN_SRC}/phonenumbers/stringutil.cc"
   "${LPN_SRC}/phonenumbers/unicodestring.cc"
   "${LPN_SRC}/phonenumbers/utf/rune.c"
@@ -62,7 +61,6 @@ target_link_libraries(ephone_phonenumber
   PUBLIC
     libprotobuf-lite
     re2
-    ephone_icu
     absl::strings
     absl::node_hash_set
     absl::synchronization

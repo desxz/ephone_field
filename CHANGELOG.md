@@ -21,6 +21,7 @@
 * **Internal cleanup:** `supportsNativeValidation` port flag (no stub type checks in validation); AsYouType session inlined into formatter; `resolveFieldValidator` lives in `Validators`; FFI util disposed with the widget.
 * **Native graph:** removed unused `EPHONE_USE_LIBPHONENUMBER=OFF` stub path (single production CMake path).
 * **Flags:** `CountryPickerConfig.useFlagImages` (default `true`); set `false` for emoji-only flags.
+* **Native size:** dropped static ICU (~22 MB/arch); Nd digit normalize uses a local shim. iOS can use `ios/prebuilt/` + `tool/prebuild_ios.sh` to skip CMake at pod install.
 
 ## 0.1.0
 

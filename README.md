@@ -32,9 +32,9 @@ supported — phone validation/formatting falls back to length checks without na
 libphonenumber.
 
 **Native note:** First Android/iOS builds compile bundled libphonenumber (CMake;
-iOS may need CMake on `PATH`, e.g. `brew install cmake`). See
-[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the roadmap to prebuilt native
-artifacts and smaller install/link risk.
+iOS may need CMake on `PATH`, e.g. `brew install cmake`). Maintainers can drop
+prebuilt stacks into `ios/prebuilt/` via `./tool/prebuild_ios.sh` so consumers
+skip CMake. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 In the `pubspec.yaml` of your flutter project, add the following dependency:
 

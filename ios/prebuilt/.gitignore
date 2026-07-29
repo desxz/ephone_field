@@ -1,0 +1,14 @@
+# Optional prebuilt libphonenumber stacks for consumer iOS installs.
+#
+# When `libephone_phonenumber_stack-${PLATFORM_NAME}.a` exists here,
+# `ios/cmake_build.sh` copies it into `ios/build/` and skips CMake.
+#
+# Produce archives with:
+#   ./tool/prebuild_ios.sh
+#   PLATFORM_NAME=iphoneos ARCHS=arm64 ./tool/prebuild_ios.sh
+#
+# These files are large (~50–80 MB/arch after ICU removal) and are gitignored
+# by default. CI or Releases can host them for tagged publishes.
+*
+!.gitignore
+!README.md

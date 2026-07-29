@@ -22,9 +22,6 @@
 #include <utility>
 #include <vector>
 
-#include <unicode/uchar.h>
-#include <unicode/utf8.h>
-
 #include "phonenumbers/asyoutypeformatter.h"
 #include "phonenumbers/base/basictypes.h"
 #include "phonenumbers/base/logging.h"

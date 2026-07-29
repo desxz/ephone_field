@@ -25,6 +25,7 @@ via dart:ffi for validation, E.164 formatting, and as-you-type formatting.
 
   s.preserve_paths = [
     'cmake_build.sh',
+    'prebuilt/**/*',
     '../src/**/*',
     '../third_party/libphonenumber/**/*',
   ]

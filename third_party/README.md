@@ -16,6 +16,11 @@ The upgrade script:
 2. Regenerates protobuf C++ sources with **protoc 25.3** (matches CMake FetchContent)
 3. Applies patches under `tool/patches/`
 
-Native builds always link Google libphonenumber. Abseil, protobuf-lite,
-RE2, and ICU are pulled via CMake `FetchContent` during the first native build
-(network required once; then cached in the CMake build directory).
+Native builds always link Google libphonenumber. Abseil, protobuf-lite, and RE2
+are pulled via CMake `FetchContent` during the first native build (network
+required once; then cached in the CMake build directory). ICU is **not** fetched:
+digit normalization uses a local Nd→ASCII shim
+(`tool/patches/libphonenumber-no-icu.patch`).
+
+For iOS consumer installs without CMake, place prebuilt stacks under
+`ios/prebuilt/` (see `tool/prebuild_ios.sh` and `docs/ARCHITECTURE.md`).
