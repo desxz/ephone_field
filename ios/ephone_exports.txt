@@ -1,0 +1,15 @@
+# Symbols kept global in the force-loaded iOS static stack.
+# Everything else is localized via `ld -r -exported_symbols_list` so Abseil /
+# protobuf / RE2 / libphonenumber C++ symbols do not collide with other plugins.
+_ephone_phone_api_version
+_ephone_phone_uses_libphonenumber
+_ephone_phone_util_create
+_ephone_phone_util_destroy
+_ephone_phone_is_valid
+_ephone_phone_is_possible
+_ephone_phone_format_e164
+_ephone_phone_format_national
+_ephone_asyoutype_create
+_ephone_asyoutype_destroy
+_ephone_asyoutype_input_digit
+_ephone_asyoutype_clear

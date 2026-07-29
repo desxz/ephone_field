@@ -16,7 +16,7 @@ install alongside other Flutter plugins. Prefer small PRs over one mega-change.
 | --- | --- | --- |
 | 0 Commits for 0.2.0 DX | Done | Compact API, full-width picker, clearErrorOnChange |
 | 1 Install honesty | Done | pubspec Android/iOS only; iOS CI smoke; README + this doc |
-| 2 Native install reliability | In progress | ICU removed; `ios/prebuilt` + `tool/prebuild_ios.sh`; symbol hide + CI collision smoke still open |
+| 2 Native install reliability | In progress | ICU removed; prebuild path; iOS `ld -r` keeps only C API globals; CI/Releases prebuilt + collision smoke still open |
 | 3 Dart compact structure | Done (pass 1) | Capability flag; formatter merge; session inline; resolver in Validators; FFI dispose |
 | 4 Country/assets footprint | Partial | `useFlagImages` emoji option; catalog/mask split still open |
 | 5 Test/docs hygiene | Partial | Prefer public API; expand contract tests as Phase 2 lands |
@@ -33,13 +33,15 @@ Done in this pass:
    (`tool/patches/libphonenumber-no-icu.patch`).
 2. Hybrid prebuild: `ios/prebuilt/libephone_phonenumber_stack-*.a` preferred by
    `ios/cmake_build.sh` (no CMake / no network). Produce with `./tool/prebuild_ios.sh`.
+3. iOS merge localizes non-C-API symbols via `ld -r -exported_symbols_list`
+   ([`ios/ephone_exports.txt`](../ios/ephone_exports.txt)); only `ephone_*` stay global under
+   `-force_load`.
 
 Still open:
 
 1. Ship prebuilt archives via CI/Releases (not git-tracked by default).
-2. Hide non-C-API symbols; keep [`src/ephone_phonenumber_c.h`](../src/ephone_phonenumber_c.h) as the sole export.
-3. Add iOS link smoke (example app + optional second plugin with protobuf) in CI.
-4. Optionally vendor Abseil/protobuf/RE2 to shrink FetchContent at first build.
+2. Add iOS link smoke (example app + optional second plugin with protobuf) in CI.
+3. Optionally vendor Abseil/protobuf/RE2 to shrink FetchContent at first build.
 
 ## Non-goals (for now)
 

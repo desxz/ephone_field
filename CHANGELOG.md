@@ -22,6 +22,7 @@
 * **Native graph:** removed unused `EPHONE_USE_LIBPHONENUMBER=OFF` stub path (single production CMake path).
 * **Flags:** `CountryPickerConfig.useFlagImages` (default `true`); set `false` for emoji-only flags.
 * **Native size:** dropped static ICU (~22 MB/arch); Nd digit normalize uses a local shim. iOS can use `ios/prebuilt/` + `tool/prebuild_ios.sh` to skip CMake at pod install.
+* **Native collisions:** iOS static stack keeps only `ephone_*` C API symbols global (`ld -r` + `ios/ephone_exports.txt`) to reduce Abseil/protobuf/RE2 clashes with other plugins.
 
 ## 0.1.0
 

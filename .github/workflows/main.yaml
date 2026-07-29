@@ -74,3 +74,18 @@ jobs:
       - name: Example iOS build (native libphonenumber smoke)
         run: flutter build ios --debug --no-codesign --simulator
         working-directory: example
+
+      - name: Assert iOS stack exports only ephone_* C API
+        run: |
+          set -euo pipefail
+          ARCH="ios/build/libephone_phonenumber_stack-iphonesimulator.a"
+          test -f "$ARCH"
+          GLOBALS="$(nm -gU "$ARCH" | awk '/ [TDS] / { print $NF }')"
+          echo "$GLOBALS"
+          echo "$GLOBALS" | grep -qv '^_ephone_' && {
+            echo "Unexpected non-C-API global symbol(s) in $ARCH" >&2
+            exit 1
+          }
+          echo "$GLOBALS" | grep -q '_ephone_phone_is_valid'
+          COUNT="$(echo "$GLOBALS" | grep -c '^_ephone_')"
+          test "$COUNT" -eq 12

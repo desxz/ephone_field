@@ -65,6 +65,11 @@ target_link_libraries(ephone_phonenumber
     absl::node_hash_set
     absl::synchronization
 )
+set_target_properties(ephone_phonenumber PROPERTIES
+  CXX_VISIBILITY_PRESET hidden
+  C_VISIBILITY_PRESET hidden
+  VISIBILITY_INLINES_HIDDEN ON
+)
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
   target_compile_options(ephone_phonenumber PRIVATE -Wno-error)
 endif()
@@ -77,6 +82,11 @@ target_compile_definitions(ephone_phonenumber_stack
   PRIVATE EPHONE_HAS_LIBPHONENUMBER=1
 )
 target_link_libraries(ephone_phonenumber_stack PUBLIC ephone_phonenumber)
+set_target_properties(ephone_phonenumber_stack PROPERTIES
+  CXX_VISIBILITY_PRESET hidden
+  C_VISIBILITY_PRESET hidden
+  VISIBILITY_INLINES_HIDDEN ON
+)
 
 if(EPHONE_BUILD_SHARED_PLUGIN)
   add_library(ephone_field SHARED ephone_phonenumber_c.cc)

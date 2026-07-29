@@ -59,11 +59,37 @@ fi
 
 LIBTOOL="${LIBTOOL:-/usr/bin/libtool}"
 LIPO="${LIPO:-/usr/bin/lipo}"
+LD="${LD:-$(xcrun --find ld)}"
 JOBS="$(sysctl -n hw.ncpu 2>/dev/null || echo 4)"
+EXPORTS_LIST="${SCRIPT_DIR}/ephone_exports.txt"
+SDK_VERSION="$(xcrun --sdk "${SDK}" --show-sdk-version)"
+case "${PLATFORM_NAME}" in
+  iphoneos) LD_PLATFORM=ios ;;
+  iphonesimulator) LD_PLATFORM=ios-simulator ;;
+esac
 
 rm -f "${OUT_LIB}"
 
 SLICE_LIBS=()
+
+# Collapse the merged static archive into one relocatable object and keep only the
+# C API globals exported. Abseil/protobuf/RE2/LPN symbols become local so
+# -force_load does not collide with other plugins that ship the same deps.
+localize_archive() {
+  local in_a="$1"
+  local out_a="$2"
+  local arch="$3"
+  local work localized
+  work="$(mktemp -d "${TMPDIR:-/tmp}/ephone_localize.XXXXXX")"
+  localized="${work}/localized.o"
+  "${LD}" -r -arch "${arch}" -syslibroot "${SDKROOT}" \
+    -platform_version "${LD_PLATFORM}" "${SDK_VERSION}" "${SDK_VERSION}" \
+    -exported_symbols_list "${EXPORTS_LIST}" \
+    -all_load "${in_a}" \
+    -o "${localized}"
+  "${LIBTOOL}" -static -o "${out_a}" "${localized}"
+  rm -rf "${work}"
+}
 
 # Protobuf (and some other CMake libs) emit both libfoo.a and libfood.a.
 # Merging both causes hundreds of duplicate symbols at link time.
@@ -138,9 +164,13 @@ build_slice() {
   "${LIBTOOL}" -static -o "${tmp_merge}" "${stack_obj}" "${archives[@]}"
 
   local slice_out="${SCRIPT_DIR}/build/libephone_phonenumber_stack-${PLATFORM_NAME}-${arch}.a"
-  cp -f "${tmp_merge}" "${slice_out}"
+  if [[ ! -f "${EXPORTS_LIST}" ]]; then
+    echo "Missing exports list: ${EXPORTS_LIST}" >&2
+    exit 1
+  fi
+  localize_archive "${tmp_merge}" "${slice_out}" "${arch}"
   SLICE_LIBS+=("${slice_out}")
-  echo "Built slice ${slice_out} ($(wc -c < "${slice_out}") bytes)"
+  echo "Built slice ${slice_out} ($(wc -c < "${slice_out}") bytes; C API symbols only)"
 }
 
 for arch in ${ARCHS}; do
