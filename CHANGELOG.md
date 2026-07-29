@@ -4,13 +4,19 @@
 * Introduced Ports & Adapters layout: `domain/phone`, `application/phone`, `infrastructure/phone`, `validation/`, `formatting/`.
 * Added internal `PhoneNumberService` port, factory, and FFI/unsupported stubs (not part of the consumer validation API).
 * Default email/phone validators when custom validators are omitted (HTML5/WHATWG email; phone via internal `PhoneNumberService` with country-length fallback).
-* Added `Validators.compose` / `andThen` and `FieldValidationPolicy` (strategy registry) so package rules can be combined with user conditions.
-* `PhoneValidators.phone` matches `EmailValidators.email` (no service/country to pass); context comes from `EPhoneField` via `ValidationBinding`.
+* Added `Validators.compose` / `andThen` so package rules can be combined with user conditions.
+* `PhoneValidators.phone` matches `EmailValidators.email` (no service/country to pass); context is bound internally by `EPhoneField`.
 * Removed public `phoneNumberService` injection; phone capability is owned by the plugin (`debugPhoneNumberService` is test-only).
 * Added `EmailValidators` / `PhoneValidators` for explicit compose/override.
-* Added `LibPhoneAsYouTypeFormatter` and `PhoneOutputMapper` (E.164 with dial-code fallback).
-* Deprecated `EphoneFieldUtils`, `EphoneFieldValidators`, and `PhoneNumberMaskFormatter` (legacy mask path kept as fallback when native is unavailable).
-* Added slim libphonenumber upgrade script (`tool/upgrade_libphonenumber.sh`) and version pin (`third_party/LIBPHONENUMBER_VERSION`). Android/iOS production builds **link Google libphonenumber by default** (`EPHONE_USE_LIBPHONENUMBER=ON`); stub FFI is no longer the product path.
+* **Slimmed public API:** `EPhoneField`, enums, and validators only. Removed exports of `PhoneNumberService`, `PhoneOutputMapper`, `FieldValidationPolicy`, `ValidationBinding`, formatters, and deprecated utils.
+* **Performance:** incremental AsYouType formatting (no full clear+re-feed on every keystroke); phone `onChanged` passes national display text instead of calling E.164 FFI per keystroke.
+* **iOS:** universal static archive build, protobuf lite/lited selection, simulator link fixes.
+* Deprecated `PhoneNumberMaskFormatter` (legacy mask path kept as fallback when native is unavailable).
+* Added slim libphonenumber upgrade script (`tool/upgrade_libphonenumber.sh`) and version pin (`third_party/LIBPHONENUMBER_VERSION`). Android/iOS production builds **link Google libphonenumber by default** (`EPHONE_USE_LIBPHONENUMBER=ON`).
+* **Compact API:** `CountryPickerConfig` and `EPhoneFieldLabels` group picker/label settings; practical `TextFormField` params (`enabled`, `readOnly`, `textInputAction`, cursor, etc.) exposed flat.
+* **Country picker UI:** denser country rows, themed search field, rounded dialog; full-width bottom sheet on all screen sizes.
+* **TextFormField parity:** extended pass-through (`autofocus`, `textDirection`, `forceErrorText`, `contextMenuBuilder`, scroll/cursor/tap params); phone-mode defaults disable autocorrect/suggestions; validator now resolves type from submitted value.
+* **Validation UX:** `clearErrorOnChange` (default `true`) clears the error as soon as the user edits text or changes country after a failed validate; set `false` for sticky errors until the next `Form.validate()`.
 
 ## 0.1.0
 

@@ -1,4 +1,4 @@
-import 'field_validation_strategy.dart';
+import 'validation_context.dart';
 
 /// Holds the active [ValidationContext] while an [EPhoneField] validator runs.
 abstract final class ValidationBinding {

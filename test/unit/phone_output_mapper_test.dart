@@ -1,4 +1,4 @@
-import 'package:ephone_field/ephone_field.dart';
+import 'package:ephone_field/src/application/phone/phone_output_mapper.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

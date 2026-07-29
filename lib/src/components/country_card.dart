@@ -21,31 +21,43 @@ class CountryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final titleStyle = theme.textTheme.bodyLarge;
-    final subtitleStyle = theme.textTheme.bodySmall?.copyWith(
-      color: theme.colorScheme.onSurfaceVariant,
+    final scheme = theme.colorScheme;
+    final titleStyle = theme.textTheme.bodyLarge?.copyWith(
+      fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
     );
-    final dialStyle = theme.textTheme.titleMedium?.copyWith(
+    final subtitleStyle = theme.textTheme.bodySmall?.copyWith(
+      color: scheme.onSurfaceVariant,
+    );
+    final dialStyle = theme.textTheme.bodyMedium?.copyWith(
       fontWeight: FontWeight.w600,
+      color: scheme.onSurface,
     );
 
-    return ListTile(
-      leading: CountryFlag(country: country, size: 32),
-      title: Text(country.name, style: titleStyle),
-      subtitle: Text(country.alpha3, style: subtitleStyle),
-      trailing: SizedBox(
-        width: 88,
+    return Material(
+      color: isSelected
+          ? scheme.primaryContainer.withValues(alpha: 0.35)
+          : Colors.transparent,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            CountryFlag(country: country, size: 28),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(country.name, style: titleStyle, maxLines: 1),
+                  Text(country.alpha2, style: subtitleStyle),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
             Text('+${country.dialCode}', style: dialStyle),
             if (isSelected) ...[
               const SizedBox(width: 8),
-              Icon(
-                Icons.check,
-                color: theme.colorScheme.primary,
-                size: 20,
-              ),
+              Icon(Icons.check, color: scheme.primary, size: 18),
             ],
           ],
         ),

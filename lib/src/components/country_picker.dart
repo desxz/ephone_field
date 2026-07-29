@@ -139,7 +139,7 @@ class _CountryPickerState extends State<CountryPicker> {
 
   Widget _buildSearchField() {
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 4),
       child: TextField(
         key: const Key('search-field'),
         focusNode: _focusNode,

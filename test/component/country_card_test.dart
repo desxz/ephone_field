@@ -26,7 +26,7 @@ void main() {
       (widgetTester) async {
     await widgetTester.pumpWidget(mockWidget);
 
-    expect(find.text(country.alpha3), findsOneWidget);
+    expect(find.text(country.alpha2), findsOneWidget);
   });
 
   testWidgets('should CountryCard widget renders correct dial code',

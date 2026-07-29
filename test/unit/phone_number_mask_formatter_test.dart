@@ -1,4 +1,6 @@
-import 'package:ephone_field/ephone_field.dart';
+import 'package:ephone_field/src/domain/phone/phone.dart';
+import 'package:ephone_field/src/formatters/phone_number_mask.dart';
+import 'package:ephone_field/src/enums/country.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

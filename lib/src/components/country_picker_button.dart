@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../config/country_picker_config.dart';
 import '../enums/country.dart';
 import '../enums/country_picker_height.dart';
 import '../enums/country_picker_menu.dart';
@@ -10,22 +11,12 @@ import 'country_picker_menu.dart';
 /// Button that opens the country picker.
 class CountryPickerButton extends StatefulWidget {
   /// Creates a country picker button.
-  CountryPickerButton({
+  const CountryPickerButton({
     super.key,
-    Country? selectedCountry,
-    @Deprecated('Use selectedCountry instead.') Country? initialValue,
+    required this.selectedCountry,
     required this.onValuePicked,
-    required this.menuType,
-    required this.isSearchable,
-    required this.searchInputDecoration,
-    required this.titlePadding,
-    required this.title,
-    required this.countries,
-    required this.minWidth,
-    required this.icon,
-    required this.pickerHeight,
-  }) : selectedCountry =
-            selectedCountry ?? initialValue ?? Country.unitedStates;
+    this.config = const CountryPickerConfig(),
+  });
 
   /// Called when a country is selected.
   final void Function(Country) onValuePicked;
@@ -33,32 +24,8 @@ class CountryPickerButton extends StatefulWidget {
   /// Currently selected country.
   final Country selectedCountry;
 
-  /// Countries available in the picker.
-  final List<Country> countries;
-
-  /// Presentation style for the picker.
-  final PickerMenuType menuType;
-
-  /// Whether the picker includes search.
-  final bool isSearchable;
-
-  /// Decoration for the search field.
-  final InputDecoration searchInputDecoration;
-
-  /// Padding around the picker title.
-  final EdgeInsetsGeometry titlePadding;
-
-  /// Height preset for dialog and bottom-sheet pickers.
-  final CountryPickerHeight pickerHeight;
-
-  /// Optional picker title.
-  final String? title;
-
-  /// Minimum width of the button.
-  final double minWidth;
-
-  /// Dropdown icon.
-  final IconData icon;
+  /// Picker presentation and list settings.
+  final CountryPickerConfig config;
 
   @override
   State<CountryPickerButton> createState() => _CountryPickerButtonState();
@@ -66,6 +33,8 @@ class CountryPickerButton extends StatefulWidget {
 
 class _CountryPickerButtonState extends State<CountryPickerButton> {
   bool _isMenuOpen = false;
+
+  CountryPickerConfig get _config => widget.config;
 
   Future<void> _openPicker() async {
     if (_isMenuOpen || !mounted) {
@@ -76,7 +45,7 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
     });
 
     try {
-      switch (widget.menuType) {
+      switch (_config.menuType) {
         case PickerMenuType.dialog:
           await _openDialog();
         case PickerMenuType.bottomSheet:
@@ -104,17 +73,18 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
     required double? height,
     required bool showTitle,
     String? title,
+    required BuildContext context,
   }) {
     return CountryPickerMenu(
       title: title,
       showTitle: showTitle,
-      titlePadding: widget.titlePadding,
-      isSearchable: widget.isSearchable,
+      titlePadding: _config.titlePadding,
+      isSearchable: _config.isSearchable,
       height: height,
-      searchInputDecoration: widget.searchInputDecoration,
+      searchInputDecoration: _config.resolveSearchDecoration(context),
       onValuePicked: widget.onValuePicked,
       itemBuilder: _countryCard,
-      countries: widget.countries,
+      countries: _config.countries,
       selectedCountry: widget.selectedCountry,
     );
   }
@@ -123,17 +93,41 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
     await showDialog<void>(
       context: context,
       builder: (dialogContext) {
-        return AlertDialog(
-          insetPadding:
-              const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-          title: widget.title == null ? null : Text(widget.title!),
-          titlePadding: widget.titlePadding,
-          content: SizedBox(
-            height: widget.pickerHeight.height(dialogContext),
-            width: MediaQuery.sizeOf(dialogContext).width * 0.85,
-            child: _buildMenu(
-              height: widget.pickerHeight.height(dialogContext),
-              showTitle: false,
+        final pickerHeight = _config.pickerHeight.height(dialogContext);
+
+        return Dialog(
+          insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          clipBehavior: Clip.antiAlias,
+          child: SizedBox(
+            width: double.maxFinite,
+            height: pickerHeight,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (_config.title != null)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                    child: Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(
+                        _config.title!,
+                        style: Theme.of(dialogContext)
+                            .textTheme
+                            .titleLarge
+                            ?.copyWith(fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ),
+                Expanded(
+                  child: _buildMenu(
+                    height: pickerHeight,
+                    showTitle: false,
+                    context: dialogContext,
+                  ),
+                ),
+              ],
             ),
           ),
         );
@@ -147,7 +141,7 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
       isScrollControlled: true,
       useSafeArea: true,
       showDragHandle: true,
-      shape: widget.pickerHeight != CountryPickerHeight.h100
+      shape: _config.pickerHeight != CountryPickerHeight.h100
           ? const RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
             )
@@ -155,16 +149,19 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
       builder: (sheetContext) {
         final viewInsets = MediaQuery.viewInsetsOf(sheetContext);
         final availableHeight = MediaQuery.sizeOf(sheetContext).height -
-            viewInsets.bottom -
-            MediaQuery.paddingOf(sheetContext).top;
-        final height = widget.pickerHeight.height(sheetContext).clamp(
-              0.0,
-              availableHeight,
-            );
+            viewInsets.bottom;
+        final height = _config.pickerHeight
+            .height(sheetContext)
+            .clamp(0.0, availableHeight);
 
         return Padding(
           padding: EdgeInsets.only(bottom: viewInsets.bottom),
-          child: _buildMenu(height: height, showTitle: widget.title != null),
+          child: _buildMenu(
+            height: height,
+            showTitle: _config.title != null,
+            title: _config.title,
+            context: sheetContext,
+          ),
         );
       },
     );
@@ -175,10 +172,14 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
       MaterialPageRoute<void>(
         builder: (pageContext) {
           return Scaffold(
-            appBar: widget.title == null
+            appBar: _config.title == null
                 ? AppBar()
-                : AppBar(title: Text(widget.title!)),
-            body: _buildMenu(height: null, showTitle: false),
+                : AppBar(title: Text(_config.title!)),
+            body: _buildMenu(
+              height: null,
+              showTitle: false,
+              context: pageContext,
+            ),
           );
         },
       ),
@@ -202,7 +203,7 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
           child: Padding(
             padding: const EdgeInsetsDirectional.only(start: 8),
             child: ConstrainedBox(
-              constraints: BoxConstraints(minWidth: widget.minWidth),
+              constraints: BoxConstraints(minWidth: _config.buttonWidth),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -219,7 +220,7 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
                   const SizedBox(width: 4),
                   CountryFlag(country: widget.selectedCountry),
                   const SizedBox(width: 4),
-                  Icon(widget.icon, size: 20),
+                  Icon(_config.buttonIcon, size: 20),
                 ],
               ),
             ),

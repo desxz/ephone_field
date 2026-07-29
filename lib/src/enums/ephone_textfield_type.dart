@@ -29,6 +29,17 @@ EphoneFieldType defaultEphoneFieldTypeResolver(
   return EphoneFieldType.email;
 }
 
+String? _mapPhoneForCallback(
+  String? value,
+  Country country,
+  PhoneOutputMapper mapper,
+) =>
+    mapper.mapForCallback(
+      raw: value,
+      regionCode: country.alpha2,
+      dialCode: country.dialCode,
+    );
+
 /// Sets the type of the [EPhoneField] widget.
 enum EphoneFieldType {
   /// Initial state before the user types.
@@ -121,11 +132,7 @@ extension EphoneFieldTypeExtension on EphoneFieldType {
         return typeValidator;
       case EphoneFieldType.phone:
         return (value) => typeValidator?.call(
-              mapper.mapForCallback(
-                raw: value,
-                regionCode: country.alpha2,
-                dialCode: country.dialCode,
-              ),
+              _mapPhoneForCallback(value, country, mapper),
             );
     }
   }
@@ -142,11 +149,7 @@ extension EphoneFieldTypeExtension on EphoneFieldType {
         return onFieldSubmitted;
       case EphoneFieldType.phone:
         return (value) => onFieldSubmitted?.call(
-              mapper.mapForCallback(
-                raw: value,
-                regionCode: country.alpha2,
-                dialCode: country.dialCode,
-              ),
+              _mapPhoneForCallback(value, country, mapper),
             );
     }
   }
@@ -163,16 +166,15 @@ extension EphoneFieldTypeExtension on EphoneFieldType {
         return onSaved;
       case EphoneFieldType.phone:
         return (value) => onSaved?.call(
-              mapper.mapForCallback(
-                raw: value,
-                regionCode: country.alpha2,
-                dialCode: country.dialCode,
-              ),
+              _mapPhoneForCallback(value, country, mapper),
             );
     }
   }
 
   /// Returns the onChanged callback for this field type.
+  ///
+  /// Phone mode passes national display text as typed; E.164 is reserved for
+  /// [onSaved], [onFieldSubmitted], and validation.
   void Function(String)? onChanged(
     Country country,
     PhoneOutputMapper mapper,
@@ -183,14 +185,7 @@ extension EphoneFieldTypeExtension on EphoneFieldType {
       case EphoneFieldType.email:
         return onChanged;
       case EphoneFieldType.phone:
-        return (value) {
-          final combined = mapper.mapForCallback(
-            raw: value,
-            regionCode: country.alpha2,
-            dialCode: country.dialCode,
-          );
-          onChanged?.call(combined ?? '');
-        };
+        return onChanged;
     }
   }
 }

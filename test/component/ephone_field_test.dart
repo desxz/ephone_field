@@ -1,4 +1,5 @@
 import 'package:ephone_field/ephone_field.dart';
+import 'package:ephone_field/src/components/country_picker_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -11,6 +12,7 @@ Widget buildEphoneFieldTestApp({
   String? initialValue,
   bool isSearchable = true,
   void Function(String)? onChanged,
+  void Function(String?)? onSaved,
 }) {
   return EPhoneFieldMock(
     formKey: formKey,
@@ -22,7 +24,7 @@ Widget buildEphoneFieldTestApp({
     phoneValidator: EphoneFieldCallerChecker.mockPhoneValidator,
     onChanged: onChanged ?? EphoneFieldCallerChecker.mockOnChanged,
     onCountryChanged: EphoneFieldCallerChecker.mockOnCountryChanged,
-    onSaved: EphoneFieldCallerChecker.mockOnSaved,
+    onSaved: onSaved ?? EphoneFieldCallerChecker.mockOnSaved,
     onFieldSubmitted: EphoneFieldCallerChecker.mockOnFieldSubmitted,
   );
 }
@@ -97,7 +99,7 @@ void main() {
         findsOneWidget);
   });
 
-  testWidgets('phone validator receives international number', (tester) async {
+  testWidgets('phone onChanged receives national display text', (tester) async {
     final formKey = GlobalKey<FormState>();
     String? changedValue;
     await tester.pumpWidget(
@@ -110,7 +112,25 @@ void main() {
     await tester.enterText(find.byType(TextFormField), '5551234567');
     await tester.pump();
 
-    expect(changedValue, '+15551234567');
+    expect(changedValue, isNotNull);
+    expect(changedValue!.replaceAll(RegExp(r'\D'), ''), '5551234567');
+  });
+
+  testWidgets('phone onSaved maps to international number', (tester) async {
+    final formKey = GlobalKey<FormState>();
+    String? savedValue;
+    await tester.pumpWidget(
+      buildEphoneFieldTestApp(
+        formKey: formKey,
+        onSaved: (value) => savedValue = value,
+      ),
+    );
+
+    await tester.enterText(find.byType(TextFormField), '5551234567');
+    await tester.pump();
+    formKey.currentState!.save();
+
+    expect(savedValue, '+15551234567');
   });
 
   testWidgets('onCountryChanged is called when a country is selected',

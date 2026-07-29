@@ -1,4 +1,4 @@
-import 'package:ephone_field/ephone_field.dart';
+import 'package:ephone_field/src/domain/phone/phone.dart';
 
 /// Test double for [PhoneNumberService].
 class FakePhoneNumberService implements PhoneNumberService {
@@ -79,6 +79,9 @@ class FakeAsYouTypeSession implements AsYouTypeSession {
   /// Whether [dispose] was called.
   bool disposed = false;
 
+  /// Number of [clear] calls (for incremental formatter tests).
+  int clearCount = 0;
+
   @override
   String inputDigit(String digit) {
     if (disposed) {
@@ -106,6 +109,7 @@ class FakeAsYouTypeSession implements AsYouTypeSession {
 
   @override
   void clear() {
+    clearCount++;
     _digits.clear();
   }
 

@@ -15,44 +15,44 @@ class PhoneNumberDigitsOnlyFormatter extends TextInputFormatter {
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    final allowed = maskSplitCharacter == null
+    final disallowed = maskSplitCharacter == null
         ? RegExp(r'[^0-9]')
         : RegExp('[^0-9${RegExp.escape(maskSplitCharacter!)}]');
-    final newText = newValue.text.replaceAll(allowed, '');
-    final selection = _preserveSelection(
-      oldValue: oldValue,
-      newText: newText,
-    );
+    final filtered = newValue.text.replaceAll(disallowed, '');
 
-    return TextEditingValue(text: newText, selection: selection);
+    // Preserve selection from a previous formatter (e.g. AsYouType) when
+    // nothing was stripped — recalculating from [oldValue] freezes the caret.
+    if (filtered == newValue.text) {
+      return newValue;
+    }
+
+    return TextEditingValue(
+      text: filtered,
+      selection: _selectionAfterFilter(
+        original: newValue,
+        filtered: filtered,
+        disallowed: disallowed,
+      ),
+    );
   }
 
-  TextSelection _preserveSelection({
-    required TextEditingValue oldValue,
-    required String newText,
+  TextSelection _selectionAfterFilter({
+    required TextEditingValue original,
+    required String filtered,
+    required RegExp disallowed,
   }) {
-    final oldOffset =
-        oldValue.selection.baseOffset.clamp(0, oldValue.text.length);
-    final removedBefore = oldValue.text.substring(0, oldOffset).length -
-        oldValue.text
-            .substring(0, oldOffset)
-            .replaceAll(
-              maskSplitCharacter == null
-                  ? RegExp(r'[^0-9]')
-                  : RegExp('[^0-9${RegExp.escape(maskSplitCharacter!)}]'),
-              '',
-            )
-            .length;
+    final base = original.selection.isValid
+        ? original.selection.baseOffset.clamp(0, original.text.length)
+        : original.text.length;
 
-    var offset = oldOffset - removedBefore;
-    if (offset > newText.length) {
-      offset = newText.length;
-    }
-    if (offset < 0) {
-      offset = 0;
-    }
+    final keptBefore = original.text
+        .substring(0, base)
+        .replaceAll(disallowed, '')
+        .length;
 
-    return TextSelection.collapsed(offset: offset);
+    return TextSelection.collapsed(
+      offset: keptBefore.clamp(0, filtered.length),
+    );
   }
 }
 

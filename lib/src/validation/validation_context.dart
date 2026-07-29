@@ -1,9 +1,7 @@
-import 'package:flutter/widgets.dart';
-
 import '../domain/phone/phone_number_service.dart';
 import '../enums/country.dart';
 
-/// Shared inputs for field validation strategies.
+/// Shared inputs for field validation inside [EPhoneField].
 class ValidationContext {
   /// Creates a validation context.
   const ValidationContext({
@@ -20,13 +18,4 @@ class ValidationContext {
 
   /// Optional message when the field is empty in initial mode.
   final String? emptyErrorText;
-}
-
-/// Resolves the [FormFieldValidator] for a field mode.
-abstract class FieldValidationStrategy {
-  /// Returns the effective validator: user override or package default.
-  FormFieldValidator<String>? resolve({
-    required FormFieldValidator<String>? userValidator,
-    required ValidationContext context,
-  });
 }

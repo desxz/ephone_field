@@ -1,4 +1,7 @@
 import 'package:ephone_field/ephone_field.dart';
+import 'package:ephone_field/src/validation/field_validator_resolver.dart';
+import 'package:ephone_field/src/validation/validation_binding.dart';
+import 'package:ephone_field/src/validation/validation_context.dart';
 import 'package:ephone_field/src/infrastructure/phone/stub/unsupported_phone_number_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -106,8 +109,7 @@ void main() {
     });
   });
 
-  group('FieldValidationPolicy', () {
-    final policy = FieldValidationPolicy();
+  group('resolveFieldValidator', () {
     final context = ValidationContext(
       phoneService: FakePhoneNumberService(validNumbers: {'US|4155552671'}),
       country: Country.unitedStates,
@@ -115,7 +117,7 @@ void main() {
     );
 
     test('email null user → package default', () {
-      final v = policy.resolve(
+      final v = resolveFieldValidator(
         EphoneFieldType.email,
         userValidator: null,
         context: context,
@@ -125,7 +127,7 @@ void main() {
     });
 
     test('phone null user → PhoneValidators.phone under binding', () {
-      final v = policy.resolve(
+      final v = resolveFieldValidator(
         EphoneFieldType.phone,
         userValidator: null,
         context: context,

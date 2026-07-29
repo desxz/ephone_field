@@ -1,4 +1,5 @@
 import 'package:ephone_field/ephone_field.dart';
+import 'package:ephone_field/src/components/country_picker_button.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/caller_checker.dart';
@@ -11,15 +12,7 @@ class CountryPickerButtonMock extends StatelessWidget {
     required this.pickerHeight,
     this.ctx,
   });
-  final List<Country> countries = Country.values;
-  final String title = 'Select Country';
-  final bool isSearchable = true;
-  final double minWidth = 150;
-  final EdgeInsetsGeometry titlePadding = const EdgeInsets.all(8);
-  final InputDecoration searchInputDecoration = const InputDecoration(
-    hintText: 'hintText',
-  );
-  final IconData icon = Icons.add;
+
   final Country initialValue = Country.afghanistan;
   final PickerMenuType menuType;
   final CountryPickerHeight pickerHeight;
@@ -27,27 +20,28 @@ class CountryPickerButtonMock extends StatelessWidget {
       EphoneFieldCallerChecker.mockOnValuePicked;
   BuildContext? ctx;
 
+  CountryPickerConfig get _config => CountryPickerConfig(
+        menuType: menuType,
+        pickerHeight:
+            menuType == PickerMenuType.page ? CountryPickerHeight.h100 : pickerHeight,
+        title: 'Select Country',
+        isSearchable: true,
+        buttonWidth: 150,
+        buttonIcon: Icons.add,
+        searchInputDecoration: const InputDecoration(hintText: 'hintText'),
+      );
+
+  IconData get icon => _config.buttonIcon;
+
   @override
   Widget build(BuildContext context) {
     ctx = context;
     return MaterialApp(
       home: Scaffold(
-        body: SizedBox(
-          child: CountryPickerButton(
-            countries: countries,
-            minWidth: minWidth,
-            icon: icon,
-            searchInputDecoration: searchInputDecoration,
-            title: title,
-            isSearchable: isSearchable,
-            titlePadding: titlePadding,
-            onValuePicked: onValuePicked,
-            initialValue: initialValue,
-            menuType: menuType,
-            pickerHeight: menuType == PickerMenuType.page
-                ? CountryPickerHeight.h100
-                : pickerHeight,
-          ),
+        body: CountryPickerButton(
+          selectedCountry: initialValue,
+          onValuePicked: onValuePicked,
+          config: _config,
         ),
       ),
     );

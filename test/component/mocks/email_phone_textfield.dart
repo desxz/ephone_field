@@ -38,8 +38,8 @@ class EPhoneFieldMock extends StatelessWidget {
           child: EPhoneField(
             controller: controller,
             initialValue: initialValue,
-            isSearchable: isSearchable,
-            emptyErrorText: emptyErrorText,
+            countryPicker: CountryPickerConfig(isSearchable: isSearchable),
+            labels: EPhoneFieldLabels(emptyErrorText: emptyErrorText),
             emailValidator: emailValidator,
             phoneValidator: phoneValidator,
             onChanged: onChanged,

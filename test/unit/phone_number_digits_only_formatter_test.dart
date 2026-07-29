@@ -1,4 +1,5 @@
 import 'package:ephone_field/ephone_field.dart';
+import 'package:ephone_field/src/formatters/phone_number_digits_only_formatter.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -73,5 +74,39 @@ void main() {
           .text,
       '1234567890',
     );
+  });
+
+  test('preserves selection when nothing is stripped', () {
+    final result = PhoneNumberDigitsOnlyFormatter(maskSplitCharacter: ' ')
+        .formatEditUpdate(
+      const TextEditingValue(
+        text: '4',
+        selection: TextSelection.collapsed(offset: 1),
+      ),
+      const TextEditingValue(
+        text: '41',
+        selection: TextSelection.collapsed(offset: 2),
+      ),
+    );
+
+    expect(result.text, '41');
+    expect(result.selection.baseOffset, 2);
+  });
+
+  test('maps selection when characters are stripped', () {
+    final result = PhoneNumberDigitsOnlyFormatter(maskSplitCharacter: ' ')
+        .formatEditUpdate(
+      const TextEditingValue(
+        text: '41',
+        selection: TextSelection.collapsed(offset: 2),
+      ),
+      const TextEditingValue(
+        text: '41a5',
+        selection: TextSelection.collapsed(offset: 4),
+      ),
+    );
+
+    expect(result.text, '415');
+    expect(result.selection.baseOffset, 3);
   });
 }

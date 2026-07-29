@@ -28,9 +28,6 @@ class _EphoneFieldDemoPageState extends State<EphoneFieldDemoPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _controller = TextEditingController();
 
-  PickerMenuType _menuType = PickerMenuType.bottomSheet;
-  Country _selectedCountry = Country.unitedStates;
-  EphoneFieldType _detectedType = EphoneFieldType.initial;
   String? _statusMessage;
 
   @override
@@ -42,8 +39,7 @@ class _EphoneFieldDemoPageState extends State<EphoneFieldDemoPage> {
   void _submit() {
     if (_formKey.currentState?.validate() ?? false) {
       setState(() {
-        _statusMessage =
-            'Valid ${_detectedType.name} input: ${_controller.text}';
+        _statusMessage = 'Valid input: ${_controller.text}';
       });
     } else {
       setState(() {
@@ -62,76 +58,34 @@ class _EphoneFieldDemoPageState extends State<EphoneFieldDemoPage> {
         child: ListView(
           padding: const EdgeInsets.all(20),
           children: [
-            DropdownButtonFormField<PickerMenuType>(
-              value: _menuType,
-              decoration: const InputDecoration(
-                labelText: 'Country picker style',
-                border: OutlineInputBorder(),
-              ),
-              items: const [
-                DropdownMenuItem(
-                  value: PickerMenuType.dialog,
-                  child: Text('Dialog'),
-                ),
-                DropdownMenuItem(
-                  value: PickerMenuType.bottomSheet,
-                  child: Text('Bottom sheet'),
-                ),
-                DropdownMenuItem(
-                  value: PickerMenuType.page,
-                  child: Text('Page'),
-                ),
-              ],
-              onChanged: (value) {
-                if (value != null) {
-                  setState(() => _menuType = value);
-                }
-              },
-            ),
-            const SizedBox(height: 16),
             Form(
               key: _formKey,
               child: EPhoneField(
                 controller: _controller,
-                title: 'Select Country',
-                menuType: _menuType,
-                pickerHeight: CountryPickerHeight.h50,
                 initialCountry: Country.turkey,
-                phoneNumberMaskSplitter: ' ',
-                emailValidator: Validators.compose([
-                  EmailValidators.email,
-                  (value) => value != null && value.endsWith('@blocked.com')
-                      ? 'Domain not allowed'
-                      : null,
-                ]),
-                phoneValidator: Validators.compose([
-                  PhoneValidators.phone,
-                  (value) {
-                    final digits = value?.replaceAll(RegExp(r'\D'), '') ?? '';
-                    if (digits.endsWith('55544445544')) {
-                      return 'This number is not allowed';
-                    }
-                    return null;
-                  },
-                ]),
-                onTypeChanged: (type) => setState(() => _detectedType = type),
-                onCountryChanged: (country) {
-                  setState(() => _selectedCountry = country);
-                },
+                countryPicker: const CountryPickerConfig(
+                  menuType: PickerMenuType.bottomSheet,
+                  title: 'Select Country',
+                ),
+                labels: const EPhoneFieldLabels(
+                  empty: 'Email or phone number',
+                  phone: 'Phone number',
+                ),
+                textInputAction: TextInputAction.done,
               ),
             ),
             const SizedBox(height: 16),
-            Text('Detected type: ${_detectedType.name}'),
-            Text(
-                'Selected country: ${_selectedCountry.name} (+${_selectedCountry.dialCode})'),
-            if (_statusMessage != null) ...[
-              const SizedBox(height: 8),
-              Text(_statusMessage!),
-            ],
+            if (_statusMessage != null) Text(_statusMessage!),
             const SizedBox(height: 16),
             FilledButton(
               onPressed: _submit,
               child: const Text('Validate'),
+            ),
+            const SizedBox(height: 32),
+            const Text(
+              'Advanced: compose validators or customize picker via '
+              'CountryPickerConfig.',
+              style: TextStyle(color: Colors.black54),
             ),
           ],
         ),
