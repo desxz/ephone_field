@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Builds and merges a fat static archive for the iOS CocoaPods target.
+# Builds every arch in $ARCHS and lipo-creates a universal OUT_LIB.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -20,47 +21,137 @@ case "${PLATFORM_NAME}" in
     ;;
 esac
 
-# Use the first arch for single-slice builds (Flutter usually builds one at a time).
-PRIMARY_ARCH="$(echo "${ARCHS}" | awk '{print $1}')"
-BUILD_DIR="${SCRIPT_DIR}/build/${PLATFORM_NAME}-${PRIMARY_ARCH}"
-mkdir -p "${BUILD_DIR}"
+# Normalize Xcode config names (Debug/Release).
+case "${CONFIGURATION}" in
+  Debug|debug) CONFIGURATION=Debug ;;
+  *) CONFIGURATION=Release ;;
+esac
 
 SDKROOT="$(xcrun --sdk "${SDK}" --show-sdk-path)"
 CMAKE_BIN="${CMAKE_BIN:-$(command -v cmake || true)}"
 if [[ -z "${CMAKE_BIN}" ]]; then
-  CMAKE_BIN="/Users/muratgun/Library/Android/sdk/cmake/3.22.1/bin/cmake"
+  for candidate in \
+    "/opt/homebrew/bin/cmake" \
+    "/usr/local/bin/cmake" \
+    "${HOME}/Library/Android/sdk/cmake/3.22.1/bin/cmake"
+  do
+    if [[ -x "${candidate}" ]]; then
+      CMAKE_BIN="${candidate}"
+      break
+    fi
+  done
 fi
-
-"${CMAKE_BIN}" -S "${SRC_DIR}" -B "${BUILD_DIR}" \
-  -G "Unix Makefiles" \
-  -DCMAKE_SYSTEM_NAME=iOS \
-  -DCMAKE_OSX_SYSROOT="${SDKROOT}" \
-  -DCMAKE_OSX_ARCHITECTURES="${PRIMARY_ARCH}" \
-  -DCMAKE_OSX_DEPLOYMENT_TARGET="${IPHONEOS_DEPLOYMENT_TARGET}" \
-  -DCMAKE_BUILD_TYPE="${CONFIGURATION}" \
-  -DEPHONE_USE_LIBPHONENUMBER=ON \
-  -DEPHONE_BUILD_SHARED_PLUGIN=OFF
-
-"${CMAKE_BIN}" --build "${BUILD_DIR}" --target ephone_phonenumber_stack -j "$(sysctl -n hw.ncpu 2>/dev/null || echo 4)"
-
-# Collect static archives that make up the stack (transitive deps are not
-# embedded in a STATIC library automatically).
-STACK_OBJ="$(find "${BUILD_DIR}" -name 'libephone_phonenumber_stack.a' | head -n 1)"
-if [[ -z "${STACK_OBJ}" ]]; then
-  echo "libephone_phonenumber_stack.a not found under ${BUILD_DIR}" >&2
+if [[ -z "${CMAKE_BIN}" ]]; then
+  echo "cmake not found; install CMake or set CMAKE_BIN" >&2
   exit 1
 fi
 
-ARCHIVES=()
-while IFS= read -r archive; do
-  ARCHIVES+=("${archive}")
-done < <(find "${BUILD_DIR}" -name '*.a' ! -name 'libephone_phonenumber_stack.a' | sort)
+LIBTOOL="${LIBTOOL:-/usr/bin/libtool}"
+LIPO="${LIPO:-/usr/bin/lipo}"
+JOBS="$(sysctl -n hw.ncpu 2>/dev/null || echo 4)"
 
 OUT_LIB="${SCRIPT_DIR}/build/libephone_phonenumber_stack-${PLATFORM_NAME}.a"
-TMP_MERGE="${BUILD_DIR}/merged_stack.a"
-rm -f "${TMP_MERGE}"
+mkdir -p "${SCRIPT_DIR}/build"
+rm -f "${OUT_LIB}"
 
-# libtool can merge multiple .a into one fat archive on Apple platforms.
-libtool -static -o "${TMP_MERGE}" "${STACK_OBJ}" "${ARCHIVES[@]}"
-cp -f "${TMP_MERGE}" "${OUT_LIB}"
+SLICE_LIBS=()
+
+# Protobuf (and some other CMake libs) emit both libfoo.a and libfood.a.
+# Merging both causes hundreds of duplicate symbols at link time.
+select_archives() {
+  local build_dir="$1"
+  local -a raw=()
+  while IFS= read -r archive; do
+    raw+=("${archive}")
+  done < <(
+    find "${build_dir}" -name '*.a' \
+      ! -name 'libephone_phonenumber_stack.a' \
+      ! -name 'merged_stack.a' \
+      ! -name 'libephone_phonenumber_stack-*.a' \
+      | sort
+  )
+
+  local -a selected=()
+  local archive base
+  for archive in "${raw[@]}"; do
+    base="$(basename "${archive}")"
+    if [[ "${CONFIGURATION}" == "Debug" ]]; then
+      # Prefer *d.a debug variants; skip the non-d twin when both exist.
+      if [[ "${base}" == "libprotobuf-lite.a" ]]; then
+        continue
+      fi
+    else
+      if [[ "${base}" == "libprotobuf-lited.a" ]]; then
+        continue
+      fi
+    fi
+    selected+=("${archive}")
+  done
+
+  if [[ ${#selected[@]} -eq 0 ]]; then
+    echo "No dependency archives found under ${build_dir}" >&2
+    exit 1
+  fi
+  printf '%s\n' "${selected[@]}"
+}
+
+build_slice() {
+  local arch="$1"
+  local build_dir="${SCRIPT_DIR}/build/${PLATFORM_NAME}-${arch}"
+  mkdir -p "${build_dir}"
+
+  "${CMAKE_BIN}" -S "${SRC_DIR}" -B "${build_dir}" \
+    -G "Unix Makefiles" \
+    -DCMAKE_SYSTEM_NAME=iOS \
+    -DCMAKE_OSX_SYSROOT="${SDKROOT}" \
+    -DCMAKE_OSX_ARCHITECTURES="${arch}" \
+    -DCMAKE_OSX_DEPLOYMENT_TARGET="${IPHONEOS_DEPLOYMENT_TARGET}" \
+    -DCMAKE_BUILD_TYPE="${CONFIGURATION}" \
+    -DEPHONE_USE_LIBPHONENUMBER=ON \
+    -DEPHONE_BUILD_SHARED_PLUGIN=OFF
+
+  "${CMAKE_BIN}" --build "${build_dir}" --target ephone_phonenumber_stack -j "${JOBS}"
+
+  local stack_obj
+  stack_obj="$(find "${build_dir}" -name 'libephone_phonenumber_stack.a' | head -n 1)"
+  if [[ -z "${stack_obj}" ]]; then
+    echo "libephone_phonenumber_stack.a not found under ${build_dir}" >&2
+    exit 1
+  fi
+
+  local tmp_merge="${build_dir}/merged_stack.a"
+  rm -f "${tmp_merge}"
+
+  local -a archives=()
+  while IFS= read -r archive; do
+    archives+=("${archive}")
+  done < <(select_archives "${build_dir}")
+
+  "${LIBTOOL}" -static -o "${tmp_merge}" "${stack_obj}" "${archives[@]}"
+
+  local slice_out="${SCRIPT_DIR}/build/libephone_phonenumber_stack-${PLATFORM_NAME}-${arch}.a"
+  cp -f "${tmp_merge}" "${slice_out}"
+  SLICE_LIBS+=("${slice_out}")
+  echo "Built slice ${slice_out} ($(wc -c < "${slice_out}") bytes)"
+}
+
+for arch in ${ARCHS}; do
+  if [[ "${arch}" == "i386" ]]; then
+    continue
+  fi
+  build_slice "${arch}"
+done
+
+if [[ ${#SLICE_LIBS[@]} -eq 0 ]]; then
+  echo "No architecture slices were built (ARCHS=${ARCHS})" >&2
+  exit 1
+fi
+
+if [[ ${#SLICE_LIBS[@]} -eq 1 ]]; then
+  cp -f "${SLICE_LIBS[0]}" "${OUT_LIB}"
+else
+  "${LIPO}" -create "${SLICE_LIBS[@]}" -output "${OUT_LIB}"
+fi
+
 echo "Installed ${OUT_LIB} ($(wc -c < "${OUT_LIB}") bytes)"
+"${LIPO}" -info "${OUT_LIB}" || true
