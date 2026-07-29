@@ -66,3 +66,5 @@ fi
 
 echo "Vendored slim libphonenumber ${VERSION} → third_party/libphonenumber"
 echo "Native builds always link Google libphonenumber."
+echo "Note: resources/metadata|geocoding|carrier are not linked by the plugin;"
+echo "      they are excluded from pub via .pubignore."

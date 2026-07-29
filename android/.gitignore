@@ -1,6 +1,6 @@
 *
-.classpath
-.project
-.local.properties
-.gradle/
-build/
+!.gitignore
+!build.gradle
+!settings.gradle
+!src/
+!src/**

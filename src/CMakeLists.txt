@@ -1,7 +1,7 @@
 # The Flutter tooling requires CMake 3.10+. libphonenumber deps need 3.14+.
 cmake_minimum_required(VERSION 3.14)
 
-project(ephone_field_library VERSION 0.2.0 LANGUAGES C CXX)
+project(ephone_field_library VERSION 0.0.3 LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

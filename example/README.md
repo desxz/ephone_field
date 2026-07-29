@@ -1,16 +1,21 @@
-# example
+# ephone_field example
 
-A new Flutter project.
+Demo app for [`ephone_field`](https://pub.dev/packages/ephone_field).
 
-## Getting Started
+## Run
 
-This project is a starting point for a Flutter application.
+```bash
+cd example
+flutter pub get
+flutter run
+```
 
-A few resources to get you started if this is your first Flutter project:
+Use an Android emulator/device or an iOS simulator. The first native build needs
+CMake (and network once for FetchContent). See the package
+[ARCHITECTURE](../doc/ARCHITECTURE.md) doc for prebuilds.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## What it shows
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- `EPhoneField` inside a `Form` (email/phone auto-detect)
+- Country picker via `CountryPickerConfig`
+- Validate / save using package default validators and E.164 mapping for phone

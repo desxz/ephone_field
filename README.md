@@ -1,57 +1,47 @@
 # EphoneField
-  
-  [![Github](https://img.shields.io/badge/github-desxz/ephone_field-purple.svg)](https://github.com/desxz/ephone_field)
-  [![pub package](https://img.shields.io/pub/v/ephone_field.svg)](https://pub.dartlang.org/packages/ephone_field)
-  [![Build Status](https://github.com/desxz/ephone_field/actions/workflows/main.yaml/badge.svg)](https://github.com/desxz/ephone_field/actions/workflows/main.yaml)
-  [![codecov](https://codecov.io/gh/desxz/ephone_field/graph/badge.svg?branch=main)](https://codecov.io/gh/desxz/ephone_field)
-  [![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](https://opensource.org/licenses/MIT)
 
-A versatile Flutter TextFormField widget for handling email and phone number input with ease.
+[![Github](https://img.shields.io/badge/github-desxz/ephone_field-purple.svg)](https://github.com/desxz/ephone_field)
+[![pub package](https://img.shields.io/pub/v/ephone_field.svg)](https://pub.dev/packages/ephone_field)
+[![Build Status](https://github.com/desxz/ephone_field/actions/workflows/main.yaml/badge.svg)](https://github.com/desxz/ephone_field/actions/workflows/main.yaml)
+[![codecov](https://codecov.io/gh/desxz/ephone_field/graph/badge.svg?branch=main)](https://codecov.io/gh/desxz/ephone_field)
+[![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](https://opensource.org/licenses/MIT)
 
-This custom TextField package simplifies the process of capturing email and phone number input
-in your Flutter applications. It offers real-time validation and user-friendly error handling (in dev),
-making it a valuable addition to any form or input-focused application. Whether you're building
-a sign-up form, a contact input screen, or anything in between, this package can save you time
-and effort by handling the intricacies of email and phone number input for you.
+A Flutter `TextFormField` for email **or** phone input in one field, with country
+picking and Google libphonenumber on Android/iOS.
 
 ## Features
 
-- Versatile: Handles email and phone number input
-- Masking: Automatically formats phone numbers as they are entered
-- Customizable: Customize the appearance of the widget to fit your application
-- Easy to use: Simply add the widget to your UI and let it handle the rest
-- Error handling: Provides real-time validation and user-friendly error handling (in dev)
-- Tested: Unit tests ensure that the widget works as expected
+- Auto-detects email vs phone as the user types
+- Phone AsYouType formatting and validation via bundled libphonenumber (FFI)
+- Country picker (bottom sheet, dialog, or full page)
+- Package default validators, or compose your own with `Validators.compose`
+- Emoji country flags by default (optional PNG assets)
 
-## Getting started
+## Requirements
 
-**Requirements:** Flutter 3.10+ and Dart 3.0+.
+- Flutter `>=3.10.0`, Dart `>=3.0.0 <4.0.0`
+- **Android and iOS only** (FFI plugin). Web/desktop are not supported; without
+  native libphonenumber, phone checks fall back to country length/mask metadata.
 
-**Supported platforms:** Android and iOS only (FFI plugin). Web/desktop are not
-supported — phone validation/formatting falls back to length checks without native
-libphonenumber.
+### Native build note
 
-**Native note:** First Android/iOS builds compile bundled libphonenumber (CMake;
-iOS may need CMake on `PATH`, e.g. `brew install cmake`). Maintainers can drop
-prebuilt stacks into `ios/prebuilt/` via `./tool/prebuild_ios.sh` so consumers
-skip CMake. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+The first Android/iOS build compiles Abseil, protobuf-lite, RE2, and libphonenumber
+with CMake (network once for FetchContent). On iOS, install CMake
+(`brew install cmake`) or place a prebuilt stack in `ios/prebuilt/`
+(see `tool/prebuild_ios.sh` and [doc/ARCHITECTURE.md](doc/ARCHITECTURE.md)).
 
-In the `pubspec.yaml` of your flutter project, add the following dependency:
+## Install
 
 ```yaml
 dependencies:
-  ephone_field: ^0.2.0
+  ephone_field: ^0.0.3
 ```
-
-Import it:
 
 ```dart
 import 'package:ephone_field/ephone_field.dart';
 ```
 
 ## Usage
-
-Install, import, drop in a form — defaults handle validation and phone formatting on Android/iOS:
 
 ```dart
 Form(
@@ -67,10 +57,9 @@ Form(
 )
 ```
 
-When `emailValidator` / `phoneValidator` are omitted, **package defaults** run.
+When `emailValidator` / `phoneValidator` are omitted, package defaults run.
 
 ```dart
-// Package rules + your extra conditions (compose)
 EPhoneField(
   emailValidator: Validators.compose([
     EmailValidators.email,
@@ -83,34 +72,28 @@ EPhoneField(
     (value) => value == '05554445544' ? 'This number is not allowed' : null,
   ]),
 )
-
-// Disable validation for a mode
-EPhoneField(
-  emailValidator: (_) => null,
-  phoneValidator: (_) => null,
-)
 ```
 
-Phone formatting uses Google **libphonenumber** AsYouType on Android/iOS (bundled with the plugin). Legacy mask formatting is used only when native libphonenumber is unavailable (for example unit tests without the plugin, or web).
+- Phone `onChanged` receives **national display** text.
+- E.164 mapping is used for `onSaved`, `onFieldSubmitted`, and phone validation.
+- Set `clearErrorOnChange: false` if you want sticky errors until the next
+  `Form.validate()`.
 
-`onChanged` receives national display text for phone mode. E.164 mapping is used for `onSaved`, `onFieldSubmitted`, and phone validation.
+### Country flags
 
-Maintainers can bump the vendored slim sources with:
+By default flags are emoji (`CountryPickerConfig.useFlagImages` is `false`).
+To use PNGs, declare the assets in **this package’s** `pubspec.yaml` and set
+`useFlagImages: true` (see comments in `pubspec.yaml`).
 
-```bash
-./tool/upgrade_libphonenumber.sh
-```
+### Country picker screenshots
+
+| Dialog | Bottom sheet | Page |
+| --- | --- | --- |
+| <img src="https://raw.githubusercontent.com/desxz/ephone_field/main/ephone-field-dialog.png" width="280"> | <img src="https://raw.githubusercontent.com/desxz/ephone_field/main/ephone-field-bottomsheet.png" width="280"> | <img src="https://raw.githubusercontent.com/desxz/ephone_field/main/ephone-field-page.png" width="280"> |
 
 <img src="https://raw.githubusercontent.com/desxz/ephone_field/main/ephone-field-show.gif" width="512">
 
-### EphoneField Country Picker Widgets
-
-| Dialog   | Bottom Sheet | Page     
-|---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------|---|
-| <img src="https://raw.githubusercontent.com/desxz/ephone_field/main/ephone-field-dialog.png" width="280"> | <img src="https://raw.githubusercontent.com/desxz/ephone_field/main/ephone-field-bottomsheet.png" width="280"> | <img src="https://raw.githubusercontent.com/desxz/ephone_field/main/ephone-field-page.png" width="280"> |
-
-
-## Additional information
+## Properties
 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
@@ -119,15 +102,15 @@ Maintainers can bump the vendored slim sources with:
 | initialValue | Initial text when no controller | `String?` | `null` |
 | initialType | Type before user types | `EphoneFieldType` | `initial` |
 | initialCountry | Default country | `Country` | `Country.unitedStates` |
-| countryPicker | Picker presentation & list | `CountryPickerConfig` | bottom sheet, searchable |
-| labels | Field labels & empty error | `EPhoneFieldLabels` | English defaults |
+| countryPicker | Picker presentation and list | `CountryPickerConfig` | bottom sheet, searchable |
+| labels | Field labels and empty error | `EPhoneFieldLabels` | English defaults |
 | decoration | Input decoration | `InputDecoration` | outlined |
 | autovalidateMode | Form autovalidate | `AutovalidateMode?` | `null` |
 | clearErrorOnChange | Clear error on text/country edit after failed validate | `bool` | `true` |
 | enabled / readOnly / autofocus | Interaction flags | `bool` | `true` / `false` / `false` |
 | textInputAction | Keyboard action | `TextInputAction?` | `null` |
 | textDirection / textAlignVertical | Text layout | optional | `null` |
-| autocorrect / enableSuggestions | IME behavior; phone defaults off | `bool?` | type-aware |
+| autocorrect / enableSuggestions | IME; phone defaults off | `bool?` | type-aware |
 | forceErrorText / errorBuilder | External validation UI | optional | `null` |
 | onChanged / onSaved / onFieldSubmitted | Form callbacks | callbacks | `null` |
 | onCountryChanged / onTypeChanged | Domain callbacks | callbacks | `null` |
@@ -135,4 +118,16 @@ Maintainers can bump the vendored slim sources with:
 | inputFormatters | Override formatters | `List<TextInputFormatter>?` | phone/email defaults |
 | typeResolver | Email vs phone detection | `EphoneFieldTypeResolver` | built-in |
 
-`CountryPickerConfig` groups `menuType`, `pickerHeight`, `isSearchable`, `title`, `buttonIcon`, `buttonWidth`, `countries`, and `useFlagImages` (default emoji; set `true` only if PNG assets are declared in the package pubspec).
+`CountryPickerConfig` groups `menuType`, `pickerHeight`, `isSearchable`, `title`,
+`buttonIcon`, `buttonWidth`, `countries`, and `useFlagImages`.
+
+## Maintainers
+
+Bump vendored slim libphonenumber sources:
+
+```bash
+./tool/upgrade_libphonenumber.sh
+```
+
+See [doc/ARCHITECTURE.md](doc/ARCHITECTURE.md) for the native build graph and
+prebuild workflow.

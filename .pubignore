@@ -1,0 +1,36 @@
+# Local / IDE
+.dart_tool/
+.packages
+.pub/
+build/
+**/doc/api/
+.idea/
+.vscode/
+*.iml
+.DS_Store
+.fvm/
+
+# Native build outputs (never publish)
+ios/build/
+android/.cxx/
+android/build/
+example/**/build/
+
+# Optional PNG flags (emoji is default; not declared as Flutter assets)
+assets/flags/
+
+# Unused libphonenumber resource trees (not linked by src/CMakeLists.txt)
+third_party/libphonenumber/resources/metadata/
+third_party/libphonenumber/resources/geocoding/
+third_party/libphonenumber/resources/carrier/
+third_party/libphonenumber/resources/test/
+third_party/libphonenumber/resources/PhoneNumberMetadataForTesting.xml
+
+# Maintainer-only / generated noise
+**/.git/
+ios/prebuilt/*.a
+*.a
+*.o
+*.so
+*.dylib
+*.xcframework/

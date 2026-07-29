@@ -3,7 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'ephone_field'
-  s.version          = '0.2.0'
+  s.version          = '0.0.3'
   s.summary          = 'Email/phone TextFormField with bundled Google libphonenumber.'
   s.description      = <<-DESC
 Email and phone Flutter field. Android/iOS builds include Google libphonenumber (C++)
@@ -11,7 +11,7 @@ via dart:ffi for validation, E.164 formatting, and as-you-type formatting.
                        DESC
   s.homepage         = 'https://github.com/desxz/ephone_field'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Murat Gun' => 'email@example.com' }
+  s.author           = { 'Murat Gun' => 'muratgun545@gmail.com' }
   s.source           = { :path => '.' }
 
   # Thin Obj-C/C++ shim kept so Flutter generates the ephone_field framework;
