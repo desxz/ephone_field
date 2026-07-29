@@ -48,5 +48,8 @@ flutter:
         ffiPlugin: true
       ios:
         ffiPlugin: true
-  assets:
-    - assets/flags/
+  # Flag PNGs live under assets/flags/ but are not bundled by default (emoji
+  # flags via CountryPickerConfig). To ship PNGs, add:
+  #   assets:
+  #     - assets/flags/
+  # and set CountryPickerConfig(useFlagImages: true).

@@ -10,7 +10,7 @@ class CountryCard extends StatelessWidget {
     super.key,
     required this.country,
     this.isSelected = false,
-    this.useFlagImages = true,
+    this.useFlagImages = false,
   });
 
   /// Country displayed in the row.

@@ -39,12 +39,20 @@ class Country {
   final int dialCode;
 
   /// Minimum national number length.
+  ///
+  /// Used only for length-based validation when native libphonenumber is
+  /// unavailable.
   final int minLength;
 
   /// Maximum national number length.
+  ///
+  /// Used for legacy input limiting / mask formatting when native as-you-type
+  /// is unavailable.
   final int maxLength;
 
   /// Input mask where `#` represents a digit.
+  ///
+  /// Legacy mask formatter path only; prefer native formatting on Android/iOS.
   final String mask;
 
   /// All supported countries.

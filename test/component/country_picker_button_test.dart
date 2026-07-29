@@ -33,11 +33,12 @@ void main() {
     expect(find.byIcon(mockWidget.icon), findsOneWidget);
   });
 
-  testWidgets('should CountryPickerButton widget renders correct image',
+  testWidgets('should CountryPickerButton widget renders flag emoji by default',
       (widgetTester) async {
     await widgetTester.pumpWidget(mockWidget);
 
-    expect(find.byType(Image), findsOneWidget);
+    expect(find.text(mockWidget.initialValue.flagEmoji), findsWidgets);
+    expect(find.byType(Image), findsNothing);
   });
 
   testWidgets(

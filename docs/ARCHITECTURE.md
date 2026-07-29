@@ -18,7 +18,7 @@ install alongside other Flutter plugins. Prefer small PRs over one mega-change.
 | 1 Install honesty | Done | pubspec Android/iOS only; iOS CI smoke; README + this doc |
 | 2 Native install reliability | In progress | ICU removed; prebuild path; iOS `ld -r` keeps only C API globals; CI/Releases prebuilt + collision smoke still open |
 | 3 Dart compact structure | Done (pass 1) | Capability flag; formatter merge; session inline; resolver in Validators; FFI dispose |
-| 4 Country/assets footprint | Partial | `useFlagImages` emoji option; catalog/mask split still open |
+| 4 Country/assets footprint | Partial | Emoji flags by default; PNGs not bundled; mask/min/max marked fallback-only (physical catalog split still optional) |
 | 5 Test/docs hygiene | Partial | Prefer public API; expand contract tests as Phase 2 lands |
 
 ## Phase 2 detail (native)
