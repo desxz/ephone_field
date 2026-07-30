@@ -33,13 +33,12 @@ via dart:ffi for validation, E.164 formatting, and as-you-type formatting.
 
   s.pod_target_xcconfig = {
     'DEFINES_MODULE' => 'YES',
-    # Prefer arm64 simulator on Apple Silicon. x86_64 is still produced when
-    # Xcode lists it in ARCHS (ios/cmake_build.sh lipo). Drop only i386.
-    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386',
+    # Apple Silicon simulators are arm64-only; our prebuilt stacks match that.
+    # Building x86_64 (Intel sim) would fail to force_load the arm64 archive.
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 x86_64',
     'CLANG_CXX_LANGUAGE_STANDARD' => 'c++17',
     'OTHER_CFLAGS' => '-DEPHONE_HAS_LIBPHONENUMBER=1',
     'OTHER_CPLUSPLUSFLAGS' => '-DEPHONE_HAS_LIBPHONENUMBER=1',
-    # Avoid linking inactive simulator slices (fixes arm64-only .a vs x86_64 link).
     'ONLY_ACTIVE_ARCH' => 'YES',
     'OTHER_LDFLAGS' => '$(inherited) -force_load "${PODS_TARGET_SRCROOT}/build/libephone_phonenumber_stack-${PLATFORM_NAME}.a" -lc++',
   }

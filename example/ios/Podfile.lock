@@ -1,5 +1,5 @@
 PODS:
-  - ephone_field (0.2.0):
+  - ephone_field (0.0.3):
     - Flutter
   - Flutter (1.0.0)
 
@@ -14,9 +14,9 @@ EXTERNAL SOURCES:
     :path: Flutter
 
 SPEC CHECKSUMS:
-  ephone_field: cdfc9d6e41f6d9832967fde640550a90377ac9ba
+  ephone_field: 81be43dd1112ce4ac9a2aa7868f835147b5d0b3e
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
 
-PODFILE CHECKSUM: 4f1c12611da7338d21589c0b2ecd6bd20b109694
+PODFILE CHECKSUM: 30752eba4463e92f56e4688025a3d1b5a0d5ef3d
 
 COCOAPODS: 1.16.2
