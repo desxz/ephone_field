@@ -10,7 +10,7 @@ class CountryCard extends StatelessWidget {
     super.key,
     required this.country,
     this.isSelected = false,
-    this.useFlagImages = false,
+    this.useFlagImages = true,
   });
 
   /// Country displayed in the row.
@@ -19,7 +19,7 @@ class CountryCard extends StatelessWidget {
   /// Whether this country is currently selected.
   final bool isSelected;
 
-  /// Whether to load PNG flag assets (vs emoji).
+  /// Whether to load PNG flag assets (vs emoji). Defaults to true.
   final bool useFlagImages;
 
   @override

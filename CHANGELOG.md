@@ -8,8 +8,8 @@
   `Validators.compose` / `andThen` for combining rules; `clearErrorOnChange` (default `true`).
 * Practical `TextFormField` pass-through (`enabled`, `readOnly`, `autofocus`, cursor,
   scroll, `forceErrorText`, etc.); phone-mode IME defaults disable autocorrect/suggestions.
-* Country picker: denser rows, themed search, full-width bottom sheet; emoji flags by
-  default (`useFlagImages: false`); PNG flags optional via package `pubspec` assets.
+* Country picker: denser rows, themed search, full-width bottom sheet; PNG flag
+  images by default (`useFlagImages: true`); set `false` for emoji-only.
 * Native graph: always links libphonenumber; dropped ICU; iOS `ld -r` keeps only
   `ephone_*` globals.
 * **Zero-friction install:** ships prebuilt iOS stacks (`ios/prebuilt/`) and Android

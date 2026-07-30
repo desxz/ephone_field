@@ -33,11 +33,29 @@ void main() {
     expect(find.byIcon(mockWidget.icon), findsOneWidget);
   });
 
-  testWidgets('should CountryPickerButton widget renders flag emoji by default',
+  testWidgets('should CountryPickerButton widget renders flag image by default',
       (widgetTester) async {
     await widgetTester.pumpWidget(mockWidget);
+    await widgetTester.pump();
 
-    expect(find.text(mockWidget.initialValue.flagEmoji), findsWidgets);
+    expect(find.byType(Image), findsWidgets);
+  });
+
+  testWidgets('should CountryPickerButton widget renders flag emoji when images off',
+      (widgetTester) async {
+    await widgetTester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: CountryPickerButton(
+            selectedCountry: Country.afghanistan,
+            onValuePicked: (_) {},
+            config: const CountryPickerConfig(useFlagImages: false),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.text(Country.afghanistan.flagEmoji), findsWidgets);
     expect(find.byType(Image), findsNothing);
   });
 

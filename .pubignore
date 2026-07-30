@@ -16,9 +16,6 @@ android/.cxx/
 android/build/
 example/**/build/
 
-# Optional PNG flags (emoji is default; not declared as Flutter assets)
-assets/flags/
-
 # Maintainer source tree — consumers use shipped prebuilt natives
 third_party/
 src/

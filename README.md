@@ -15,7 +15,7 @@ picking and Google libphonenumber on Android/iOS.
 - Phone AsYouType formatting and validation via bundled libphonenumber (FFI)
 - Country picker (bottom sheet, dialog, or full page)
 - Package default validators, or compose your own with `Validators.compose`
-- Emoji country flags by default (optional PNG assets)
+- Country picker with PNG flag images by default (emoji via `useFlagImages: false`)
 
 ## Requirements
 
@@ -77,9 +77,8 @@ EPhoneField(
 
 ### Country flags
 
-By default flags are emoji (`CountryPickerConfig.useFlagImages` is `false`).
-To use PNGs, declare the assets in **this package’s** `pubspec.yaml` and set
-`useFlagImages: true` (see comments in `pubspec.yaml`).
+By default flags use bundled PNG assets (`CountryPickerConfig.useFlagImages` is
+`true`). Set `useFlagImages: false` for emoji-only flags.
 
 ### Country picker screenshots
 
