@@ -10,8 +10,9 @@ import 'utils/caller_checker.dart';
 void main() {
   setUp(EphoneFieldCallerChecker.reset);
 
-  testWidgets('clears validation error when user edits after failed validate',
-      (tester) async {
+  testWidgets('clears validation error when user edits after failed validate', (
+    tester,
+  ) async {
     final formKey = GlobalKey<FormState>();
     await tester.pumpWidget(
       EPhoneFieldMock(
@@ -32,8 +33,9 @@ void main() {
     expect(find.text(EphoneFieldCallerChecker.mockEmptyError), findsNothing);
   });
 
-  testWidgets('keeps validation error when clearErrorOnChange is false',
-      (tester) async {
+  testWidgets('keeps validation error when clearErrorOnChange is false', (
+    tester,
+  ) async {
     final formKey = GlobalKey<FormState>();
     await tester.pumpWidget(
       MaterialApp(
@@ -64,39 +66,44 @@ void main() {
   });
 
   testWidgets(
-      'clears validation error when country changes after failed validate',
-      (tester) async {
-    final formKey = GlobalKey<FormState>();
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Scaffold(
-          body: Form(
-            key: formKey,
-            child: EPhoneField(
-              labels: EPhoneFieldLabels(
-                emptyErrorText: EphoneFieldCallerChecker.mockEmptyError,
+    'clears validation error when country changes after failed validate',
+    (tester) async {
+      final formKey = GlobalKey<FormState>();
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Form(
+              key: formKey,
+              child: EPhoneField(
+                labels: EPhoneFieldLabels(
+                  emptyErrorText: EphoneFieldCallerChecker.mockEmptyError,
+                ),
+                emailValidator: EphoneFieldCallerChecker.mockEmailValidator,
+                phoneValidator: EphoneFieldCallerChecker.mockPhoneValidator,
               ),
-              emailValidator: EphoneFieldCallerChecker.mockEmailValidator,
-              phoneValidator: EphoneFieldCallerChecker.mockPhoneValidator,
             ),
           ),
         ),
-      ),
-    );
+      );
 
-    await tester.enterText(find.byType(TextFormField), '5');
-    await tester.pump();
-    formKey.currentState!.validate();
-    await tester.pump();
-    expect(find.text(EphoneFieldCallerChecker.mockPhoneValidatorError),
-        findsOneWidget);
+      await tester.enterText(find.byType(TextFormField), '5');
+      await tester.pump();
+      formKey.currentState!.validate();
+      await tester.pump();
+      expect(
+        find.text(EphoneFieldCallerChecker.mockPhoneValidatorError),
+        findsOneWidget,
+      );
 
-    await tester.tap(find.byType(CountryPickerButton));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byType(CountryCard).first);
-    await tester.pumpAndSettle();
+      await tester.tap(find.byType(CountryPickerButton));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(CountryCard).first);
+      await tester.pumpAndSettle();
 
-    expect(find.text(EphoneFieldCallerChecker.mockPhoneValidatorError),
-        findsNothing);
-  });
+      expect(
+        find.text(EphoneFieldCallerChecker.mockPhoneValidatorError),
+        findsNothing,
+      );
+    },
+  );
 }

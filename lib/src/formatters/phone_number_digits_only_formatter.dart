@@ -16,9 +16,10 @@ class PhoneNumberDigitsOnlyFormatter extends TextInputFormatter {
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    final disallowed = maskSplitCharacter == null
-        ? RegExp(r'[^0-9]')
-        : RegExp('[^0-9${RegExp.escape(maskSplitCharacter!)}]');
+    final disallowed =
+        maskSplitCharacter == null
+            ? RegExp(r'[^0-9]')
+            : RegExp('[^0-9${RegExp.escape(maskSplitCharacter!)}]');
     final filtered = newValue.text.replaceAll(disallowed, '');
 
     // Preserve selection from a previous formatter (e.g. AsYouType) when
@@ -42,9 +43,10 @@ class PhoneNumberDigitsOnlyFormatter extends TextInputFormatter {
     required String filtered,
     required RegExp disallowed,
   }) {
-    final base = original.selection.isValid
-        ? original.selection.baseOffset.clamp(0, original.text.length)
-        : original.text.length;
+    final base =
+        original.selection.isValid
+            ? original.selection.baseOffset.clamp(0, original.text.length)
+            : original.text.length;
 
     final keptBefore =
         original.text.substring(0, base).replaceAll(disallowed, '').length;

@@ -76,8 +76,9 @@ void main() {
   });
 
   test('preserves selection when nothing is stripped', () {
-    final result = PhoneNumberDigitsOnlyFormatter(maskSplitCharacter: ' ')
-        .formatEditUpdate(
+    final result = PhoneNumberDigitsOnlyFormatter(
+      maskSplitCharacter: ' ',
+    ).formatEditUpdate(
       const TextEditingValue(
         text: '4',
         selection: TextSelection.collapsed(offset: 1),
@@ -93,8 +94,9 @@ void main() {
   });
 
   test('maps selection when characters are stripped', () {
-    final result = PhoneNumberDigitsOnlyFormatter(maskSplitCharacter: ' ')
-        .formatEditUpdate(
+    final result = PhoneNumberDigitsOnlyFormatter(
+      maskSplitCharacter: ' ',
+    ).formatEditUpdate(
       const TextEditingValue(
         text: '41',
         selection: TextSelection.collapsed(offset: 2),

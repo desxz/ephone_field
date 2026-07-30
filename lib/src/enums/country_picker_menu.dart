@@ -7,5 +7,5 @@ enum PickerMenuType {
   bottomSheet,
 
   /// Show the picker in an external page
-  page
+  page,
 }

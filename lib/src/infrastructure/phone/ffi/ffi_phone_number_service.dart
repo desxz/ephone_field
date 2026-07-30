@@ -8,11 +8,7 @@ import 'phone_number_bindings.dart';
 
 /// [PhoneNumberService] backed by the native `ephone_field` FFI library.
 class FfiPhoneNumberService implements PhoneNumberService {
-  FfiPhoneNumberService._(
-    this._bindings,
-    this._util,
-    this._usesLibPhoneNumber,
-  );
+  FfiPhoneNumberService._(this._bindings, this._util, this._usesLibPhoneNumber);
 
   final EphonePhoneBindings _bindings;
   final Pointer<EphonePhoneUtil> _util;
@@ -56,9 +52,7 @@ class FfiPhoneNumberService implements PhoneNumberService {
     if (Platform.isWindows) {
       return DynamicLibrary.open('$libName.dll');
     }
-    throw UnsupportedError(
-      'Unsupported platform: ${Platform.operatingSystem}',
-    );
+    throw UnsupportedError('Unsupported platform: ${Platform.operatingSystem}');
   }
 
   /// Native API version (hello round-trip).
@@ -116,20 +110,12 @@ class FfiPhoneNumberService implements PhoneNumberService {
 
   @override
   String? formatE164(String raw, {required String regionCode}) {
-    return _format(
-      raw,
-      regionCode,
-      _bindings.ephone_phone_format_e164,
-    );
+    return _format(raw, regionCode, _bindings.ephone_phone_format_e164);
   }
 
   @override
   String? formatNational(String raw, {required String regionCode}) {
-    return _format(
-      raw,
-      regionCode,
-      _bindings.ephone_phone_format_national,
-    );
+    return _format(raw, regionCode, _bindings.ephone_phone_format_national);
   }
 
   @override
@@ -153,7 +139,8 @@ class FfiPhoneNumberService implements PhoneNumberService {
       Pointer<Char>,
       Pointer<Char>,
       int,
-    ) formatFn,
+    )
+    formatFn,
   ) {
     return using((Arena arena) {
       final rawPtr = raw.toNativeUtf8(allocator: arena).cast<Char>();

@@ -101,10 +101,13 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
         final pickerHeight = _config.pickerHeight.height(dialogContext);
 
         return Dialog(
-          insetPadding:
-              const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          insetPadding: const EdgeInsets.symmetric(
+            horizontal: 24,
+            vertical: 24,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
           clipBehavior: Clip.antiAlias,
           child: SizedBox(
             width: double.maxFinite,
@@ -119,9 +122,7 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
                       alignment: AlignmentDirectional.centerStart,
                       child: Text(
                         _config.title!,
-                        style: Theme.of(dialogContext)
-                            .textTheme
-                            .titleLarge
+                        style: Theme.of(dialogContext).textTheme.titleLarge
                             ?.copyWith(fontWeight: FontWeight.w600),
                       ),
                     ),
@@ -150,11 +151,12 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
       isScrollControlled: true,
       useSafeArea: true,
       showDragHandle: true,
-      shape: _config.pickerHeight != CountryPickerHeight.h100
-          ? const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-            )
-          : null,
+      shape:
+          _config.pickerHeight != CountryPickerHeight.h100
+              ? const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+              )
+              : null,
       builder: (sheetContext) {
         final viewInsets = MediaQuery.viewInsetsOf(sheetContext);
         final availableHeight =
@@ -181,9 +183,10 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
       MaterialPageRoute<void>(
         builder: (pageContext) {
           return Scaffold(
-            appBar: _config.title == null
-                ? AppBar()
-                : AppBar(title: Text(_config.title!)),
+            appBar:
+                _config.title == null
+                    ? AppBar()
+                    : AppBar(title: Text(_config.title!)),
             body: _buildMenu(
               height: null,
               showTitle: false,

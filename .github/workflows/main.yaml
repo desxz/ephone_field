@@ -47,7 +47,8 @@ jobs:
           ./tool/assert_prebuilts.sh
 
       - name: Format check
-        run: dart format --set-exit-if-changed .
+        # Scope to package sources; avoid ios/build and other generated trees.
+        run: dart format --set-exit-if-changed lib test example
 
       - name: Analyze
         run: flutter analyze --no-fatal-infos

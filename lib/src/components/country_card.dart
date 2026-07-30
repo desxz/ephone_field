@@ -38,18 +38,15 @@ class CountryCard extends StatelessWidget {
     );
 
     return Material(
-      color: isSelected
-          ? scheme.primaryContainer.withValues(alpha: 0.35)
-          : Colors.transparent,
+      color:
+          isSelected
+              ? scheme.primaryContainer.withValues(alpha: 0.35)
+              : Colors.transparent,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
         child: Row(
           children: [
-            CountryFlag(
-              country: country,
-              size: 28,
-              useImage: useFlagImages,
-            ),
+            CountryFlag(country: country, size: 28, useImage: useFlagImages),
             const SizedBox(width: 12),
             Expanded(
               child: Column(

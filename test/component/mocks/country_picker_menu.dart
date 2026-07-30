@@ -5,9 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class CountryPickerMenuMock extends StatelessWidget {
-  CountryPickerMenuMock({
-    Key? key,
-  }) : super(key: key);
+  CountryPickerMenuMock({Key? key}) : super(key: key);
   final List<Country> countries = Country.values;
   final String title = 'title';
   final bool isSearchable = true;

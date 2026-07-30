@@ -14,79 +14,61 @@ void main() {
     expect(EphoneFieldType.initial.keyboardType, TextInputType.text);
   });
 
-  test(
-    'should EphoneFieldType inputFormatters match successfully',
-    () {
-      expect(
-        EphoneFieldType.email.inputFormatters(Country.unitedStates),
-        <TextInputFormatter>[],
-      );
-      expect(
-        EphoneFieldType.phone.inputFormatters(Country.unitedStates).length,
-        2,
-      );
-      expect(
-        EphoneFieldType.initial.inputFormatters(Country.unitedStates),
-        <TextInputFormatter>[],
-      );
-    },
-  );
+  test('should EphoneFieldType inputFormatters match successfully', () {
+    expect(
+      EphoneFieldType.email.inputFormatters(Country.unitedStates),
+      <TextInputFormatter>[],
+    );
+    expect(
+      EphoneFieldType.phone.inputFormatters(Country.unitedStates).length,
+      2,
+    );
+    expect(
+      EphoneFieldType.initial.inputFormatters(Country.unitedStates),
+      <TextInputFormatter>[],
+    );
+  });
 
-  test(
-    'should EphoneFieldType labelText match successfully',
-    () {
-      expect(
-        EphoneFieldType.email.labelText('empty', 'email', 'phone'),
-        'email',
-      );
-      expect(
-        EphoneFieldType.phone.labelText('empty', 'email', 'phone'),
-        'phone',
-      );
-      expect(
-        EphoneFieldType.initial.labelText('empty', 'email', 'phone'),
-        'empty',
-      );
-    },
-  );
+  test('should EphoneFieldType labelText match successfully', () {
+    expect(EphoneFieldType.email.labelText('empty', 'email', 'phone'), 'email');
+    expect(EphoneFieldType.phone.labelText('empty', 'email', 'phone'), 'phone');
+    expect(
+      EphoneFieldType.initial.labelText('empty', 'email', 'phone'),
+      'empty',
+    );
+  });
 
-  test(
-    'should email validator works successfully',
-    () {
-      final String? Function(String?)? emailValidator =
-          EphoneFieldType.email.validator(
-        (value) => value == 'email' ? null : 'error',
-        Country.unitedStates,
-        mapper,
-      );
+  test('should email validator works successfully', () {
+    final String? Function(String?)? emailValidator = EphoneFieldType.email
+        .validator(
+          (value) => value == 'email' ? null : 'error',
+          Country.unitedStates,
+          mapper,
+        );
 
-      expect(emailValidator!('email'), null);
-      expect(emailValidator(''), 'error');
-    },
-  );
+    expect(emailValidator!('email'), null);
+    expect(emailValidator(''), 'error');
+  });
 
-  test(
-    'should phone validator works successfully',
-    () {
-      final String? Function(String?)? phoneValidator =
-          EphoneFieldType.phone.validator(
-        (value) => value == '+1222333' ? null : 'error',
-        Country.unitedStates,
-        mapper,
-      );
+  test('should phone validator works successfully', () {
+    final String? Function(String?)? phoneValidator = EphoneFieldType.phone
+        .validator(
+          (value) => value == '+1222333' ? null : 'error',
+          Country.unitedStates,
+          mapper,
+        );
 
-      expect(phoneValidator!('222 333'), null);
-      expect(phoneValidator(''), 'error');
-    },
-  );
+    expect(phoneValidator!('222 333'), null);
+    expect(phoneValidator(''), 'error');
+  });
 
   test('should empty validator works successfully', () {
-    final String? Function(String?)? emptyValidator =
-        EphoneFieldType.initial.validator(
-      (value) => value == 'empty' ? null : 'error',
-      Country.unitedStates,
-      mapper,
-    );
+    final String? Function(String?)? emptyValidator = EphoneFieldType.initial
+        .validator(
+          (value) => value == 'empty' ? null : 'error',
+          Country.unitedStates,
+          mapper,
+        );
 
     expect(emptyValidator!('empty'), null);
     expect(emptyValidator(''), 'error');

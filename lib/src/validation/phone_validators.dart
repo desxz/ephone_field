@@ -32,7 +32,8 @@ abstract final class PhoneValidators {
     if (value == null || value.isEmpty) {
       return emptyMessage;
     }
-    final check = validityCheck ??
+    final check =
+        validityCheck ??
         PhoneValidityCheck.forService(
           service: context.phoneService,
           country: context.country,

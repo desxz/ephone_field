@@ -21,11 +21,12 @@ class CountryPickerMock extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: CountryPicker(
-            onValuePicked: onValuePicked,
-            itemBuilder: itemBuilder,
-            searchInputDecoration: searchInputDecoration,
-            isSearchable: isSearchable,
-            countries: countries),
+          onValuePicked: onValuePicked,
+          itemBuilder: itemBuilder,
+          searchInputDecoration: searchInputDecoration,
+          isSearchable: isSearchable,
+          countries: countries,
+        ),
       ),
     );
   }

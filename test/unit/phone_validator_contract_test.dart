@@ -5,8 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 import '../support/fake_phone_number_service.dart';
 
 void main() {
-  testWidgets('defaults validate email when validators omitted',
-      (tester) async {
+  testWidgets('defaults validate email when validators omitted', (
+    tester,
+  ) async {
     final key = GlobalKey<FormState>();
 
     await tester.pumpWidget(
@@ -26,8 +27,9 @@ void main() {
     expect(key.currentState!.validate(), isFalse);
   });
 
-  testWidgets('compose phone blocks number without PhoneNumberService API',
-      (tester) async {
+  testWidgets('compose phone blocks number without PhoneNumberService API', (
+    tester,
+  ) async {
     final service = FakePhoneNumberService(
       validNumbers: {'TR|55544445544', 'TR|9055544445544'},
     );
@@ -64,8 +66,9 @@ void main() {
     expect(find.text('This number is not allowed'), findsOneWidget);
   });
 
-  testWidgets('binding uses selected country for PhoneValidators.phone',
-      (tester) async {
+  testWidgets('binding uses selected country for PhoneValidators.phone', (
+    tester,
+  ) async {
     final service = FakePhoneNumberService(
       // Field text and dial-prefixed callback forms both appear in validation.
       validNumbers: {'US|4155552671', 'US|14155552671'},

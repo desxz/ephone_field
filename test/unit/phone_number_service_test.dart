@@ -25,14 +25,8 @@ void main() {
     });
 
     test('isValid matches configured keys', () {
-      expect(
-        service.isValid('415-555-2671', regionCode: 'us'),
-        isTrue,
-      );
-      expect(
-        service.isValid('4155550000', regionCode: 'US'),
-        isFalse,
-      );
+      expect(service.isValid('415-555-2671', regionCode: 'us'), isTrue);
+      expect(service.isValid('4155550000', regionCode: 'US'), isFalse);
     });
 
     test('isPossible is true for possible or valid', () {

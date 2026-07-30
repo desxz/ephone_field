@@ -65,9 +65,7 @@ class _EphoneFieldDemoPageState extends State<EphoneFieldDemoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Ephone Field Demo'),
-      ),
+      appBar: AppBar(title: const Text('Ephone Field Demo')),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(20),
@@ -133,10 +131,7 @@ class _EphoneFieldDemoPageState extends State<EphoneFieldDemoPage> {
             const SizedBox(height: 16),
             if (_statusMessage != null) Text(_statusMessage!),
             const SizedBox(height: 16),
-            FilledButton(
-              onPressed: _submit,
-              child: const Text('Validate'),
-            ),
+            FilledButton(onPressed: _submit, child: const Text('Validate')),
             const SizedBox(height: 32),
             Text(
               'Use the segmented control to switch picker presentation, then '

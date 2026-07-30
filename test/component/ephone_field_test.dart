@@ -61,8 +61,9 @@ void main() {
     expect(find.byType(CountryPickerButton), findsOneWidget);
   });
 
-  testWidgets('uses initialValue when no controller is provided',
-      (tester) async {
+  testWidgets('uses initialValue when no controller is provided', (
+    tester,
+  ) async {
     final formKey = GlobalKey<FormState>();
     await tester.pumpWidget(
       buildEphoneFieldTestApp(
@@ -95,8 +96,10 @@ void main() {
     await tester.pump();
 
     expect(EphoneFieldCallerChecker.isEmailValidatorCalled, isTrue);
-    expect(find.text(EphoneFieldCallerChecker.mockEmailValidatorError),
-        findsOneWidget);
+    expect(
+      find.text(EphoneFieldCallerChecker.mockEmailValidatorError),
+      findsOneWidget,
+    );
   });
 
   testWidgets('phone onChanged receives national display text', (tester) async {
@@ -133,8 +136,9 @@ void main() {
     expect(savedValue, '+15551234567');
   });
 
-  testWidgets('onCountryChanged is called when a country is selected',
-      (tester) async {
+  testWidgets('onCountryChanged is called when a country is selected', (
+    tester,
+  ) async {
     final formKey = GlobalKey<FormState>();
     await tester.pumpWidget(buildEphoneFieldTestApp(formKey: formKey));
 

@@ -12,7 +12,7 @@ class FakePhoneNumberService implements PhoneNumberService {
     this.supportsAsYouTypeFormatting = true,
     bool? supportsNativeValidation,
   }) : supportsNativeValidation =
-            supportsNativeValidation ?? supportsAsYouTypeFormatting;
+           supportsNativeValidation ?? supportsAsYouTypeFormatting;
 
   /// Raws (normalized key: digits only + region) treated as valid.
   final Set<String> validNumbers;

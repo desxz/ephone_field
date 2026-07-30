@@ -7,8 +7,9 @@ import '../support/fake_phone_number_service.dart';
 
 void main() {
   group('EPhoneField phone formatting', () {
-    testWidgets('keeps multiple digits when as-you-type is unavailable',
-        (tester) async {
+    testWidgets('keeps multiple digits when as-you-type is unavailable', (
+      tester,
+    ) async {
       final controller = TextEditingController();
 
       await tester.pumpWidget(
@@ -30,8 +31,9 @@ void main() {
       expect(controller.text, '12');
     });
 
-    testWidgets('uses as-you-type formatter when service supports it',
-        (tester) async {
+    testWidgets('uses as-you-type formatter when service supports it', (
+      tester,
+    ) async {
       final service = FakePhoneNumberService();
       final controller = TextEditingController();
 
@@ -55,8 +57,9 @@ void main() {
       expect(service.createdSessions, isNotEmpty);
     });
 
-    testWidgets('falls back to length and digits-only when AsYouType is off',
-        (tester) async {
+    testWidgets('falls back to length and digits-only when AsYouType is off', (
+      tester,
+    ) async {
       final service = FakePhoneNumberService(
         supportsAsYouTypeFormatting: false,
       );

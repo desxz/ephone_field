@@ -21,16 +21,17 @@ class CountryPickerButtonMock extends StatelessWidget {
   BuildContext? ctx;
 
   CountryPickerConfig get _config => CountryPickerConfig(
-        menuType: menuType,
-        pickerHeight: menuType == PickerMenuType.page
+    menuType: menuType,
+    pickerHeight:
+        menuType == PickerMenuType.page
             ? CountryPickerHeight.h100
             : pickerHeight,
-        title: 'Select Country',
-        isSearchable: true,
-        buttonWidth: 150,
-        buttonIcon: Icons.add,
-        searchInputDecoration: const InputDecoration(hintText: 'hintText'),
-      );
+    title: 'Select Country',
+    isSearchable: true,
+    buttonWidth: 150,
+    buttonIcon: Icons.add,
+    searchInputDecoration: const InputDecoration(hintText: 'hintText'),
+  );
 
   IconData get icon => _config.buttonIcon;
 

@@ -61,10 +61,14 @@ class CountryPickerConfig {
       filled: true,
       fillColor: scheme.surfaceContainerHighest,
       contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      border:
-          OutlineInputBorder(borderRadius: radius, borderSide: BorderSide.none),
-      enabledBorder:
-          OutlineInputBorder(borderRadius: radius, borderSide: BorderSide.none),
+      border: OutlineInputBorder(
+        borderRadius: radius,
+        borderSide: BorderSide.none,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: radius,
+        borderSide: BorderSide.none,
+      ),
       focusedBorder: OutlineInputBorder(
         borderRadius: radius,
         borderSide: BorderSide(color: scheme.primary, width: 2),

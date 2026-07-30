@@ -617,10 +617,7 @@ class _EPhoneFieldState extends State<EPhoneField> {
 
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: [
-        userPrefix,
-        countryButton,
-      ],
+      children: [userPrefix, countryButton],
     );
   }
 

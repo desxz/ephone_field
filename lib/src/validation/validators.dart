@@ -26,8 +26,7 @@ abstract final class Validators {
   static FormFieldValidator<String> andThen(
     FormFieldValidator<String> base,
     FormFieldValidator<String> extra,
-  ) =>
-      compose(<FormFieldValidator<String>>[base, extra]);
+  ) => compose(<FormFieldValidator<String>>[base, extra]);
 }
 
 /// Resolves the effective [FormFieldValidator] for an [EphoneFieldType].

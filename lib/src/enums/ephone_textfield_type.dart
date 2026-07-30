@@ -5,10 +5,8 @@ import '../formatters/formatters.dart';
 import 'country.dart';
 
 /// Detects whether the current input should be treated as email or phone.
-typedef EphoneFieldTypeResolver = EphoneFieldType Function(
-  String text,
-  EphoneFieldType initialType,
-);
+typedef EphoneFieldTypeResolver =
+    EphoneFieldType Function(String text, EphoneFieldType initialType);
 
 /// Default resolver: empty → [initialType], phone-like digits → phone, else email.
 EphoneFieldType defaultEphoneFieldTypeResolver(
@@ -33,12 +31,11 @@ String? _mapPhoneForCallback(
   String? value,
   Country country,
   PhoneOutputMapper mapper,
-) =>
-    mapper.mapForCallback(
-      raw: value,
-      regionCode: country.alpha2,
-      dialCode: country.dialCode,
-    );
+) => mapper.mapForCallback(
+  raw: value,
+  regionCode: country.alpha2,
+  dialCode: country.dialCode,
+);
 
 /// Sets the type of the [EPhoneField] widget.
 enum EphoneFieldType {
@@ -125,9 +122,8 @@ extension EphoneFieldTypeExtension on EphoneFieldType {
       case EphoneFieldType.email:
         return typeValidator;
       case EphoneFieldType.phone:
-        return (value) => typeValidator?.call(
-              _mapPhoneForCallback(value, country, mapper),
-            );
+        return (value) =>
+            typeValidator?.call(_mapPhoneForCallback(value, country, mapper));
     }
   }
 
@@ -143,8 +139,8 @@ extension EphoneFieldTypeExtension on EphoneFieldType {
         return onFieldSubmitted;
       case EphoneFieldType.phone:
         return (value) => onFieldSubmitted?.call(
-              _mapPhoneForCallback(value, country, mapper),
-            );
+          _mapPhoneForCallback(value, country, mapper),
+        );
     }
   }
 
@@ -159,9 +155,8 @@ extension EphoneFieldTypeExtension on EphoneFieldType {
       case EphoneFieldType.email:
         return onSaved;
       case EphoneFieldType.phone:
-        return (value) => onSaved?.call(
-              _mapPhoneForCallback(value, country, mapper),
-            );
+        return (value) =>
+            onSaved?.call(_mapPhoneForCallback(value, country, mapper));
     }
   }
 

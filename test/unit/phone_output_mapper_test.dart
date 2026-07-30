@@ -10,10 +10,7 @@ void main() {
   });
 
   test('dialCodeFallback returns null for empty input', () {
-    expect(
-      PhoneOutputMapper.dialCodeFallback(raw: '', dialCode: 93),
-      isNull,
-    );
+    expect(PhoneOutputMapper.dialCodeFallback(raw: '', dialCode: 93), isNull);
   });
 
   test('dialCodeFallback strips non-digit characters', () {
@@ -25,10 +22,7 @@ void main() {
 
   test('dialCodeFallback strips leading dial code for international paste', () {
     expect(
-      PhoneOutputMapper.dialCodeFallback(
-        raw: '+1 415 555 2671',
-        dialCode: 1,
-      ),
+      PhoneOutputMapper.dialCodeFallback(raw: '+1 415 555 2671', dialCode: 1),
       '+14155552671',
     );
     expect(

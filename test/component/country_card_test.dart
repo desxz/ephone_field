@@ -9,28 +9,32 @@ void main() {
   const Country country = Country.unitedStates;
   const Widget mockWidget = CountryCardMock(country: country);
 
-  testWidgets('should CountryCard widget renders successfully',
-      (widgetTester) async {
+  testWidgets('should CountryCard widget renders successfully', (
+    widgetTester,
+  ) async {
     await widgetTester.pumpWidget(mockWidget);
     expect(find.byType(CountryCard), findsOneWidget);
   });
 
-  testWidgets('should CountryCard widget renders correct title',
-      (widgetTester) async {
+  testWidgets('should CountryCard widget renders correct title', (
+    widgetTester,
+  ) async {
     await widgetTester.pumpWidget(mockWidget);
 
     expect(find.text(country.name), findsOneWidget);
   });
 
-  testWidgets('should CountryCard widget renders correct subtitle',
-      (widgetTester) async {
+  testWidgets('should CountryCard widget renders correct subtitle', (
+    widgetTester,
+  ) async {
     await widgetTester.pumpWidget(mockWidget);
 
     expect(find.text(country.alpha2), findsOneWidget);
   });
 
-  testWidgets('should CountryCard widget renders correct dial code',
-      (widgetTester) async {
+  testWidgets('should CountryCard widget renders correct dial code', (
+    widgetTester,
+  ) async {
     await widgetTester.pumpWidget(mockWidget);
 
     expect(find.text('+${country.dialCode}'), findsOneWidget);

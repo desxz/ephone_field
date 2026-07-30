@@ -82,12 +82,13 @@ class _CountryPickerState extends State<CountryPicker> {
     }
 
     setState(() {
-      _filteredCountries = widget.countries.where((country) {
-        return _normalize(country.alpha2).contains(text) ||
-            _normalize(country.alpha3).contains(text) ||
-            _normalize(country.name).contains(text) ||
-            country.dialCode.toString().contains(text);
-      }).toList();
+      _filteredCountries =
+          widget.countries.where((country) {
+            return _normalize(country.alpha2).contains(text) ||
+                _normalize(country.alpha3).contains(text) ||
+                _normalize(country.name).contains(text) ||
+                country.dialCode.toString().contains(text);
+          }).toList();
     });
   }
 
@@ -156,24 +157,25 @@ class _CountryPickerState extends State<CountryPicker> {
       children: [
         if (widget.isSearchable) _buildSearchField(),
         Expanded(
-          child: _filteredCountries.isEmpty
-              ? Center(
-                  child: Text(
-                    widget.emptyResultsText,
-                    style: Theme.of(context).textTheme.bodyMedium,
+          child:
+              _filteredCountries.isEmpty
+                  ? Center(
+                    child: Text(
+                      widget.emptyResultsText,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  )
+                  : ListView.builder(
+                    key: const Key('country-picker-list'),
+                    itemCount: _filteredCountries.length,
+                    itemBuilder: (context, index) {
+                      final country = _filteredCountries[index];
+                      return InkWell(
+                        onTap: () => _handleCountryTap(country),
+                        child: widget.itemBuilder(country),
+                      );
+                    },
                   ),
-                )
-              : ListView.builder(
-                  key: const Key('country-picker-list'),
-                  itemCount: _filteredCountries.length,
-                  itemBuilder: (context, index) {
-                    final country = _filteredCountries[index];
-                    return InkWell(
-                      onTap: () => _handleCountryTap(country),
-                      child: widget.itemBuilder(country),
-                    );
-                  },
-                ),
         ),
       ],
     );

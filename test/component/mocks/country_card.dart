@@ -9,11 +9,7 @@ class CountryCardMock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: SizedBox(
-          child: CountryCard(country: country),
-        ),
-      ),
+      home: Scaffold(body: SizedBox(child: CountryCard(country: country))),
     );
   }
 }

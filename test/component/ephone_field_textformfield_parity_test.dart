@@ -4,8 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('validator resolves field type from value not stale build type',
-      (tester) async {
+  testWidgets('validator resolves field type from value not stale build type', (
+    tester,
+  ) async {
     final key = GlobalKey<FormState>();
 
     await tester.pumpWidget(
@@ -31,11 +32,7 @@ void main() {
   testWidgets('phone mode disables autocorrect by default', (tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: Scaffold(
-          body: EPhoneField(
-            initialType: EphoneFieldType.phone,
-          ),
-        ),
+        home: Scaffold(body: EPhoneField(initialType: EphoneFieldType.phone)),
       ),
     );
 
@@ -49,11 +46,7 @@ void main() {
   testWidgets('email mode enables suggestions by default', (tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: Scaffold(
-          body: EPhoneField(
-            initialType: EphoneFieldType.email,
-          ),
-        ),
+        home: Scaffold(body: EPhoneField(initialType: EphoneFieldType.email)),
       ),
     );
 

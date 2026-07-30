@@ -9,8 +9,8 @@ class LibPhoneAsYouTypeFormatter extends TextInputFormatter {
   LibPhoneAsYouTypeFormatter({
     required PhoneNumberService service,
     required String regionCode,
-  })  : _service = service,
-        _regionCode = regionCode.toUpperCase();
+  }) : _service = service,
+       _regionCode = regionCode.toUpperCase();
 
   final PhoneNumberService _service;
   String _regionCode;
@@ -75,16 +75,10 @@ class LibPhoneAsYouTypeFormatter extends TextInputFormatter {
     _trackedDigits = newDigits;
 
     if (formatted.isEmpty && newDigits.isNotEmpty) {
-      return _selectionForDigits(
-        text: newDigits,
-        newValue: newValue,
-      );
+      return _selectionForDigits(text: newDigits, newValue: newValue);
     }
 
-    return _selectionForDigits(
-      text: formatted,
-      newValue: newValue,
-    );
+    return _selectionForDigits(text: formatted, newValue: newValue);
   }
 
   String _formatDigits({
@@ -97,7 +91,8 @@ class LibPhoneAsYouTypeFormatter extends TextInputFormatter {
       return '';
     }
 
-    final canAppend = newDigits.length > oldDigits.length &&
+    final canAppend =
+        newDigits.length > oldDigits.length &&
         newDigits.startsWith(oldDigits) &&
         _trackedDigits == oldDigits;
     if (canAppend) {
@@ -127,9 +122,10 @@ class LibPhoneAsYouTypeFormatter extends TextInputFormatter {
     required String text,
     required TextEditingValue newValue,
   }) {
-    final caretInNew = newValue.selection.isValid
-        ? newValue.selection.baseOffset.clamp(0, newValue.text.length)
-        : newValue.text.length;
+    final caretInNew =
+        newValue.selection.isValid
+            ? newValue.selection.baseOffset.clamp(0, newValue.text.length)
+            : newValue.text.length;
     final digitsBeforeCaret =
         newValue.text.substring(0, caretInNew).replaceAll(_nonDigit, '').length;
 

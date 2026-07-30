@@ -10,16 +10,18 @@ void main() {
     test('values contains every private country constant', () {
       final dataFile = File('lib/src/enums/country_data.dart');
       final source = dataFile.readAsStringSync();
-      final privateConstants = RegExp(r'const Country _(\w+) =')
-          .allMatches(source)
-          .map((match) => match.group(1))
-          .toSet();
+      final privateConstants =
+          RegExp(
+            r'const Country _(\w+) =',
+          ).allMatches(source).map((match) => match.group(1)).toSet();
 
       final valueAlpha2 =
           Country.values.map((country) => country.alpha2).toSet();
       expect(valueAlpha2.length, Country.values.length);
       expect(
-          privateConstants.length, greaterThanOrEqualTo(Country.values.length));
+        privateConstants.length,
+        greaterThanOrEqualTo(Country.values.length),
+      );
     });
 
     test('alpha2 codes are unique', () {
@@ -49,10 +51,7 @@ void main() {
     });
 
     test('macedonia is included in values', () {
-      expect(
-        Country.values.any((country) => country.alpha2 == 'MK'),
-        isTrue,
-      );
+      expect(Country.values.any((country) => country.alpha2 == 'MK'), isTrue);
     });
 
     test('united states dial code is 1', () {

@@ -35,9 +35,7 @@ void main() {
   group('PhoneValidators', () {
     test('phoneWith uses PhoneNumberService when available', () {
       final context = ValidationContext(
-        phoneService: FakePhoneNumberService(
-          validNumbers: {'TR|5321234567'},
-        ),
+        phoneService: FakePhoneNumberService(validNumbers: {'TR|5321234567'}),
         country: Country.turkey,
       );
       expect(PhoneValidators.phoneWith(null, context), isNotNull);
@@ -56,9 +54,7 @@ void main() {
 
     test('phone reads ValidationBinding', () {
       final context = ValidationContext(
-        phoneService: FakePhoneNumberService(
-          validNumbers: {'US|4155552671'},
-        ),
+        phoneService: FakePhoneNumberService(validNumbers: {'US|4155552671'}),
         country: Country.unitedStates,
       );
       ValidationBinding.run(context, () {
@@ -76,9 +72,10 @@ void main() {
     test('email compose runs package then extra', () {
       final composed = Validators.compose([
         EmailValidators.email,
-        (value) => value != null && value.endsWith('@blocked.com')
-            ? 'Domain not allowed'
-            : null,
+        (value) =>
+            value != null && value.endsWith('@blocked.com')
+                ? 'Domain not allowed'
+                : null,
       ]);
       expect(composed('bad'), isNotNull);
       expect(composed('user@blocked.com'), 'Domain not allowed');
@@ -87,9 +84,7 @@ void main() {
 
     test('phone compose with binding', () {
       final context = ValidationContext(
-        phoneService: FakePhoneNumberService(
-          validNumbers: {'TR|55544445544'},
-        ),
+        phoneService: FakePhoneNumberService(validNumbers: {'TR|55544445544'}),
         country: Country.turkey,
       );
       final composed = Validators.compose([

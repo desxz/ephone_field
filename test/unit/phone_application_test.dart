@@ -25,11 +25,7 @@ void main() {
     test('falls back to dial code concatenation', () {
       final mapper = PhoneOutputMapper(FakePhoneNumberService());
       expect(
-        mapper.mapForCallback(
-          raw: '532 123',
-          regionCode: 'TR',
-          dialCode: 90,
-        ),
+        mapper.mapForCallback(raw: '532 123', regionCode: 'TR', dialCode: 90),
         '+90532123',
       );
     });

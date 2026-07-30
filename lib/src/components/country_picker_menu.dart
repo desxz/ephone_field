@@ -69,9 +69,9 @@ class CountryPickerMenu extends StatelessWidget {
             padding: titlePadding,
             child: Text(
               title!,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
         Expanded(child: picker),

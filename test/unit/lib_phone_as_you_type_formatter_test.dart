@@ -146,10 +146,11 @@ void main() {
 
       expect(result.text.replaceAll(RegExp(r'\D'), ''), '49155');
       // Caret stays after 2 digits, not forced to end.
-      final digitsBefore = result.text
-          .substring(0, result.selection.baseOffset)
-          .replaceAll(RegExp(r'\D'), '')
-          .length;
+      final digitsBefore =
+          result.text
+              .substring(0, result.selection.baseOffset)
+              .replaceAll(RegExp(r'\D'), '')
+              .length;
       expect(digitsBefore, 2);
       expect(result.selection.baseOffset, lessThan(result.text.length));
     });

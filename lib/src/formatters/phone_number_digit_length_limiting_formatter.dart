@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 class PhoneNumberDigitLengthLimitingFormatter extends TextInputFormatter {
   /// Creates a formatter that keeps at most [maxDigits] digits.
   PhoneNumberDigitLengthLimitingFormatter(this.maxDigits)
-      : assert(maxDigits >= 0);
+    : assert(maxDigits >= 0);
 
   /// Maximum number of digits allowed.
   final int maxDigits;
@@ -35,9 +35,10 @@ class PhoneNumberDigitLengthLimitingFormatter extends TextInputFormatter {
     }
 
     final truncated = buffer.toString();
-    final base = newValue.selection.isValid
-        ? newValue.selection.baseOffset.clamp(0, newValue.text.length)
-        : newValue.text.length;
+    final base =
+        newValue.selection.isValid
+            ? newValue.selection.baseOffset.clamp(0, newValue.text.length)
+            : newValue.text.length;
     var digitsBefore =
         newValue.text.substring(0, base).replaceAll(_nonDigit, '').length;
     if (digitsBefore > maxDigits) {

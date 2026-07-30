@@ -484,15 +484,15 @@ class Country {
 
   @override
   int get hashCode => Object.hash(
-        name,
-        alpha2,
-        alpha3,
-        flagEmoji,
-        flagImagePath,
-        dialCode,
-        minLength,
-        maxLength,
-      );
+    name,
+    alpha2,
+    alpha3,
+    flagEmoji,
+    flagImagePath,
+    dialCode,
+    minLength,
+    maxLength,
+  );
 
   @override
   String toString() => 'Country($name, +$dialCode)';
