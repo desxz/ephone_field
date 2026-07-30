@@ -41,7 +41,8 @@ void main() {
     expect(find.byType(Image), findsWidgets);
   });
 
-  testWidgets('should CountryPickerButton widget renders flag emoji when images off',
+  testWidgets(
+      'should CountryPickerButton widget renders flag emoji when images off',
       (widgetTester) async {
     await widgetTester.pumpWidget(
       MaterialApp(

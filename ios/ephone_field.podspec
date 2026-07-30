@@ -18,6 +18,7 @@ via dart:ffi for validation, E.164 formatting, and as-you-type formatting.
   # real symbols come from the CMake static stack force-loaded below.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
+  s.static_framework = true
   s.dependency 'Flutter'
   s.platform = :ios, '12.0'
   s.libraries = 'c++'
@@ -39,7 +40,6 @@ via dart:ffi for validation, E.164 formatting, and as-you-type formatting.
     'CLANG_CXX_LANGUAGE_STANDARD' => 'c++17',
     'OTHER_CFLAGS' => '-DEPHONE_HAS_LIBPHONENUMBER=1',
     'OTHER_CPLUSPLUSFLAGS' => '-DEPHONE_HAS_LIBPHONENUMBER=1',
-    'ONLY_ACTIVE_ARCH' => 'YES',
     'OTHER_LDFLAGS' => '$(inherited) -force_load "${PODS_TARGET_SRCROOT}/build/libephone_phonenumber_stack-${PLATFORM_NAME}.a" -lc++',
   }
 

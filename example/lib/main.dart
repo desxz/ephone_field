@@ -118,7 +118,8 @@ class _EphoneFieldDemoPageState extends State<EphoneFieldDemoPage> {
                     initialType: EphoneFieldType.phone,
                     countryPicker: CountryPickerConfig(
                       menuType: _pickerMenuType,
-                      title: 'Select Country (${_pickerLabel(_pickerMenuType)})',
+                      title:
+                          'Select Country (${_pickerLabel(_pickerMenuType)})',
                     ),
                     labels: const EPhoneFieldLabels(
                       empty: 'Phone (picker demo)',

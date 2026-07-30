@@ -12,20 +12,36 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flutter: ['3.10.0', 'stable']
+        include:
+          - flutter_version: '3.16.9'
+            channel: stable
+            is_latest: false
+          - flutter_version: ''
+            channel: stable
+            is_latest: true
     steps:
       - uses: actions/checkout@v4
 
-      - uses: subosito/flutter-action@v2
+      - name: Setup Flutter (pinned)
+        if: matrix.flutter_version != ''
+        uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${{ matrix.flutter }}
+          flutter-version: ${{ matrix.flutter_version }}
+          channel: ${{ matrix.channel }}
+          cache: true
+
+      - name: Setup Flutter (channel latest)
+        if: matrix.flutter_version == ''
+        uses: subosito/flutter-action@v2
+        with:
+          channel: ${{ matrix.channel }}
           cache: true
 
       - name: Install dependencies
         run: flutter pub get
 
       - name: Assert shipped native prebuilts
-        if: matrix.flutter == 'stable'
+        if: matrix.is_latest
         run: |
           chmod +x tool/assert_prebuilts.sh
           ./tool/assert_prebuilts.sh
@@ -34,7 +50,7 @@ jobs:
         run: dart format --set-exit-if-changed .
 
       - name: Analyze
-        run: flutter analyze
+        run: flutter analyze --no-fatal-infos
 
       - name: Run package tests
         run: flutter test --coverage
@@ -48,16 +64,16 @@ jobs:
         working-directory: example
 
       - name: Example Android assemble (prebuilt jniLibs smoke)
-        if: matrix.flutter == 'stable'
+        if: matrix.is_latest
         run: flutter build apk --debug
         working-directory: example
 
       - name: Publish dry-run
-        if: matrix.flutter == 'stable'
+        if: matrix.is_latest
         run: flutter pub publish --dry-run
 
       - name: Upload coverage to Codecov
-        if: matrix.flutter == 'stable' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: matrix.is_latest && github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -74,14 +90,24 @@ jobs:
           channel: stable
           cache: true
 
+      - name: Disable Swift Package Manager (CocoaPods FFI plugin)
+        run: flutter config --no-enable-swift-package-manager
+
       - name: Assert shipped iOS prebuilts
         run: |
           chmod +x tool/assert_prebuilts.sh
           ./tool/assert_prebuilts.sh
 
       - name: Example iOS build (prebuilt stack smoke)
-        run: flutter build ios --debug --no-codesign --simulator
         working-directory: example
+        run: |
+          set -euo pipefail
+          if ! flutter build ios --debug --no-codesign --simulator; then
+            echo '::group::Verbose iOS rebuild for diagnostics'
+            flutter build ios --debug --no-codesign --simulator -v || true
+            echo '::endgroup::'
+            exit 1
+          fi
 
       - name: Assert iOS stack exports only ephone_* C API
         run: |

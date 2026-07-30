@@ -19,7 +19,7 @@ picking and Google libphonenumber on Android/iOS.
 
 ## Requirements
 
-- Flutter `>=3.10.0`, Dart `>=3.0.0 <4.0.0`
+- Flutter `>=3.16.0`, Dart `>=3.2.0 <4.0.0`
 - **Android and iOS only** (FFI plugin). Web/desktop are not supported; without
   native libphonenumber, phone checks fall back to country length metadata.
 

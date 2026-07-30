@@ -18,7 +18,7 @@
 * Slimmed vendored LPN tree (no metadata/geocoding/carrier/test resources); excluded
   from the pub tarball when prebuilts are present.
 * CI: assert shipped prebuilts; Android/iOS smoke; iOS export assert on CMake fallback.
-* Requires Flutter `>=3.10.0` and Dart `>=3.0.0 <4.0.0`.
+* Requires Flutter `>=3.16.0` and Dart `>=3.2.0 <4.0.0` (ffigen / CI floor).
 * Correctness and UX fixes from the unreleased tree: controller/focus ownership,
   `initialValue`, phone clear/`onChanged`, country data length alignment, picker a11y.
 * **Breaking:** removed deprecated aliases (`Country.macedonia` / `swaziland`,
