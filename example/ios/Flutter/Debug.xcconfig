@@ -1,2 +1,5 @@
 #include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"
 #include "Generated.xcconfig"
+// Keep arm64 simulator builds valid. Flutter may inject arm64 into
+// EXCLUDED_ARCHS after mistaking arm64e for arm64 (flutter/flutter#184056).
+EXCLUDED_ARCHS[sdk=iphonesimulator*]=i386 x86_64

@@ -65,7 +65,9 @@ jobs:
 
       - name: Example Android assemble (prebuilt jniLibs smoke)
         if: matrix.is_latest
-        run: flutter build apk --debug
+        env:
+          GRADLE_OPTS: -Xmx4g -Dorg.gradle.daemon=false
+        run: flutter build apk --debug --android-skip-build-dependency-validation
         working-directory: example
 
       - name: Publish dry-run

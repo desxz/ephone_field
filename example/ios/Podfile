@@ -40,8 +40,11 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
+    # Only the FFI pod excludes Intel sim slices (arm64-only prebuilts). Applying
+    # this to every pod can interact badly with Flutter's Generated.xcconfig
+    # EXCLUDED_ARCHS (arm64e→arm64 false positive on some Flutter versions).
+    next unless target.name == 'ephone_field'
     target.build_configurations.each do |config|
-      # Match ephone_field prebuilt arm64 simulator stacks on Apple Silicon.
       config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'i386 x86_64'
     end
   end
