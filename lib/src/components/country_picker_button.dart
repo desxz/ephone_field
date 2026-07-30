@@ -16,6 +16,7 @@ class CountryPickerButton extends StatefulWidget {
     required this.selectedCountry,
     required this.onValuePicked,
     this.config = const CountryPickerConfig(),
+    this.enabled = true,
   });
 
   /// Called when a country is selected.
@@ -27,6 +28,9 @@ class CountryPickerButton extends StatefulWidget {
   /// Picker presentation and list settings.
   final CountryPickerConfig config;
 
+  /// Whether the picker can be opened.
+  final bool enabled;
+
   @override
   State<CountryPickerButton> createState() => _CountryPickerButtonState();
 }
@@ -37,7 +41,7 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
   CountryPickerConfig get _config => widget.config;
 
   Future<void> _openPicker() async {
-    if (_isMenuOpen || !mounted) {
+    if (!widget.enabled || _isMenuOpen || !mounted) {
       return;
     }
     setState(() {
@@ -124,7 +128,10 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
                   ),
                 Expanded(
                   child: _buildMenu(
-                    height: pickerHeight,
+                    // Parent [Expanded] already bounds height; a nested
+                    // SizedBox(height: pickerHeight) would overflow when a
+                    // title consumes vertical space above.
+                    height: null,
                     showTitle: false,
                     context: dialogContext,
                   ),
@@ -197,11 +204,12 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
 
     return Semantics(
       button: true,
+      enabled: widget.enabled,
       label: 'Select country, current +${widget.selectedCountry.dialCode}',
       child: Tooltip(
         message: 'Select country',
         child: InkWell(
-          onTap: _openPicker,
+          onTap: widget.enabled ? _openPicker : null,
           child: Padding(
             padding: const EdgeInsetsDirectional.only(start: 8),
             child: ConstrainedBox(

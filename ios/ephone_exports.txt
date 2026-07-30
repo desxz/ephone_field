@@ -9,6 +9,7 @@ _ephone_phone_is_valid
 _ephone_phone_is_possible
 _ephone_phone_format_e164
 _ephone_phone_format_national
+_ephone_phone_parse
 _ephone_asyoutype_create
 _ephone_asyoutype_destroy
 _ephone_asyoutype_input_digit

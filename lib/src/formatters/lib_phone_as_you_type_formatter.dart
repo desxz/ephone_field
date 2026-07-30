@@ -17,6 +17,8 @@ class LibPhoneAsYouTypeFormatter extends TextInputFormatter {
   AsYouTypeSession? _session;
   String _trackedDigits = '';
 
+  static final RegExp _nonDigit = RegExp(r'\D');
+
   AsYouTypeSession _sessionForRegion() {
     if (_session != null) {
       return _session!;
@@ -39,13 +41,26 @@ class LibPhoneAsYouTypeFormatter extends TextInputFormatter {
     _trackedDigits = '';
   }
 
+  /// Formats [digits] for the current region (full rebuild).
+  String formatDigits(String digits) {
+    final national = digits.replaceAll(_nonDigit, '');
+    if (national.isEmpty) {
+      _sessionForRegion().clear();
+      _trackedDigits = '';
+      return '';
+    }
+    final formatted = _rebuildSession(_sessionForRegion(), national);
+    _trackedDigits = national;
+    return formatted;
+  }
+
   @override
   TextEditingValue formatEditUpdate(
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    final oldDigits = oldValue.text.replaceAll(RegExp(r'\D'), '');
-    final newDigits = newValue.text.replaceAll(RegExp(r'\D'), '');
+    final oldDigits = oldValue.text.replaceAll(_nonDigit, '');
+    final newDigits = newValue.text.replaceAll(_nonDigit, '');
 
     if (newDigits == _trackedDigits && newValue.text == oldValue.text) {
       return newValue;
@@ -60,10 +75,16 @@ class LibPhoneAsYouTypeFormatter extends TextInputFormatter {
     _trackedDigits = newDigits;
 
     if (formatted.isEmpty && newDigits.isNotEmpty) {
-      return _collapseToEnd(newDigits);
+      return _selectionForDigits(
+        text: newDigits,
+        newValue: newValue,
+      );
     }
 
-    return _collapseToEnd(formatted);
+    return _selectionForDigits(
+      text: formatted,
+      newValue: newValue,
+    );
   }
 
   String _formatDigits({
@@ -100,11 +121,41 @@ class LibPhoneAsYouTypeFormatter extends TextInputFormatter {
     return formatted;
   }
 
-  TextEditingValue _collapseToEnd(String text) {
+  /// Maps the caret from [newValue] onto [text] by counting digits before the
+  /// caret, so mid-string edits do not jump to the end.
+  TextEditingValue _selectionForDigits({
+    required String text,
+    required TextEditingValue newValue,
+  }) {
+    final caretInNew = newValue.selection.isValid
+        ? newValue.selection.baseOffset.clamp(0, newValue.text.length)
+        : newValue.text.length;
+    final digitsBeforeCaret =
+        newValue.text.substring(0, caretInNew).replaceAll(_nonDigit, '').length;
+
     return TextEditingValue(
       text: text,
-      selection: TextSelection.collapsed(offset: text.length),
+      selection: TextSelection.collapsed(
+        offset: _offsetForDigitCount(text, digitsBeforeCaret),
+      ),
     );
+  }
+
+  static int _offsetForDigitCount(String text, int digitCount) {
+    if (digitCount <= 0) {
+      return 0;
+    }
+    var seen = 0;
+    for (var i = 0; i < text.length; i++) {
+      final code = text.codeUnitAt(i);
+      if (code >= 0x30 && code <= 0x39) {
+        seen++;
+        if (seen == digitCount) {
+          return i + 1;
+        }
+      }
+    }
+    return text.length;
   }
 
   /// Releases the native/session resources.

@@ -17,6 +17,7 @@ class FfiPhoneNumberService implements PhoneNumberService {
   final EphonePhoneBindings _bindings;
   final Pointer<EphonePhoneUtil> _util;
   final bool _usesLibPhoneNumber;
+  bool _disposed = false;
 
   static const int _bufferSize = 64;
 
@@ -85,17 +86,32 @@ class FfiPhoneNumberService implements PhoneNumberService {
 
   @override
   PhoneParseResult? parse(String raw, {required String regionCode}) {
-    final e164 = formatE164(raw, regionCode: regionCode);
-    if (e164 == null) {
-      return null;
-    }
-    final national = formatNational(raw, regionCode: regionCode);
-    return PhoneParseResult(
-      e164: e164,
-      nationalNumber: (national ?? e164).replaceAll(RegExp(r'\D'), ''),
-      countryCode: 0,
-      regionCode: regionCode.toUpperCase(),
-    );
+    return using((Arena arena) {
+      final rawPtr = raw.toNativeUtf8(allocator: arena).cast<Char>();
+      final regionPtr = regionCode.toNativeUtf8(allocator: arena).cast<Char>();
+      final e164Out = arena<Uint8>(_bufferSize).cast<Char>();
+      final nationalOut = arena<Uint8>(_bufferSize).cast<Char>();
+      final countryCodeOut = arena<Int32>();
+      final ok = _bindings.ephone_phone_parse(
+        _util,
+        rawPtr,
+        regionPtr,
+        e164Out,
+        _bufferSize,
+        nationalOut,
+        _bufferSize,
+        countryCodeOut,
+      );
+      if (ok != 1) {
+        return null;
+      }
+      return PhoneParseResult(
+        e164: e164Out.cast<Utf8>().toDartString(),
+        nationalNumber: nationalOut.cast<Utf8>().toDartString(),
+        countryCode: countryCodeOut.value,
+        regionCode: regionCode.toUpperCase(),
+      );
+    });
   }
 
   @override
@@ -166,6 +182,10 @@ class FfiPhoneNumberService implements PhoneNumberService {
   /// Releases the native util handle.
   @override
   void dispose() {
+    if (_disposed) {
+      return;
+    }
+    _disposed = true;
     _bindings.ephone_phone_util_destroy(_util);
   }
 }
@@ -191,7 +211,7 @@ class _FfiAsYouTypeSession implements AsYouTypeSession {
       final out = arena<Uint8>(_bufferSize).cast<Char>();
       final ok = _bindings.ephone_asyoutype_input_digit(
         _session,
-        digit.codeUnitAt(0),
+        digit.runes.first,
         out,
         _bufferSize,
       );

@@ -1,6 +1,5 @@
 import 'package:ephone_field/src/domain/phone/phone.dart';
 import 'package:ephone_field/src/formatters/lib_phone_as_you_type_formatter.dart';
-import 'package:ephone_field/src/formatters/phone_number_digits_only_formatter.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -120,41 +119,51 @@ void main() {
       expect(result.text, '12');
     });
 
-    test('chained digits-only formatter keeps caret at end', () {
-      final asYouType = LibPhoneAsYouTypeFormatter(
+    test('preserves caret by digit index on mid-string edit', () {
+      final formatter = LibPhoneAsYouTypeFormatter(
         service: FakePhoneNumberService(),
         regionCode: 'US',
       );
-      addTearDown(asYouType.dispose);
-      final digitsOnly =
-          PhoneNumberDigitsOnlyFormatter(maskSplitCharacter: ' ');
+      addTearDown(formatter.dispose);
 
-      TextEditingValue apply(TextEditingValue old, TextEditingValue next) {
-        final formatted = asYouType.formatEditUpdate(old, next);
-        return digitsOnly.formatEditUpdate(old, formatted);
-      }
+      // Build "415 5"
+      formatter.formatEditUpdate(
+        const TextEditingValue(text: ''),
+        const TextEditingValue(text: '4155'),
+      );
 
-      var value = TextEditingValue.empty;
-      value = apply(value, const TextEditingValue(text: '4'));
-      expect(value.selection.baseOffset, value.text.length);
+      // Insert '9' after first digit: digits "49155" with caret after "49"
+      final result = formatter.formatEditUpdate(
+        const TextEditingValue(
+          text: '415 5',
+          selection: TextSelection.collapsed(offset: 1),
+        ),
+        const TextEditingValue(
+          text: '4915 5',
+          selection: TextSelection.collapsed(offset: 2),
+        ),
+      );
 
-      value = apply(
-          value,
-          TextEditingValue(
-            text: '${value.text}1',
-            selection: TextSelection.collapsed(offset: value.text.length + 1),
-          ));
-      expect(value.text, '41');
-      expect(value.selection.baseOffset, 2);
+      expect(result.text.replaceAll(RegExp(r'\D'), ''), '49155');
+      // Caret stays after 2 digits, not forced to end.
+      final digitsBefore = result.text
+          .substring(0, result.selection.baseOffset)
+          .replaceAll(RegExp(r'\D'), '')
+          .length;
+      expect(digitsBefore, 2);
+      expect(result.selection.baseOffset, lessThan(result.text.length));
+    });
 
-      value = apply(
-          value,
-          TextEditingValue(
-            text: '${value.text}5',
-            selection: TextSelection.collapsed(offset: value.text.length + 1),
-          ));
-      expect(value.text, '415');
-      expect(value.selection.baseOffset, 3);
+    test('formatDigits rebuilds for a new region', () {
+      final formatter = LibPhoneAsYouTypeFormatter(
+        service: FakePhoneNumberService(),
+        regionCode: 'US',
+      );
+      addTearDown(formatter.dispose);
+
+      expect(formatter.formatDigits('4155'), '415 5');
+      formatter.updateRegion('TR');
+      expect(formatter.formatDigits('532'), '532');
     });
   });
 }

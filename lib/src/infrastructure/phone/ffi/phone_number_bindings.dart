@@ -158,7 +158,7 @@ class EphonePhoneBindings {
       ffi.NativeFunction<
           ffi.Int32 Function(
               ffi.Pointer<EphoneAsYouType>,
-              ffi.Char,
+              ffi.Int32,
               ffi.Pointer<ffi.Char>,
               ffi.Int32)>>('ephone_asyoutype_input_digit');
   late final _ephone_asyoutype_input_digit =
@@ -168,11 +168,11 @@ class EphonePhoneBindings {
 
   int ephone_asyoutype_input_digit(
     ffi.Pointer<EphoneAsYouType> session,
-    int digit,
+    int code_point,
     ffi.Pointer<ffi.Char> out,
     int out_len,
   ) =>
-      _ephone_asyoutype_input_digit(session, digit, out, out_len);
+      _ephone_asyoutype_input_digit(session, code_point, out, out_len);
 
   late final _ephone_asyoutype_clearPtr = _lookup<
           ffi.NativeFunction<ffi.Void Function(ffi.Pointer<EphoneAsYouType>)>>(
@@ -182,6 +182,49 @@ class EphonePhoneBindings {
 
   void ephone_asyoutype_clear(ffi.Pointer<EphoneAsYouType> session) =>
       _ephone_asyoutype_clear(session);
+
+  late final _ephone_phone_parsePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<EphonePhoneUtil>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>,
+              ffi.Int32,
+              ffi.Pointer<ffi.Char>,
+              ffi.Int32,
+              ffi.Pointer<ffi.Int32>)>>('ephone_phone_parse');
+  late final _ephone_phone_parse = _ephone_phone_parsePtr.asFunction<
+      int Function(
+          ffi.Pointer<EphonePhoneUtil>,
+          ffi.Pointer<ffi.Char>,
+          ffi.Pointer<ffi.Char>,
+          ffi.Pointer<ffi.Char>,
+          int,
+          ffi.Pointer<ffi.Char>,
+          int,
+          ffi.Pointer<ffi.Int32>)>();
+
+  int ephone_phone_parse(
+    ffi.Pointer<EphonePhoneUtil> util,
+    ffi.Pointer<ffi.Char> raw,
+    ffi.Pointer<ffi.Char> region_code,
+    ffi.Pointer<ffi.Char> e164_out,
+    int e164_len,
+    ffi.Pointer<ffi.Char> national_out,
+    int national_len,
+    ffi.Pointer<ffi.Int32> country_code_out,
+  ) =>
+      _ephone_phone_parse(
+        util,
+        raw,
+        region_code,
+        e164_out,
+        e164_len,
+        national_out,
+        national_len,
+        country_code_out,
+      );
 }
 
 final class EphonePhoneUtil extends ffi.Opaque {}

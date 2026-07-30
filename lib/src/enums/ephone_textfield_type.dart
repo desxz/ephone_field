@@ -68,8 +68,9 @@ extension EphoneFieldTypeExtension on EphoneFieldType {
 
   /// Returns input formatters for this field type.
   ///
-  /// Phone mode limits length and strips non-digits. Prefer native AsYouType
-  /// via [EPhoneField] when libphonenumber is available.
+  /// Phone mode strips non-digits and limits by national digit count (not
+  /// character length). Prefer native AsYouType via [EPhoneField] when
+  /// libphonenumber is available.
   List<TextInputFormatter> inputFormatters(Country country) {
     switch (this) {
       case EphoneFieldType.initial:
@@ -77,8 +78,8 @@ extension EphoneFieldTypeExtension on EphoneFieldType {
         return const [];
       case EphoneFieldType.phone:
         return [
-          LengthLimitingTextInputFormatter(country.maxLength),
           PhoneNumberDigitsOnlyFormatter(),
+          PhoneNumberDigitLengthLimitingFormatter(country.maxLength),
         ];
     }
   }

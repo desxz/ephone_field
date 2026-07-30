@@ -62,14 +62,27 @@ EPHONE_FFI_EXPORT EphoneAsYouType* ephone_asyoutype_create(
 
 EPHONE_FFI_EXPORT void ephone_asyoutype_destroy(EphoneAsYouType* session);
 
-/// Feeds one character; writes formatted output into [out]. Returns 1 on success.
+/// Feeds one Unicode code point; writes formatted output into [out].
+/// Returns 1 on success.
 EPHONE_FFI_EXPORT int32_t ephone_asyoutype_input_digit(
     EphoneAsYouType* session,
-    char digit,
+    int32_t code_point,
     char* out,
     int32_t out_len);
 
 EPHONE_FFI_EXPORT void ephone_asyoutype_clear(EphoneAsYouType* session);
+
+/// Parses [raw] for [region_code]. On success writes E.164, national digits,
+/// and ITU country calling code. Returns 1 on success, 0 on failure.
+EPHONE_FFI_EXPORT int32_t ephone_phone_parse(
+    EphonePhoneUtil* util,
+    const char* raw,
+    const char* region_code,
+    char* e164_out,
+    int32_t e164_len,
+    char* national_out,
+    int32_t national_len,
+    int32_t* country_code_out);
 
 #ifdef __cplusplus
 }  // extern "C"

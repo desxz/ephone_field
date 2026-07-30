@@ -39,6 +39,13 @@ if [[ -f "${PREBUILT_LIB}" && "${EPHONE_FORCE_CMAKE:-0}" != "1" ]]; then
   exit 0
 fi
 
+if [[ ! -f "${SRC_DIR}/CMakeLists.txt" ]]; then
+  echo "ephone_field: prebuilt archive missing (${PREBUILT_LIB}) and source tree" >&2
+  echo "  not present at ${SRC_DIR}. Reinstall the package from pub.dev, or as a" >&2
+  echo "  maintainer run ./tool/prebuild_ios.sh --all." >&2
+  exit 1
+fi
+
 SDKROOT="$(xcrun --sdk "${SDK}" --show-sdk-path)"
 CMAKE_BIN="${CMAKE_BIN:-$(command -v cmake || true)}"
 if [[ -z "${CMAKE_BIN}" ]]; then

@@ -21,8 +21,22 @@ rootProject.allprojects {
 
 apply plugin: "com.android.library"
 
-def prebuiltArm64 = file("src/main/jniLibs/arm64-v8a/libephone_field.so")
-def usePrebuiltNatives = prebuiltArm64.exists()
+def requiredAbis = ["arm64-v8a", "armeabi-v7a", "x86_64"]
+def prebuiltMissing = requiredAbis.findAll { abi ->
+    !file("src/main/jniLibs/${abi}/libephone_field.so").exists()
+}
+def usePrebuiltNatives = prebuiltMissing.isEmpty()
+def cmakeLists = file("../src/CMakeLists.txt")
+def canBuildFromSource = cmakeLists.exists()
+
+if (!usePrebuiltNatives && !canBuildFromSource) {
+    throw new GradleException(
+        "ephone_field: missing prebuilt jniLibs (" +
+            prebuiltMissing.join(", ") +
+            ") and no src/CMakeLists.txt. Reinstall the package from pub.dev, " +
+            "or as a maintainer run ./tool/prebuild_android.sh."
+    )
+}
 
 android {
     namespace = "com.desxz.ephone_field"
@@ -59,7 +73,6 @@ android {
         }
     }
 
-    // Prefer the ABIs we ship as prebuilts when present.
     packaging {
         jniLibs {
             useLegacyPackaging = false

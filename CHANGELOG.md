@@ -25,6 +25,11 @@
   `CountryPickerHeigth`, `PhoneNumberDigistOnlyFormatter`).
 * **Breaking:** removed `PhoneNumberMaskFormatter`, `EPhoneField.phoneNumberMaskSplitter`,
   and `Country.mask`. Without native AsYouType, phone input uses length limit + digits-only.
+* Must-fix: disabled/readOnly blocks country picker; dial-code fallback no longer doubles
+  pasted international numbers; dialog picker height overflow; controller swap resyncs type;
+  AsYouType caret preservation; country change reformats; digit-count length limit; FFI
+  dispose idempotent; `parse()` returns real country code; AsYouType accepts Unicode code
+  points; clear errors when prebuilts are missing from a published layout.
 
 ## 0.0.2
 

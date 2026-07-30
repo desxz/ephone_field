@@ -334,6 +334,7 @@ class _EPhoneFieldState extends State<EPhoneField> {
       }
       _bindController(widget.controller);
       _controller.addListener(_controllerListener);
+      _syncTypeFromText();
     }
 
     if (widget.focusNode != oldWidget.focusNode) {
@@ -581,11 +582,9 @@ class _EPhoneFieldState extends State<EPhoneField> {
         service: _phoneService,
         regionCode: _selectedCountry.alpha2,
       );
-      // Allow spaces produced by AsYouType while stripping other junk.
-      _cachedFormatters = <TextInputFormatter>[
-        _libPhoneFormatter!,
-        PhoneNumberDigitsOnlyFormatter(maskSplitCharacter: ' '),
-      ];
+      // AsYouType already emits a formatted national string; do not strip
+      // punctuation with DigitsOnly (that fights dashes/parens).
+      _cachedFormatters = <TextInputFormatter>[_libPhoneFormatter!];
     } else {
       _cachedFormatters = type.inputFormatters(_selectedCountry);
     }
@@ -608,6 +607,7 @@ class _EPhoneFieldState extends State<EPhoneField> {
       selectedCountry: _selectedCountry,
       onValuePicked: _handleCountryPicked,
       config: widget.countryPicker,
+      enabled: widget.enabled && !widget.readOnly,
     );
 
     final userPrefix = widget.decoration.prefixIcon;
@@ -635,6 +635,7 @@ class _EPhoneFieldState extends State<EPhoneField> {
       } else {
         _invalidateFormatterCache();
       }
+      _reformatPhoneForSelectedCountry();
     });
     widget.onCountryChanged?.call(country);
     _maybeClearValidationError();
@@ -643,6 +644,38 @@ class _EPhoneFieldState extends State<EPhoneField> {
         _focusNode.requestFocus();
       }
     });
+  }
+
+  /// Re-applies formatting for the new region so display matches validation.
+  void _reformatPhoneForSelectedCountry() {
+    if (_resolvedType != EphoneFieldType.phone) {
+      return;
+    }
+    final digits = _controller.text.replaceAll(RegExp(r'\D'), '');
+    if (digits.isEmpty) {
+      return;
+    }
+
+    if (_libPhoneFormatter != null && _shouldUseLibPhoneFormatting) {
+      final formatted = _libPhoneFormatter!.formatDigits(digits);
+      if (formatted != _controller.text) {
+        _controller.value = TextEditingValue(
+          text: formatted,
+          selection: TextSelection.collapsed(offset: formatted.length),
+        );
+      }
+      return;
+    }
+
+    final maxLen = _selectedCountry.maxLength;
+    final limited =
+        digits.length > maxLen ? digits.substring(0, maxLen) : digits;
+    if (limited != _controller.text) {
+      _controller.value = TextEditingValue(
+        text: limited,
+        selection: TextSelection.collapsed(offset: limited.length),
+      );
+    }
   }
 
   void _invalidateFormatterCache() {

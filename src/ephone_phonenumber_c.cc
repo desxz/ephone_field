@@ -198,7 +198,7 @@ EPHONE_FFI_EXPORT void ephone_asyoutype_destroy(EphoneAsYouType* session) {
 
 EPHONE_FFI_EXPORT int32_t ephone_asyoutype_input_digit(
     EphoneAsYouType* session,
-    char digit,
+    int32_t code_point,
     char* out,
     int32_t out_len) {
   if (session == nullptr || out == nullptr || out_len <= 0) {
@@ -209,10 +209,10 @@ EPHONE_FFI_EXPORT int32_t ephone_asyoutype_input_digit(
     return 0;
   }
   std::string formatted;
-  session->formatter->InputDigit(digit, &formatted);
+  session->formatter->InputDigit(code_point, &formatted);
   return CopyToBuffer(formatted, out, out_len) ? 1 : 0;
 #else
-  (void)digit;
+  (void)code_point;
   out[0] = '\0';
   return 1;
 #endif
@@ -226,6 +226,49 @@ EPHONE_FFI_EXPORT void ephone_asyoutype_clear(EphoneAsYouType* session) {
   if (session->formatter != nullptr) {
     session->formatter->Clear();
   }
+#endif
+}
+
+EPHONE_FFI_EXPORT int32_t ephone_phone_parse(
+    EphonePhoneUtil* util,
+    const char* raw,
+    const char* region_code,
+    char* e164_out,
+    int32_t e164_len,
+    char* national_out,
+    int32_t national_len,
+    int32_t* country_code_out) {
+  if (util == nullptr || raw == nullptr || region_code == nullptr ||
+      e164_out == nullptr || national_out == nullptr ||
+      country_code_out == nullptr || e164_len <= 0 || national_len <= 0) {
+    return 0;
+  }
+#if defined(EPHONE_HAS_LIBPHONENUMBER)
+  PhoneNumber number;
+  const auto error = util->util->Parse(raw, region_code, &number);
+  if (error != PhoneNumberUtil::NO_PARSING_ERROR) {
+    return 0;
+  }
+  std::string e164;
+  util->util->Format(number, PhoneNumberUtil::E164, &e164);
+  std::string national;
+  util->util->GetNationalSignificantNumber(number, &national);
+  if (!CopyToBuffer(e164, e164_out, e164_len) ||
+      !CopyToBuffer(national, national_out, national_len)) {
+    return 0;
+  }
+  *country_code_out = number.has_country_code() ? number.country_code() : 0;
+  return 1;
+#else
+  (void)util;
+  (void)raw;
+  (void)region_code;
+  (void)e164_out;
+  (void)e164_len;
+  (void)national_out;
+  (void)national_len;
+  (void)country_code_out;
+  return 0;
 #endif
 }
 

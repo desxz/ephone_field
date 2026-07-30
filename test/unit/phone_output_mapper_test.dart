@@ -22,4 +22,28 @@ void main() {
       '+12223334444',
     );
   });
+
+  test('dialCodeFallback strips leading dial code for international paste', () {
+    expect(
+      PhoneOutputMapper.dialCodeFallback(
+        raw: '+1 415 555 2671',
+        dialCode: 1,
+      ),
+      '+14155552671',
+    );
+    expect(
+      PhoneOutputMapper.dialCodeFallback(
+        raw: '00 90 532 123 4567',
+        dialCode: 90,
+      ),
+      '+905321234567',
+    );
+  });
+
+  test('dialCodeFallback still prepends for national digits', () {
+    expect(
+      PhoneOutputMapper.dialCodeFallback(raw: '4155552671', dialCode: 1),
+      '+14155552671',
+    );
+  });
 }
