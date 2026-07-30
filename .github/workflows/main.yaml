@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - flutter_version: '3.27.4'
+          - flutter_version: '3.41.4'
             channel: stable
             is_latest: false
           - flutter_version: ''
