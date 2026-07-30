@@ -8,7 +8,7 @@ void main() {
   testWidgets('demo renders the email/phone field', (tester) async {
     await tester.pumpWidget(const EphoneFieldDemoApp());
     expect(find.text('Ephone Field Demo'), findsOneWidget);
-    expect(find.byType(EPhoneField), findsOneWidget);
+    expect(find.byType(EPhoneField), findsNWidgets(2));
     expect(find.text('Validate'), findsOneWidget);
   });
 }

@@ -27,12 +27,15 @@ class EphoneFieldDemoPage extends StatefulWidget {
 class _EphoneFieldDemoPageState extends State<EphoneFieldDemoPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _controller = TextEditingController();
+  final TextEditingController _pickerDemoController = TextEditingController();
 
+  PickerMenuType _pickerMenuType = PickerMenuType.dialog;
   String? _statusMessage;
 
   @override
   void dispose() {
     _controller.dispose();
+    _pickerDemoController.dispose();
     super.dispose();
   }
 
@@ -48,6 +51,17 @@ class _EphoneFieldDemoPageState extends State<EphoneFieldDemoPage> {
     }
   }
 
+  String _pickerLabel(PickerMenuType type) {
+    switch (type) {
+      case PickerMenuType.bottomSheet:
+        return 'Bottom sheet';
+      case PickerMenuType.dialog:
+        return 'Dialog';
+      case PickerMenuType.page:
+        return 'Page';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,18 +74,59 @@ class _EphoneFieldDemoPageState extends State<EphoneFieldDemoPage> {
           children: [
             Form(
               key: _formKey,
-              child: EPhoneField(
-                controller: _controller,
-                initialCountry: Country.turkey,
-                countryPicker: const CountryPickerConfig(
-                  menuType: PickerMenuType.bottomSheet,
-                  title: 'Select Country',
-                ),
-                labels: const EPhoneFieldLabels(
-                  empty: 'Email or phone number',
-                  phone: 'Phone number',
-                ),
-                textInputAction: TextInputAction.done,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  EPhoneField(
+                    controller: _controller,
+                    initialCountry: Country.turkey,
+                    countryPicker: const CountryPickerConfig(
+                      menuType: PickerMenuType.bottomSheet,
+                      title: 'Select Country',
+                    ),
+                    labels: const EPhoneFieldLabels(
+                      empty: 'Email or phone number',
+                      phone: 'Phone number',
+                    ),
+                    textInputAction: TextInputAction.done,
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    'Country picker type',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  const SizedBox(height: 8),
+                  SegmentedButton<PickerMenuType>(
+                    segments: [
+                      for (final type in PickerMenuType.values)
+                        ButtonSegment(
+                          value: type,
+                          label: Text(_pickerLabel(type)),
+                        ),
+                    ],
+                    selected: {_pickerMenuType},
+                    onSelectionChanged: (selected) {
+                      setState(() {
+                        _pickerMenuType = selected.single;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  EPhoneField(
+                    controller: _pickerDemoController,
+                    initialCountry: Country.unitedStates,
+                    initialType: EphoneFieldType.phone,
+                    countryPicker: CountryPickerConfig(
+                      menuType: _pickerMenuType,
+                      title: 'Select Country (${_pickerLabel(_pickerMenuType)})',
+                    ),
+                    labels: const EPhoneFieldLabels(
+                      empty: 'Phone (picker demo)',
+                      phone: 'Phone (picker demo)',
+                    ),
+                    textInputAction: TextInputAction.done,
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 16),
@@ -82,10 +137,12 @@ class _EphoneFieldDemoPageState extends State<EphoneFieldDemoPage> {
               child: const Text('Validate'),
             ),
             const SizedBox(height: 32),
-            const Text(
-              'Advanced: compose validators or customize picker via '
-              'CountryPickerConfig.',
-              style: TextStyle(color: Colors.black54),
+            Text(
+              'Use the segmented control to switch picker presentation, then '
+              'open the country button on the second field.',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
           ],
         ),
