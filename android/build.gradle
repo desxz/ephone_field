@@ -21,14 +21,25 @@ rootProject.allprojects {
 
 apply plugin: "com.android.library"
 
+def prebuiltArm64 = file("src/main/jniLibs/arm64-v8a/libephone_field.so")
+def usePrebuiltNatives = prebuiltArm64.exists()
+
 android {
     namespace = "com.desxz.ephone_field"
     compileSdk = 34
     ndkVersion = android.ndkVersion
 
-    externalNativeBuild {
-        cmake {
-            path = "../src/CMakeLists.txt"
+    if (usePrebuiltNatives) {
+        sourceSets {
+            main {
+                jniLibs.srcDirs = ["src/main/jniLibs"]
+            }
+        }
+    } else {
+        externalNativeBuild {
+            cmake {
+                path = "../src/CMakeLists.txt"
+            }
         }
     }
 
@@ -39,5 +50,25 @@ android {
 
     defaultConfig {
         minSdk = 21
+        if (!usePrebuiltNatives) {
+            externalNativeBuild {
+                cmake {
+                    arguments "-DEPHONE_BUILD_SHARED_PLUGIN=ON"
+                }
+            }
+        }
     }
+
+    // Prefer the ABIs we ship as prebuilts when present.
+    packaging {
+        jniLibs {
+            useLegacyPackaging = false
+        }
+    }
+}
+
+if (usePrebuiltNatives) {
+    logger.lifecycle("ephone_field: using prebuilt jniLibs (skipping CMake)")
+} else {
+    logger.lifecycle("ephone_field: building natives from source via CMake")
 }

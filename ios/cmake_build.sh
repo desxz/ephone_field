@@ -32,7 +32,8 @@ PREBUILT_LIB="${SCRIPT_DIR}/prebuilt/libephone_phonenumber_stack-${PLATFORM_NAME
 mkdir -p "${SCRIPT_DIR}/build"
 
 # Prefer maintainer-produced archives (tool/prebuild_ios.sh) so consumers skip CMake.
-if [[ -f "${PREBUILT_LIB}" ]]; then
+# Set EPHONE_FORCE_CMAKE=1 to rebuild even when a prebuilt exists.
+if [[ -f "${PREBUILT_LIB}" && "${EPHONE_FORCE_CMAKE:-0}" != "1" ]]; then
   cp -f "${PREBUILT_LIB}" "${OUT_LIB}"
   echo "ephone_field: using prebuilt ${PREBUILT_LIB} ($(wc -c < "${OUT_LIB}") bytes)"
   exit 0

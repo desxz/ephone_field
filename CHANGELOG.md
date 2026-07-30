@@ -10,10 +10,14 @@
   scroll, `forceErrorText`, etc.); phone-mode IME defaults disable autocorrect/suggestions.
 * Country picker: denser rows, themed search, full-width bottom sheet; emoji flags by
   default (`useFlagImages: false`); PNG flags optional via package `pubspec` assets.
-* Native graph: always links libphonenumber; dropped ICU (~4 MB/arch stacks); iOS
-  `ld -r` keeps only `ephone_*` globals; optional `ios/prebuilt/` + `tool/prebuild_ios.sh`.
-* CI: Android/iOS smoke builds, iOS export assert, FetchContent cache, simulator prebuilt
-  artifact on `main`.
+* Native graph: always links libphonenumber; dropped ICU; iOS `ld -r` keeps only
+  `ephone_*` globals.
+* **Zero-friction install:** ships prebuilt iOS stacks (`ios/prebuilt/`) and Android
+  `jniLibs` (arm64-v8a / armeabi-v7a / x86_64). Consumers need no CMake or extra
+  commands — `flutter pub add` only. Maintainer rebuild: `tool/prebuild_all.sh`.
+* Slimmed vendored LPN tree (no metadata/geocoding/carrier/test resources); excluded
+  from the pub tarball when prebuilts are present.
+* CI: assert shipped prebuilts; Android/iOS smoke; iOS export assert on CMake fallback.
 * Requires Flutter `>=3.10.0` and Dart `>=3.0.0 <4.0.0`.
 * Correctness and UX fixes from the unreleased tree: controller/focus ownership,
   `initialValue`, phone clear/`onChanged`, country data length alignment, picker a11y.

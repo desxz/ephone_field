@@ -19,18 +19,20 @@ example/**/build/
 # Optional PNG flags (emoji is default; not declared as Flutter assets)
 assets/flags/
 
-# Unused libphonenumber resource trees (not linked by src/CMakeLists.txt)
-third_party/libphonenumber/resources/metadata/
-third_party/libphonenumber/resources/geocoding/
-third_party/libphonenumber/resources/carrier/
-third_party/libphonenumber/resources/test/
-third_party/libphonenumber/resources/PhoneNumberMetadataForTesting.xml
+# Maintainer source tree — consumers use shipped prebuilt natives
+third_party/
+src/
+tool/
+doc/
 
-# Maintainer-only / generated noise
-**/.git/
-ios/prebuilt/*.a
-*.a
+# Accidental object noise (prebuilts are allowlisted below)
 *.o
-*.so
 *.dylib
 *.xcframework/
+
+# Do not publish random archives / shared libs outside known prebuilt paths
+*.a
+!ios/prebuilt/libephone_phonenumber_stack-iphoneos.a
+!ios/prebuilt/libephone_phonenumber_stack-iphonesimulator.a
+*.so
+!android/src/main/jniLibs/**/libephone_field.so

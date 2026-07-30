@@ -1,0 +1,9 @@
+# Shipped consumer natives (see tool/prebuild_android.sh).
+*
+!.gitignore
+!arm64-v8a/
+!armeabi-v7a/
+!x86_64/
+!arm64-v8a/libephone_field.so
+!armeabi-v7a/libephone_field.so
+!x86_64/libephone_field.so

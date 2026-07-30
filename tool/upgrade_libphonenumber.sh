@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
-# Downloads a slim Google libphonenumber snapshot (cpp/ + resources/ only),
+# Downloads a slim Google libphonenumber snapshot (cpp/src + regen protos/XML),
 # regenerates protobuf C++ sources (protoc 25.3), and applies local patches.
+#
+# Does NOT vendor unused trees (resources/metadata|geocoding|carrier|test|timezones,
+# cpp/test) — those are not linked by src/CMakeLists.txt.
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -16,7 +19,7 @@ TAG="v${VERSION}"
 cleanup() { rm -rf "${TMP}"; }
 trap cleanup EXIT
 
-echo "Fetching google/libphonenumber@${TAG} (cpp + resources only)..."
+echo "Fetching google/libphonenumber@${TAG} (slim cpp + resources)..."
 curl -fsSL \
   "https://github.com/google/libphonenumber/archive/refs/tags/${TAG}.tar.gz" \
   -o "${ARCHIVE}"
@@ -26,11 +29,25 @@ tar -xzf "${ARCHIVE}" -C "${TMP}/extract"
 SRC="${TMP}/extract/libphonenumber-${VERSION}"
 
 rm -rf "${TARGET}"
-mkdir -p "${TARGET}"
-cp -R "${SRC}/cpp" "${TARGET}/cpp"
-cp -R "${SRC}/resources" "${TARGET}/resources"
+mkdir -p "${TARGET}/cpp" "${TARGET}/resources"
+
+# Keep compile sources only (drop cpp/test / cmake helpers we do not use).
+cp -R "${SRC}/cpp/src" "${TARGET}/cpp/src"
+cp "${SRC}/cpp/CMakeLists.txt" "${TARGET}/cpp/CMakeLists.txt" 2>/dev/null || true
+cp "${SRC}/cpp/LICENSE" "${TARGET}/cpp/LICENSE" 2>/dev/null || true
+cp "${SRC}/cpp/README" "${TARGET}/cpp/README" 2>/dev/null || true
 cp "${SRC}/LICENSE" "${TARGET}/LICENSE"
 cp "${SRC}/AUTHORS" "${TARGET}/AUTHORS" 2>/dev/null || true
+
+# Protos for .pb.cc regeneration; metadata XMLs for maintainer reference / regen tools.
+for f in \
+  phonemetadata.proto \
+  phonenumber.proto \
+  PhoneNumberMetadata.xml \
+  ShortNumberMetadata.xml
+do
+  cp "${SRC}/resources/${f}" "${TARGET}/resources/${f}"
+done
 
 # Generate .pb.cc/.pb.h with a pinned host protoc matching FetchContent protobuf.
 OS="$(uname -s)"
@@ -65,6 +82,5 @@ if [[ -d "${PATCH_DIR}" ]]; then
 fi
 
 echo "Vendored slim libphonenumber ${VERSION} → third_party/libphonenumber"
-echo "Native builds always link Google libphonenumber."
-echo "Note: resources/metadata|geocoding|carrier are not linked by the plugin;"
-echo "      they are excluded from pub via .pubignore."
+echo "Kept: cpp/src + protos + PhoneNumberMetadata.xml + ShortNumberMetadata.xml"
+echo "Omitted: resources/{metadata,geocoding,carrier,test,timezones}, cpp/test"

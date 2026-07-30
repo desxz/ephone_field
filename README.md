@@ -23,12 +23,8 @@ picking and Google libphonenumber on Android/iOS.
 - **Android and iOS only** (FFI plugin). Web/desktop are not supported; without
   native libphonenumber, phone checks fall back to country length metadata.
 
-### Native build note
-
-The first Android/iOS build compiles Abseil, protobuf-lite, RE2, and libphonenumber
-with CMake (network once for FetchContent). On iOS, install CMake
-(`brew install cmake`) or place a prebuilt stack in `ios/prebuilt/`
-(see `tool/prebuild_ios.sh` and [doc/ARCHITECTURE.md](doc/ARCHITECTURE.md)).
+No extra native tooling: the package ships prebuilt libphonenumber stacks. After
+`flutter pub add`, build your app as usual.
 
 ## Install
 
@@ -123,11 +119,10 @@ To use PNGs, declare the assets in **this package’s** `pubspec.yaml` and set
 
 ## Maintainers
 
-Bump vendored slim libphonenumber sources:
-
 ```bash
-./tool/upgrade_libphonenumber.sh
+./tool/upgrade_libphonenumber.sh   # slim LPN sources
+./tool/prebuild_all.sh             # refresh shipped iOS/Android natives
+./tool/assert_prebuilts.sh         # required before publish
 ```
 
-See [doc/ARCHITECTURE.md](doc/ARCHITECTURE.md) for the native build graph and
-prebuild workflow.
+See [doc/ARCHITECTURE.md](doc/ARCHITECTURE.md) for the native build graph.

@@ -24,6 +24,12 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Assert shipped native prebuilts
+        if: matrix.flutter == 'stable'
+        run: |
+          chmod +x tool/assert_prebuilts.sh
+          ./tool/assert_prebuilts.sh
+
       - name: Format check
         run: dart format --set-exit-if-changed .
 
@@ -41,7 +47,7 @@ jobs:
         run: flutter test
         working-directory: example
 
-      - name: Example Android assemble (native libphonenumber smoke)
+      - name: Example Android assemble (prebuilt jniLibs smoke)
         if: matrix.flutter == 'stable'
         run: flutter build apk --debug
         working-directory: example
@@ -68,20 +74,12 @@ jobs:
           channel: stable
           cache: true
 
-      - name: Install CMake
-        run: brew install cmake
+      - name: Assert shipped iOS prebuilts
+        run: |
+          chmod +x tool/assert_prebuilts.sh
+          ./tool/assert_prebuilts.sh
 
-      - name: Cache FetchContent native deps
-        uses: actions/cache@v4
-        with:
-          path: |
-            ios/build/iphonesimulator-arm64/_deps
-            ios/prebuilt
-          key: ephone-ios-deps-${{ hashFiles('src/CMakeLists.txt', 'src/cmake/EphoneMobileDeps.cmake', 'third_party/LIBPHONENUMBER_VERSION', 'tool/patches/*.patch', 'ios/ephone_exports.txt') }}
-          restore-keys: |
-            ephone-ios-deps-
-
-      - name: Example iOS build (native libphonenumber smoke)
+      - name: Example iOS build (prebuilt stack smoke)
         run: flutter build ios --debug --no-codesign --simulator
         working-directory: example
 
@@ -99,21 +97,3 @@ jobs:
           echo "$GLOBALS" | grep -q '_ephone_phone_is_valid'
           COUNT="$(echo "$GLOBALS" | grep -c '^_ephone_')"
           test "$COUNT" -eq 12
-
-      - name: Stage simulator prebuilt for artifact
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          set -euo pipefail
-          mkdir -p ios/prebuilt
-          cp -f ios/build/libephone_phonenumber_stack-iphonesimulator.a \
-            ios/prebuilt/libephone_phonenumber_stack-iphonesimulator.a
-          ls -lh ios/prebuilt/
-
-      - name: Upload iOS prebuilt stack (simulator)
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: actions/upload-artifact@v4
-        with:
-          name: ephone-ios-prebuilt-iphonesimulator
-          path: ios/prebuilt/libephone_phonenumber_stack-iphonesimulator.a
-          if-no-files-found: error
-          retention-days: 14
