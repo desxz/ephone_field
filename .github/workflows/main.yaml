@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - flutter_version: '3.16.9'
+          - flutter_version: '3.27.4'
             channel: stable
             is_latest: false
           - flutter_version: ''
@@ -67,7 +67,11 @@ jobs:
         if: matrix.is_latest
         env:
           GRADLE_OPTS: -Xmx4g -Dorg.gradle.daemon=false
-        run: flutter build apk --debug --android-skip-build-dependency-validation
+        run: |
+          flutter build apk --debug --android-skip-build-dependency-validation
+          # Flutter may rewrite gradle.properties during the build; restore so
+          # publish --dry-run does not fail on a dirty git tree.
+          git checkout -- android/gradle.properties
         working-directory: example
 
       - name: Publish dry-run
