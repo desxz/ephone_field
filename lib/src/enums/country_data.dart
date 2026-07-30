@@ -8,8 +8,7 @@ const Country _afghanistan = Country(
     flagImagePath: 'assets/flags/af.png',
     dialCode: 93,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _albania = Country(
     name: 'Albania',
@@ -19,8 +18,7 @@ const Country _albania = Country(
     flagImagePath: 'assets/flags/al.png',
     dialCode: 355,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _algeria = Country(
     name: 'Algeria',
@@ -30,8 +28,7 @@ const Country _algeria = Country(
     flagImagePath: 'assets/flags/dz.png',
     dialCode: 213,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _andorra = Country(
     name: 'Andorra',
@@ -41,8 +38,7 @@ const Country _andorra = Country(
     flagImagePath: 'assets/flags/ad.png',
     dialCode: 376,
     minLength: 6,
-    maxLength: 6,
-    mask: "### ###");
+    maxLength: 6);
 
 const Country _angola = Country(
     name: 'Angola',
@@ -52,8 +48,7 @@ const Country _angola = Country(
     flagImagePath: 'assets/flags/ao.png',
     dialCode: 244,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _antiguaAndBarbuda = Country(
     name: 'Antigua and Barbuda',
@@ -63,8 +58,7 @@ const Country _antiguaAndBarbuda = Country(
     flagImagePath: 'assets/flags/ag.png',
     dialCode: 1,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _argentina = Country(
     name: 'Argentina',
@@ -74,8 +68,7 @@ const Country _argentina = Country(
     flagImagePath: 'assets/flags/ar.png',
     dialCode: 54,
     minLength: 10,
-    maxLength: 10,
-    mask: "## #### ####");
+    maxLength: 10);
 
 const Country _armenia = Country(
     name: 'Armenia',
@@ -85,8 +78,7 @@ const Country _armenia = Country(
     flagImagePath: 'assets/flags/am.png',
     dialCode: 374,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _australia = Country(
     name: 'Australia',
@@ -96,8 +88,7 @@ const Country _australia = Country(
     flagImagePath: 'assets/flags/au.png',
     dialCode: 61,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ### ####");
+    maxLength: 9);
 
 const Country _austria = Country(
     name: 'Austria',
@@ -107,8 +98,7 @@ const Country _austria = Country(
     flagImagePath: 'assets/flags/at.png',
     dialCode: 43,
     minLength: 10,
-    maxLength: 10,
-    mask: "### ### ####");
+    maxLength: 10);
 
 const Country _azerbaijan = Country(
     name: 'Azerbaijan',
@@ -118,8 +108,7 @@ const Country _azerbaijan = Country(
     flagImagePath: 'assets/flags/az.png',
     dialCode: 994,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _bahamas = Country(
     name: 'Bahamas',
@@ -129,8 +118,7 @@ const Country _bahamas = Country(
     flagImagePath: 'assets/flags/bs.png',
     dialCode: 1,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _bahrain = Country(
     name: 'Bahrain',
@@ -140,8 +128,7 @@ const Country _bahrain = Country(
     flagImagePath: 'assets/flags/bh.png',
     dialCode: 973,
     minLength: 8,
-    maxLength: 8,
-    mask: "#### ####");
+    maxLength: 8);
 
 const Country _bangladesh = Country(
     name: 'Bangladesh',
@@ -151,8 +138,7 @@ const Country _bangladesh = Country(
     flagImagePath: 'assets/flags/bd.png',
     dialCode: 880,
     minLength: 10,
-    maxLength: 10,
-    mask: "## #### ####");
+    maxLength: 10);
 
 const Country _barbados = Country(
     name: 'Barbados',
@@ -162,8 +148,7 @@ const Country _barbados = Country(
     flagImagePath: 'assets/flags/bb.png',
     dialCode: 1,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _belarus = Country(
     name: 'Belarus',
@@ -173,8 +158,7 @@ const Country _belarus = Country(
     flagImagePath: 'assets/flags/by.png',
     dialCode: 375,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _belgium = Country(
     name: 'Belgium',
@@ -184,8 +168,7 @@ const Country _belgium = Country(
     flagImagePath: 'assets/flags/be.png',
     dialCode: 32,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ### ## ##");
+    maxLength: 9);
 
 const Country _belize = Country(
     name: 'Belize',
@@ -195,8 +178,7 @@ const Country _belize = Country(
     flagImagePath: 'assets/flags/bz.png',
     dialCode: 501,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _benin = Country(
     name: 'Benin',
@@ -206,8 +188,7 @@ const Country _benin = Country(
     flagImagePath: 'assets/flags/bj.png',
     dialCode: 229,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ## ## ##");
+    maxLength: 8);
 
 const Country _bhutan = Country(
     name: 'Bhutan',
@@ -217,8 +198,7 @@ const Country _bhutan = Country(
     flagImagePath: 'assets/flags/bt.png',
     dialCode: 975,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _bolivia = Country(
     name: 'Bolivia',
@@ -228,8 +208,7 @@ const Country _bolivia = Country(
     flagImagePath: 'assets/flags/bo.png',
     dialCode: 591,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _bosniaAndHerzegovina = Country(
     name: 'Bosnia and Herzegovina',
@@ -239,8 +218,7 @@ const Country _bosniaAndHerzegovina = Country(
     flagImagePath: 'assets/flags/ba.png',
     dialCode: 387,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _botswana = Country(
     name: 'Botswana',
@@ -250,8 +228,7 @@ const Country _botswana = Country(
     flagImagePath: 'assets/flags/bw.png',
     dialCode: 267,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _brazil = Country(
     name: 'Brazil',
@@ -261,8 +238,7 @@ const Country _brazil = Country(
     flagImagePath: 'assets/flags/br.png',
     dialCode: 55,
     minLength: 10,
-    maxLength: 10,
-    mask: "## #### ####");
+    maxLength: 10);
 
 const Country _brunei = Country(
     name: 'Brunei',
@@ -272,8 +248,7 @@ const Country _brunei = Country(
     flagImagePath: 'assets/flags/bn.png',
     dialCode: 673,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _bulgaria = Country(
     name: 'Bulgaria',
@@ -283,8 +258,7 @@ const Country _bulgaria = Country(
     flagImagePath: 'assets/flags/bg.png',
     dialCode: 359,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _burkinaFaso = Country(
     name: 'Burkina Faso',
@@ -294,8 +268,7 @@ const Country _burkinaFaso = Country(
     flagImagePath: 'assets/flags/bf.png',
     dialCode: 226,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ## ## ##");
+    maxLength: 8);
 
 const Country _burundi = Country(
     name: 'Burundi',
@@ -305,8 +278,7 @@ const Country _burundi = Country(
     flagImagePath: 'assets/flags/bi.png',
     dialCode: 257,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ## ## ##");
+    maxLength: 8);
 
 const Country _cambodia = Country(
     name: 'Cambodia',
@@ -316,8 +288,7 @@ const Country _cambodia = Country(
     flagImagePath: 'assets/flags/kh.png',
     dialCode: 855,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _cameroon = Country(
     name: 'Cameroon',
@@ -327,8 +298,7 @@ const Country _cameroon = Country(
     flagImagePath: 'assets/flags/cm.png',
     dialCode: 237,
     minLength: 8,
-    maxLength: 8,
-    mask: "#### ####");
+    maxLength: 8);
 
 const Country _canada = Country(
     name: 'Canada',
@@ -338,8 +308,7 @@ const Country _canada = Country(
     flagImagePath: 'assets/flags/ca.png',
     dialCode: 1,
     minLength: 10,
-    maxLength: 10,
-    mask: "### ### ####");
+    maxLength: 10);
 
 const Country _capeVerde = Country(
     name: 'Cape Verde',
@@ -349,8 +318,7 @@ const Country _capeVerde = Country(
     flagImagePath: 'assets/flags/cv.png',
     dialCode: 238,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _centralAfricanRepublic = Country(
     name: 'Central African Republic',
@@ -360,8 +328,7 @@ const Country _centralAfricanRepublic = Country(
     flagImagePath: 'assets/flags/cf.png',
     dialCode: 236,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ## ## ##");
+    maxLength: 8);
 
 const Country _chad = Country(
     name: 'Chad',
@@ -371,8 +338,7 @@ const Country _chad = Country(
     flagImagePath: 'assets/flags/td.png',
     dialCode: 235,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ## ## ##");
+    maxLength: 8);
 
 const Country _chile = Country(
     name: 'Chile',
@@ -382,8 +348,7 @@ const Country _chile = Country(
     flagImagePath: 'assets/flags/cl.png',
     dialCode: 56,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _china = Country(
     name: 'China',
@@ -393,8 +358,7 @@ const Country _china = Country(
     flagImagePath: 'assets/flags/cn.png',
     dialCode: 86,
     minLength: 11,
-    maxLength: 11,
-    mask: "### #### ####");
+    maxLength: 11);
 
 const Country _colombia = Country(
     name: 'Colombia',
@@ -404,8 +368,7 @@ const Country _colombia = Country(
     flagImagePath: 'assets/flags/co.png',
     dialCode: 57,
     minLength: 10,
-    maxLength: 10,
-    mask: "### ### ####");
+    maxLength: 10);
 
 const Country _comoros = Country(
     name: 'Comoros',
@@ -415,8 +378,7 @@ const Country _comoros = Country(
     flagImagePath: 'assets/flags/km.png',
     dialCode: 269,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _congoDemocraticRepublic = Country(
     name: 'Congo (Democratic Republic)',
@@ -426,8 +388,7 @@ const Country _congoDemocraticRepublic = Country(
     flagImagePath: 'assets/flags/cd.png',
     dialCode: 243,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _congoRepublic = Country(
     name: 'Congo (Republic)',
@@ -437,8 +398,7 @@ const Country _congoRepublic = Country(
     flagImagePath: 'assets/flags/cg.png',
     dialCode: 242,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _costaRica = Country(
     name: 'Costa Rica',
@@ -448,8 +408,7 @@ const Country _costaRica = Country(
     flagImagePath: 'assets/flags/cr.png',
     dialCode: 506,
     minLength: 8,
-    maxLength: 8,
-    mask: "#### ####");
+    maxLength: 8);
 
 const Country _coteDIvoire = Country(
     name: 'Côte d’Ivoire',
@@ -459,8 +418,7 @@ const Country _coteDIvoire = Country(
     flagImagePath: 'assets/flags/ci.png',
     dialCode: 225,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ## ## ##");
+    maxLength: 8);
 
 const Country _croatia = Country(
     name: 'Croatia',
@@ -470,8 +428,7 @@ const Country _croatia = Country(
     flagImagePath: 'assets/flags/hr.png',
     dialCode: 385,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _cuba = Country(
     name: 'Cuba',
@@ -481,8 +438,7 @@ const Country _cuba = Country(
     flagImagePath: 'assets/flags/cu.png',
     dialCode: 53,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _cyprus = Country(
     name: 'Cyprus',
@@ -492,8 +448,7 @@ const Country _cyprus = Country(
     flagImagePath: 'assets/flags/cy.png',
     dialCode: 357,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _czechRepublic = Country(
     name: 'Czech Republic',
@@ -503,8 +458,7 @@ const Country _czechRepublic = Country(
     flagImagePath: 'assets/flags/cz.png',
     dialCode: 420,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _denmark = Country(
     name: 'Denmark',
@@ -514,8 +468,7 @@ const Country _denmark = Country(
     flagImagePath: 'assets/flags/dk.png',
     dialCode: 45,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ## ## ##");
+    maxLength: 8);
 
 const Country _djibouti = Country(
     name: 'Djibouti',
@@ -525,8 +478,7 @@ const Country _djibouti = Country(
     flagImagePath: 'assets/flags/dj.png',
     dialCode: 253,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ## ## ##");
+    maxLength: 8);
 
 const Country _dominica = Country(
     name: 'Dominica',
@@ -536,8 +488,7 @@ const Country _dominica = Country(
     flagImagePath: 'assets/flags/dm.png',
     dialCode: 1,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _dominicanRepublic = Country(
     name: 'Dominican Republic',
@@ -547,8 +498,7 @@ const Country _dominicanRepublic = Country(
     flagImagePath: 'assets/flags/do.png',
     dialCode: 1,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _eastTimor = Country(
     name: 'East Timor',
@@ -558,8 +508,7 @@ const Country _eastTimor = Country(
     flagImagePath: 'assets/flags/tl.png',
     dialCode: 670,
     minLength: 8,
-    maxLength: 8,
-    mask: "### ### ##");
+    maxLength: 8);
 
 const Country _ecuador = Country(
     name: 'Ecuador',
@@ -569,8 +518,7 @@ const Country _ecuador = Country(
     flagImagePath: 'assets/flags/ec.png',
     dialCode: 593,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _egypt = Country(
     name: 'Egypt',
@@ -580,8 +528,7 @@ const Country _egypt = Country(
     flagImagePath: 'assets/flags/eg.png',
     dialCode: 20,
     minLength: 10,
-    maxLength: 10,
-    mask: "### ### ####");
+    maxLength: 10);
 
 const Country _elSalvador = Country(
     name: 'El Salvador',
@@ -591,8 +538,7 @@ const Country _elSalvador = Country(
     flagImagePath: 'assets/flags/sv.png',
     dialCode: 503,
     minLength: 8,
-    maxLength: 8,
-    mask: "#### ####");
+    maxLength: 8);
 
 const Country _equatorialGuinea = Country(
     name: 'Equatorial Guinea',
@@ -602,8 +548,7 @@ const Country _equatorialGuinea = Country(
     flagImagePath: 'assets/flags/gq.png',
     dialCode: 240,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _eritrea = Country(
     name: 'Eritrea',
@@ -613,8 +558,7 @@ const Country _eritrea = Country(
     flagImagePath: 'assets/flags/er.png',
     dialCode: 291,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _estonia = Country(
     name: 'Estonia',
@@ -624,8 +568,7 @@ const Country _estonia = Country(
     flagImagePath: 'assets/flags/ee.png',
     dialCode: 372,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _macedonia = Country(
     name: 'North Macedonia',
@@ -635,8 +578,7 @@ const Country _macedonia = Country(
     flagImagePath: 'assets/flags/mk.png',
     dialCode: 389,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _swaziland = Country(
     name: 'Eswatini',
@@ -646,8 +588,7 @@ const Country _swaziland = Country(
     flagImagePath: 'assets/flags/sz.png',
     dialCode: 268,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _ethiopia = Country(
     name: 'Ethiopia',
@@ -657,8 +598,7 @@ const Country _ethiopia = Country(
     flagImagePath: 'assets/flags/et.png',
     dialCode: 251,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _fiji = Country(
     name: 'Fiji',
@@ -668,8 +608,7 @@ const Country _fiji = Country(
     flagImagePath: 'assets/flags/fj.png',
     dialCode: 679,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _finland = Country(
     name: 'Finland',
@@ -679,8 +618,7 @@ const Country _finland = Country(
     flagImagePath: 'assets/flags/fi.png',
     dialCode: 358,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _france = Country(
     name: 'France',
@@ -690,8 +628,7 @@ const Country _france = Country(
     flagImagePath: 'assets/flags/fr.png',
     dialCode: 33,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ### ####");
+    maxLength: 9);
 
 const Country _gabon = Country(
     name: 'Gabon',
@@ -701,8 +638,7 @@ const Country _gabon = Country(
     flagImagePath: 'assets/flags/ga.png',
     dialCode: 241,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ## ## ##");
+    maxLength: 8);
 
 const Country _gambia = Country(
     name: 'Gambia',
@@ -712,8 +648,7 @@ const Country _gambia = Country(
     flagImagePath: 'assets/flags/gm.png',
     dialCode: 220,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _georgia = Country(
     name: 'Georgia',
@@ -723,8 +658,7 @@ const Country _georgia = Country(
     flagImagePath: 'assets/flags/ge.png',
     dialCode: 995,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _germany = Country(
     name: 'Germany',
@@ -734,8 +668,7 @@ const Country _germany = Country(
     flagImagePath: 'assets/flags/de.png',
     dialCode: 49,
     minLength: 11,
-    maxLength: 11,
-    mask: "### #### ####");
+    maxLength: 11);
 
 const Country _ghana = Country(
     name: 'Ghana',
@@ -745,8 +678,7 @@ const Country _ghana = Country(
     flagImagePath: 'assets/flags/gh.png',
     dialCode: 233,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _greece = Country(
     name: 'Greece',
@@ -756,8 +688,7 @@ const Country _greece = Country(
     flagImagePath: 'assets/flags/gr.png',
     dialCode: 30,
     minLength: 10,
-    maxLength: 10,
-    mask: "### ### ####");
+    maxLength: 10);
 
 const Country _grenada = Country(
     name: 'Grenada',
@@ -767,8 +698,7 @@ const Country _grenada = Country(
     flagImagePath: 'assets/flags/gd.png',
     dialCode: 1,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _guatemala = Country(
     name: 'Guatemala',
@@ -778,8 +708,7 @@ const Country _guatemala = Country(
     flagImagePath: 'assets/flags/gt.png',
     dialCode: 502,
     minLength: 8,
-    maxLength: 8,
-    mask: "#### ####");
+    maxLength: 8);
 
 const Country _guinea = Country(
     name: 'Guinea',
@@ -789,8 +718,7 @@ const Country _guinea = Country(
     flagImagePath: 'assets/flags/gn.png',
     dialCode: 224,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _guineaBissau = Country(
     name: 'Guinea-Bissau',
@@ -800,8 +728,7 @@ const Country _guineaBissau = Country(
     flagImagePath: 'assets/flags/gw.png',
     dialCode: 245,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _guyana = Country(
     name: 'Guyana',
@@ -811,8 +738,7 @@ const Country _guyana = Country(
     flagImagePath: 'assets/flags/gy.png',
     dialCode: 592,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _haiti = Country(
     name: 'Haiti',
@@ -822,8 +748,7 @@ const Country _haiti = Country(
     flagImagePath: 'assets/flags/ht.png',
     dialCode: 509,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ## ####");
+    maxLength: 8);
 
 const Country _honduras = Country(
     name: 'Honduras',
@@ -833,8 +758,7 @@ const Country _honduras = Country(
     flagImagePath: 'assets/flags/hn.png',
     dialCode: 504,
     minLength: 8,
-    maxLength: 8,
-    mask: "#### ####");
+    maxLength: 8);
 
 const Country _hungary = Country(
     name: 'Hungary',
@@ -844,8 +768,7 @@ const Country _hungary = Country(
     flagImagePath: 'assets/flags/hu.png',
     dialCode: 36,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _iceland = Country(
     name: 'Iceland',
@@ -855,8 +778,7 @@ const Country _iceland = Country(
     flagImagePath: 'assets/flags/is.png',
     dialCode: 354,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _india = Country(
     name: 'India',
@@ -866,8 +788,7 @@ const Country _india = Country(
     flagImagePath: 'assets/flags/in.png',
     dialCode: 91,
     minLength: 10,
-    maxLength: 10,
-    mask: "## #### ####");
+    maxLength: 10);
 
 const Country _indonesia = Country(
     name: 'Indonesia',
@@ -877,8 +798,7 @@ const Country _indonesia = Country(
     flagImagePath: 'assets/flags/id.png',
     dialCode: 62,
     minLength: 10,
-    maxLength: 10,
-    mask: "## #### ####");
+    maxLength: 10);
 
 const Country _iran = Country(
     name: 'Iran',
@@ -888,8 +808,7 @@ const Country _iran = Country(
     flagImagePath: 'assets/flags/ir.png',
     dialCode: 98,
     minLength: 10,
-    maxLength: 10,
-    mask: "### ### ####");
+    maxLength: 10);
 
 const Country _iraq = Country(
     name: 'Iraq',
@@ -899,8 +818,7 @@ const Country _iraq = Country(
     flagImagePath: 'assets/flags/iq.png',
     dialCode: 964,
     minLength: 10,
-    maxLength: 10,
-    mask: "### ### ####");
+    maxLength: 10);
 
 const Country _ireland = Country(
     name: 'Ireland',
@@ -910,8 +828,7 @@ const Country _ireland = Country(
     flagImagePath: 'assets/flags/ie.png',
     dialCode: 353,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ### ####");
+    maxLength: 9);
 
 const Country _israel = Country(
     name: "Israel",
@@ -921,8 +838,7 @@ const Country _israel = Country(
     flagImagePath: 'assets/flags/il.png',
     dialCode: 972,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ### ####");
+    maxLength: 9);
 
 const Country _italy = Country(
     name: 'Italy',
@@ -932,8 +848,7 @@ const Country _italy = Country(
     flagImagePath: 'assets/flags/it.png',
     dialCode: 39,
     minLength: 10,
-    maxLength: 10,
-    mask: "## #### ####");
+    maxLength: 10);
 
 const Country _jamaica = Country(
     name: 'Jamaica',
@@ -943,8 +858,7 @@ const Country _jamaica = Country(
     flagImagePath: 'assets/flags/jm.png',
     dialCode: 1,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _japan = Country(
     name: 'Japan',
@@ -954,8 +868,7 @@ const Country _japan = Country(
     flagImagePath: 'assets/flags/jp.png',
     dialCode: 81,
     minLength: 10,
-    maxLength: 10,
-    mask: "## #### ####");
+    maxLength: 10);
 
 const Country _jordan = Country(
     name: 'Jordan',
@@ -965,8 +878,7 @@ const Country _jordan = Country(
     flagImagePath: 'assets/flags/jo.png',
     dialCode: 962,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ### ####");
+    maxLength: 9);
 
 const Country _kazakhstan = Country(
     name: 'Kazakhstan',
@@ -976,8 +888,7 @@ const Country _kazakhstan = Country(
     flagImagePath: 'assets/flags/kz.png',
     dialCode: 7,
     minLength: 10,
-    maxLength: 10,
-    mask: "### ### ####");
+    maxLength: 10);
 
 const Country _kenya = Country(
     name: 'Kenya',
@@ -987,8 +898,7 @@ const Country _kenya = Country(
     flagImagePath: 'assets/flags/ke.png',
     dialCode: 254,
     minLength: 10,
-    maxLength: 10,
-    mask: "### ### ####");
+    maxLength: 10);
 
 const Country _kiribati = Country(
     name: 'Kiribati',
@@ -998,8 +908,7 @@ const Country _kiribati = Country(
     flagImagePath: 'assets/flags/ki.png',
     dialCode: 686,
     minLength: 5,
-    maxLength: 5,
-    mask: "#####");
+    maxLength: 5);
 
 const Country _southKorea = Country(
     name: 'South Korea',
@@ -1009,8 +918,7 @@ const Country _southKorea = Country(
     flagImagePath: 'assets/flags/kr.png',
     dialCode: 82,
     minLength: 10,
-    maxLength: 10,
-    mask: "## #### ####");
+    maxLength: 10);
 
 const Country _northKorea = Country(
     name: 'North Korea',
@@ -1020,8 +928,7 @@ const Country _northKorea = Country(
     flagImagePath: 'assets/flags/kp.png',
     dialCode: 850,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _kosovo = Country(
     name: 'Kosovo',
@@ -1031,8 +938,7 @@ const Country _kosovo = Country(
     flagImagePath: 'assets/flags/xk.png',
     dialCode: 383,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _kuwait = Country(
     name: 'Kuwait',
@@ -1042,8 +948,7 @@ const Country _kuwait = Country(
     flagImagePath: 'assets/flags/kw.png',
     dialCode: 965,
     minLength: 8,
-    maxLength: 8,
-    mask: "#### ####");
+    maxLength: 8);
 
 const Country _kyrgyzstan = Country(
     name: 'Kyrgyzstan',
@@ -1053,8 +958,7 @@ const Country _kyrgyzstan = Country(
     flagImagePath: 'assets/flags/kg.png',
     dialCode: 996,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _laos = Country(
     name: 'Laos',
@@ -1064,8 +968,7 @@ const Country _laos = Country(
     flagImagePath: 'assets/flags/la.png',
     dialCode: 856,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _latvia = Country(
     name: 'Latvia',
@@ -1075,8 +978,7 @@ const Country _latvia = Country(
     flagImagePath: 'assets/flags/lv.png',
     dialCode: 371,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _lebanon = Country(
     name: 'Lebanon',
@@ -1086,8 +988,7 @@ const Country _lebanon = Country(
     flagImagePath: 'assets/flags/lb.png',
     dialCode: 961,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _lesotho = Country(
     name: 'Lesotho',
@@ -1097,8 +998,7 @@ const Country _lesotho = Country(
     flagImagePath: 'assets/flags/ls.png',
     dialCode: 266,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _liberia = Country(
     name: 'Liberia',
@@ -1108,8 +1008,7 @@ const Country _liberia = Country(
     flagImagePath: 'assets/flags/lr.png',
     dialCode: 231,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _libya = Country(
     name: 'Libya',
@@ -1119,8 +1018,7 @@ const Country _libya = Country(
     flagImagePath: 'assets/flags/ly.png',
     dialCode: 218,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _liechtenstein = Country(
     name: 'Liechtenstein',
@@ -1130,8 +1028,7 @@ const Country _liechtenstein = Country(
     flagImagePath: 'assets/flags/li.png',
     dialCode: 423,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _lithuania = Country(
     name: 'Lithuania',
@@ -1141,8 +1038,7 @@ const Country _lithuania = Country(
     flagImagePath: 'assets/flags/lt.png',
     dialCode: 370,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _luxembourg = Country(
     name: 'Luxembourg',
@@ -1152,8 +1048,7 @@ const Country _luxembourg = Country(
     flagImagePath: 'assets/flags/lu.png',
     dialCode: 352,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _madagascar = Country(
     name: 'Madagascar',
@@ -1163,8 +1058,7 @@ const Country _madagascar = Country(
     flagImagePath: 'assets/flags/mg.png',
     dialCode: 261,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ## ### ##");
+    maxLength: 9);
 
 const Country _malawi = Country(
     name: 'Malawi',
@@ -1174,8 +1068,7 @@ const Country _malawi = Country(
     flagImagePath: 'assets/flags/mw.png',
     dialCode: 265,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ### ####");
+    maxLength: 9);
 
 const Country _malaysia = Country(
     name: 'Malaysia',
@@ -1185,8 +1078,7 @@ const Country _malaysia = Country(
     flagImagePath: 'assets/flags/my.png',
     dialCode: 60,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ### ####");
+    maxLength: 9);
 
 const Country _maldives = Country(
     name: 'Maldives',
@@ -1196,8 +1088,7 @@ const Country _maldives = Country(
     flagImagePath: 'assets/flags/mv.png',
     dialCode: 960,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _mali = Country(
     name: 'Mali',
@@ -1207,8 +1098,7 @@ const Country _mali = Country(
     flagImagePath: 'assets/flags/ml.png',
     dialCode: 223,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ## ####");
+    maxLength: 8);
 
 const Country _malta = Country(
     name: 'Malta',
@@ -1218,8 +1108,7 @@ const Country _malta = Country(
     flagImagePath: 'assets/flags/mt.png',
     dialCode: 356,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _marshallIslands = Country(
     name: 'Marshall Islands',
@@ -1229,8 +1118,7 @@ const Country _marshallIslands = Country(
     flagImagePath: 'assets/flags/mh.png',
     dialCode: 692,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _mauritania = Country(
     name: 'Mauritania',
@@ -1240,8 +1128,7 @@ const Country _mauritania = Country(
     flagImagePath: 'assets/flags/mr.png',
     dialCode: 222,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ## ####");
+    maxLength: 8);
 
 const Country _mauritius = Country(
     name: 'Mauritius',
@@ -1251,8 +1138,7 @@ const Country _mauritius = Country(
     flagImagePath: 'assets/flags/mu.png',
     dialCode: 230,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _mexico = Country(
     name: 'Mexico',
@@ -1262,8 +1148,7 @@ const Country _mexico = Country(
     flagImagePath: 'assets/flags/mx.png',
     dialCode: 52,
     minLength: 10,
-    maxLength: 10,
-    mask: "## #### ####");
+    maxLength: 10);
 
 const Country _micronesia = Country(
     name: 'Micronesia',
@@ -1273,8 +1158,7 @@ const Country _micronesia = Country(
     flagImagePath: 'assets/flags/fm.png',
     dialCode: 691,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _moldova = Country(
     name: 'Moldova',
@@ -1284,8 +1168,7 @@ const Country _moldova = Country(
     flagImagePath: 'assets/flags/md.png',
     dialCode: 373,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _monaco = Country(
     name: 'Monaco',
@@ -1295,8 +1178,7 @@ const Country _monaco = Country(
     flagImagePath: 'assets/flags/mc.png',
     dialCode: 377,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ## ## ##");
+    maxLength: 8);
 
 const Country _mongolia = Country(
     name: 'Mongolia',
@@ -1306,8 +1188,7 @@ const Country _mongolia = Country(
     flagImagePath: 'assets/flags/mn.png',
     dialCode: 976,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _montenegro = Country(
     name: 'Montenegro',
@@ -1317,8 +1198,7 @@ const Country _montenegro = Country(
     flagImagePath: 'assets/flags/me.png',
     dialCode: 382,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _morocco = Country(
     name: 'Morocco',
@@ -1328,8 +1208,7 @@ const Country _morocco = Country(
     flagImagePath: 'assets/flags/ma.png',
     dialCode: 212,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ### ####");
+    maxLength: 9);
 
 const Country _mozambique = Country(
     name: 'Mozambique',
@@ -1339,8 +1218,7 @@ const Country _mozambique = Country(
     flagImagePath: 'assets/flags/mz.png',
     dialCode: 258,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ### ####");
+    maxLength: 9);
 
 const Country _myanmar = Country(
     name: 'Myanmar',
@@ -1350,8 +1228,7 @@ const Country _myanmar = Country(
     flagImagePath: 'assets/flags/mm.png',
     dialCode: 95,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _namibia = Country(
     name: 'Namibia',
@@ -1361,8 +1238,7 @@ const Country _namibia = Country(
     flagImagePath: 'assets/flags/na.png',
     dialCode: 264,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _nauru = Country(
     name: 'Nauru',
@@ -1372,8 +1248,7 @@ const Country _nauru = Country(
     flagImagePath: 'assets/flags/nr.png',
     dialCode: 674,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _nepal = Country(
     name: 'Nepal',
@@ -1383,8 +1258,7 @@ const Country _nepal = Country(
     flagImagePath: 'assets/flags/np.png',
     dialCode: 977,
     minLength: 10,
-    maxLength: 10,
-    mask: "## #### ####");
+    maxLength: 10);
 
 const Country _netherlands = Country(
     name: 'Netherlands',
@@ -1394,8 +1268,7 @@ const Country _netherlands = Country(
     flagImagePath: 'assets/flags/nl.png',
     dialCode: 31,
     minLength: 10,
-    maxLength: 10,
-    mask: "### ### ####");
+    maxLength: 10);
 
 const Country _newZealand = Country(
     name: 'New Zealand',
@@ -1405,8 +1278,7 @@ const Country _newZealand = Country(
     flagImagePath: 'assets/flags/nz.png',
     dialCode: 64,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ### ####");
+    maxLength: 9);
 
 const Country _nicaragua = Country(
     name: 'Nicaragua',
@@ -1416,8 +1288,7 @@ const Country _nicaragua = Country(
     flagImagePath: 'assets/flags/ni.png',
     dialCode: 505,
     minLength: 8,
-    maxLength: 8,
-    mask: "#### ####");
+    maxLength: 8);
 
 const Country _niger = Country(
     name: 'Niger',
@@ -1427,8 +1298,7 @@ const Country _niger = Country(
     flagImagePath: 'assets/flags/ne.png',
     dialCode: 227,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ## ####");
+    maxLength: 8);
 
 const Country _nigeria = Country(
     name: 'Nigeria',
@@ -1438,8 +1308,7 @@ const Country _nigeria = Country(
     flagImagePath: 'assets/flags/ng.png',
     dialCode: 234,
     minLength: 10,
-    maxLength: 10,
-    mask: "### ### ####");
+    maxLength: 10);
 
 const Country _norway = Country(
     name: 'Norway',
@@ -1449,8 +1318,7 @@ const Country _norway = Country(
     flagImagePath: 'assets/flags/no.png',
     dialCode: 47,
     minLength: 8,
-    maxLength: 8,
-    mask: "#### ####");
+    maxLength: 8);
 
 const Country _oman = Country(
     name: 'Oman',
@@ -1460,8 +1328,7 @@ const Country _oman = Country(
     flagImagePath: 'assets/flags/om.png',
     dialCode: 968,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _pakistan = Country(
     name: 'Pakistan',
@@ -1471,8 +1338,7 @@ const Country _pakistan = Country(
     flagImagePath: 'assets/flags/pk.png',
     dialCode: 92,
     minLength: 10,
-    maxLength: 10,
-    mask: "## #### ####");
+    maxLength: 10);
 
 const Country _palau = Country(
     name: 'Palau',
@@ -1482,8 +1348,7 @@ const Country _palau = Country(
     flagImagePath: 'assets/flags/pw.png',
     dialCode: 680,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _panama = Country(
     name: 'Panama',
@@ -1493,8 +1358,7 @@ const Country _panama = Country(
     flagImagePath: 'assets/flags/pa.png',
     dialCode: 507,
     minLength: 8,
-    maxLength: 8,
-    mask: "#### ####");
+    maxLength: 8);
 
 const Country _papuaNewGuinea = Country(
     name: 'Papua New Guinea',
@@ -1504,8 +1368,7 @@ const Country _papuaNewGuinea = Country(
     flagImagePath: 'assets/flags/pg.png',
     dialCode: 675,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _paraguay = Country(
     name: 'Paraguay',
@@ -1515,8 +1378,7 @@ const Country _paraguay = Country(
     flagImagePath: 'assets/flags/py.png',
     dialCode: 595,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _peru = Country(
     name: 'Peru',
@@ -1526,8 +1388,7 @@ const Country _peru = Country(
     flagImagePath: 'assets/flags/pe.png',
     dialCode: 51,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _philippines = Country(
     name: 'Philippines',
@@ -1537,8 +1398,7 @@ const Country _philippines = Country(
     flagImagePath: 'assets/flags/ph.png',
     dialCode: 63,
     minLength: 10,
-    maxLength: 10,
-    mask: "## #### ####");
+    maxLength: 10);
 
 const Country _poland = Country(
     name: 'Poland',
@@ -1548,8 +1408,7 @@ const Country _poland = Country(
     flagImagePath: 'assets/flags/pl.png',
     dialCode: 48,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _portugal = Country(
     name: 'Portugal',
@@ -1559,8 +1418,7 @@ const Country _portugal = Country(
     flagImagePath: 'assets/flags/pt.png',
     dialCode: 351,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _qatar = Country(
     name: 'Qatar',
@@ -1570,8 +1428,7 @@ const Country _qatar = Country(
     flagImagePath: 'assets/flags/qa.png',
     dialCode: 974,
     minLength: 8,
-    maxLength: 8,
-    mask: "#### ####");
+    maxLength: 8);
 
 const Country _romania = Country(
     name: 'Romania',
@@ -1581,8 +1438,7 @@ const Country _romania = Country(
     flagImagePath: 'assets/flags/ro.png',
     dialCode: 40,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _russia = Country(
     name: 'Russia',
@@ -1592,8 +1448,7 @@ const Country _russia = Country(
     flagImagePath: 'assets/flags/ru.png',
     dialCode: 7,
     minLength: 10,
-    maxLength: 10,
-    mask: "### ### ####");
+    maxLength: 10);
 
 const Country _rwanda = Country(
     name: 'Rwanda',
@@ -1603,8 +1458,7 @@ const Country _rwanda = Country(
     flagImagePath: 'assets/flags/rw.png',
     dialCode: 250,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _saintKittsAndNevis = Country(
     name: 'Saint Kitts and Nevis',
@@ -1614,8 +1468,7 @@ const Country _saintKittsAndNevis = Country(
     flagImagePath: 'assets/flags/kn.png',
     dialCode: 1,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _saintLucia = Country(
     name: 'Saint Lucia',
@@ -1625,8 +1478,7 @@ const Country _saintLucia = Country(
     flagImagePath: 'assets/flags/lc.png',
     dialCode: 1,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _saintVincentAndTheGrenadines = Country(
     name: 'Saint Vincent and the Grenadines',
@@ -1636,8 +1488,7 @@ const Country _saintVincentAndTheGrenadines = Country(
     flagImagePath: 'assets/flags/vc.png',
     dialCode: 1,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _samoa = Country(
     name: 'Samoa',
@@ -1647,8 +1498,7 @@ const Country _samoa = Country(
     flagImagePath: 'assets/flags/ws.png',
     dialCode: 685,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _sanMarino = Country(
     name: 'San Marino',
@@ -1658,8 +1508,7 @@ const Country _sanMarino = Country(
     flagImagePath: 'assets/flags/sm.png',
     dialCode: 378,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ## ## ##");
+    maxLength: 8);
 
 const Country _saoTomeAndPrincipe = Country(
     name: 'Sao Tome and Principe',
@@ -1669,8 +1518,7 @@ const Country _saoTomeAndPrincipe = Country(
     flagImagePath: 'assets/flags/st.png',
     dialCode: 239,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _saudiArabia = Country(
     name: 'Saudi Arabia',
@@ -1680,8 +1528,7 @@ const Country _saudiArabia = Country(
     flagImagePath: 'assets/flags/sa.png',
     dialCode: 966,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ### ####");
+    maxLength: 9);
 
 const Country _senegal = Country(
     name: 'Senegal',
@@ -1691,8 +1538,7 @@ const Country _senegal = Country(
     flagImagePath: 'assets/flags/sn.png',
     dialCode: 221,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ### ####");
+    maxLength: 9);
 
 const Country _serbia = Country(
     name: 'Serbia',
@@ -1702,8 +1548,7 @@ const Country _serbia = Country(
     flagImagePath: 'assets/flags/rs.png',
     dialCode: 381,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _seychelles = Country(
     name: 'Seychelles',
@@ -1713,8 +1558,7 @@ const Country _seychelles = Country(
     flagImagePath: 'assets/flags/sc.png',
     dialCode: 248,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _sierraLeone = Country(
     name: 'Sierra Leone',
@@ -1724,8 +1568,7 @@ const Country _sierraLeone = Country(
     flagImagePath: 'assets/flags/sl.png',
     dialCode: 232,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _singapore = Country(
     name: 'Singapore',
@@ -1735,8 +1578,7 @@ const Country _singapore = Country(
     flagImagePath: 'assets/flags/sg.png',
     dialCode: 65,
     minLength: 8,
-    maxLength: 8,
-    mask: "#### ####");
+    maxLength: 8);
 
 const Country _slovakia = Country(
     name: 'Slovakia',
@@ -1746,8 +1588,7 @@ const Country _slovakia = Country(
     flagImagePath: 'assets/flags/sk.png',
     dialCode: 421,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _slovenia = Country(
     name: 'Slovenia',
@@ -1757,8 +1598,7 @@ const Country _slovenia = Country(
     flagImagePath: 'assets/flags/si.png',
     dialCode: 386,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _solomonIslands = Country(
     name: 'Solomon Islands',
@@ -1768,8 +1608,7 @@ const Country _solomonIslands = Country(
     flagImagePath: 'assets/flags/sb.png',
     dialCode: 677,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _somalia = Country(
     name: 'Somalia',
@@ -1779,8 +1618,7 @@ const Country _somalia = Country(
     flagImagePath: 'assets/flags/so.png',
     dialCode: 252,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _southAfrica = Country(
     name: 'South Africa',
@@ -1790,8 +1628,7 @@ const Country _southAfrica = Country(
     flagImagePath: 'assets/flags/za.png',
     dialCode: 27,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ### ####");
+    maxLength: 9);
 
 const Country _spain = Country(
     name: 'Spain',
@@ -1801,8 +1638,7 @@ const Country _spain = Country(
     flagImagePath: 'assets/flags/es.png',
     dialCode: 34,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _sriLanka = Country(
     name: 'Sri Lanka',
@@ -1812,8 +1648,7 @@ const Country _sriLanka = Country(
     flagImagePath: 'assets/flags/lk.png',
     dialCode: 94,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ### ####");
+    maxLength: 9);
 
 const Country _sudan = Country(
     name: 'Sudan',
@@ -1823,8 +1658,7 @@ const Country _sudan = Country(
     flagImagePath: 'assets/flags/sd.png',
     dialCode: 249,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _suriname = Country(
     name: 'Suriname',
@@ -1834,8 +1668,7 @@ const Country _suriname = Country(
     flagImagePath: 'assets/flags/sr.png',
     dialCode: 597,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _sweden = Country(
     name: 'Sweden',
@@ -1845,8 +1678,7 @@ const Country _sweden = Country(
     flagImagePath: 'assets/flags/se.png',
     dialCode: 46,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _switzerland = Country(
     name: 'Switzerland',
@@ -1856,8 +1688,7 @@ const Country _switzerland = Country(
     flagImagePath: 'assets/flags/ch.png',
     dialCode: 41,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _syria = Country(
     name: 'Syria',
@@ -1867,8 +1698,7 @@ const Country _syria = Country(
     flagImagePath: 'assets/flags/sy.png',
     dialCode: 963,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _taiwan = Country(
     name: 'Taiwan',
@@ -1878,8 +1708,7 @@ const Country _taiwan = Country(
     flagImagePath: 'assets/flags/tw.png',
     dialCode: 886,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ### ####");
+    maxLength: 9);
 
 const Country _tajikistan = Country(
     name: 'Tajikistan',
@@ -1889,8 +1718,7 @@ const Country _tajikistan = Country(
     flagImagePath: 'assets/flags/tj.png',
     dialCode: 992,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ### ####");
+    maxLength: 9);
 
 const Country _tanzania = Country(
     name: 'Tanzania',
@@ -1900,8 +1728,7 @@ const Country _tanzania = Country(
     flagImagePath: 'assets/flags/tz.png',
     dialCode: 255,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _thailand = Country(
     name: 'Thailand',
@@ -1911,8 +1738,7 @@ const Country _thailand = Country(
     flagImagePath: 'assets/flags/th.png',
     dialCode: 66,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ### ####");
+    maxLength: 9);
 
 const Country _togo = Country(
     name: 'Togo',
@@ -1922,8 +1748,7 @@ const Country _togo = Country(
     flagImagePath: 'assets/flags/tg.png',
     dialCode: 228,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _tonga = Country(
     name: 'Tonga',
@@ -1933,8 +1758,7 @@ const Country _tonga = Country(
     flagImagePath: 'assets/flags/to.png',
     dialCode: 676,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _trinidadAndTobago = Country(
     name: 'Trinidad and Tobago',
@@ -1944,8 +1768,7 @@ const Country _trinidadAndTobago = Country(
     flagImagePath: 'assets/flags/tt.png',
     dialCode: 1,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _tunisia = Country(
     name: 'Tunisia',
@@ -1955,8 +1778,7 @@ const Country _tunisia = Country(
     flagImagePath: 'assets/flags/tn.png',
     dialCode: 216,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _turkey = Country(
     name: 'Turkey',
@@ -1966,8 +1788,7 @@ const Country _turkey = Country(
     flagImagePath: 'assets/flags/tr.png',
     dialCode: 90,
     minLength: 10,
-    maxLength: 10,
-    mask: "### ### ####");
+    maxLength: 10);
 
 const Country _turkmenistan = Country(
     name: 'Turkmenistan',
@@ -1977,8 +1798,7 @@ const Country _turkmenistan = Country(
     flagImagePath: 'assets/flags/tm.png',
     dialCode: 993,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _tuvalu = Country(
     name: 'Tuvalu',
@@ -1988,8 +1808,7 @@ const Country _tuvalu = Country(
     flagImagePath: 'assets/flags/tv.png',
     dialCode: 688,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _uganda = Country(
     name: 'Uganda',
@@ -1999,8 +1818,7 @@ const Country _uganda = Country(
     flagImagePath: 'assets/flags/ug.png',
     dialCode: 256,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _ukraine = Country(
     name: 'Ukraine',
@@ -2010,8 +1828,7 @@ const Country _ukraine = Country(
     flagImagePath: 'assets/flags/ua.png',
     dialCode: 380,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _unitedArabEmirates = Country(
     name: 'United Arab Emirates',
@@ -2021,8 +1838,7 @@ const Country _unitedArabEmirates = Country(
     flagImagePath: 'assets/flags/ae.png',
     dialCode: 971,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _unitedKingdom = Country(
     name: 'United Kingdom',
@@ -2032,8 +1848,7 @@ const Country _unitedKingdom = Country(
     flagImagePath: 'assets/flags/gb.png',
     dialCode: 44,
     minLength: 10,
-    maxLength: 10,
-    mask: "## #### ####");
+    maxLength: 10);
 
 const Country _unitedStates = Country(
     name: 'United States',
@@ -2043,8 +1858,7 @@ const Country _unitedStates = Country(
     flagImagePath: 'assets/flags/us.png',
     dialCode: 1,
     minLength: 10,
-    maxLength: 10,
-    mask: "### ### ####");
+    maxLength: 10);
 
 const Country _uruguay = Country(
     name: 'Uruguay',
@@ -2054,8 +1868,7 @@ const Country _uruguay = Country(
     flagImagePath: 'assets/flags/uy.png',
     dialCode: 598,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _uzbekistan = Country(
     name: 'Uzbekistan',
@@ -2065,8 +1878,7 @@ const Country _uzbekistan = Country(
     flagImagePath: 'assets/flags/uz.png',
     dialCode: 998,
     minLength: 9,
-    maxLength: 9,
-    mask: "## ### ####");
+    maxLength: 9);
 
 const Country _vanuatu = Country(
     name: 'Vanuatu',
@@ -2076,8 +1888,7 @@ const Country _vanuatu = Country(
     flagImagePath: 'assets/flags/vu.png',
     dialCode: 678,
     minLength: 7,
-    maxLength: 7,
-    mask: "### ####");
+    maxLength: 7);
 
 const Country _vaticanCity = Country(
     name: 'Vatican City',
@@ -2087,8 +1898,7 @@ const Country _vaticanCity = Country(
     flagImagePath: 'assets/flags/va.png',
     dialCode: 379,
     minLength: 8,
-    maxLength: 8,
-    mask: "## ### ###");
+    maxLength: 8);
 
 const Country _venezuela = Country(
     name: 'Venezuela',
@@ -2098,8 +1908,7 @@ const Country _venezuela = Country(
     flagImagePath: 'assets/flags/ve.png',
     dialCode: 58,
     minLength: 10,
-    maxLength: 10,
-    mask: "### ### ####");
+    maxLength: 10);
 
 const Country _vietnam = Country(
     name: 'Vietnam',
@@ -2109,8 +1918,7 @@ const Country _vietnam = Country(
     flagImagePath: 'assets/flags/vn.png',
     dialCode: 84,
     minLength: 10,
-    maxLength: 10,
-    mask: "## #### ####");
+    maxLength: 10);
 
 const Country _yemen = Country(
     name: 'Yemen',
@@ -2120,8 +1928,7 @@ const Country _yemen = Country(
     flagImagePath: 'assets/flags/ye.png',
     dialCode: 967,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _zambia = Country(
     name: 'Zambia',
@@ -2131,8 +1938,7 @@ const Country _zambia = Country(
     flagImagePath: 'assets/flags/zm.png',
     dialCode: 260,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);
 
 const Country _zimbabwe = Country(
     name: 'Zimbabwe',
@@ -2142,5 +1948,4 @@ const Country _zimbabwe = Country(
     flagImagePath: 'assets/flags/zw.png',
     dialCode: 263,
     minLength: 9,
-    maxLength: 9,
-    mask: "### ### ###");
+    maxLength: 9);

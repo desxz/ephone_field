@@ -17,7 +17,6 @@ class Country {
     required this.dialCode,
     required this.minLength,
     required this.maxLength,
-    required this.mask,
   });
 
   /// Display name.
@@ -46,14 +45,9 @@ class Country {
 
   /// Maximum national number length.
   ///
-  /// Used for legacy input limiting / mask formatting when native as-you-type
+  /// Used for input limiting and length validation when native as-you-type
   /// is unavailable.
   final int maxLength;
-
-  /// Input mask where `#` represents a digit.
-  ///
-  /// Legacy mask formatter path only; prefer native formatting on Android/iOS.
-  final String mask;
 
   /// All supported countries.
   static const List<Country> values = <Country>[
@@ -451,14 +445,6 @@ class Country {
   static const Country zambia = _zambia;
   static const Country zimbabwe = _zimbabwe;
 
-  /// Deprecated alias for [northMacedonia].
-  @Deprecated('Use northMacedonia instead.')
-  static const Country macedonia = northMacedonia;
-
-  /// Deprecated alias for [eswatini].
-  @Deprecated('Use eswatini instead.')
-  static const Country swaziland = eswatini;
-
   /// Returns a copy with overridden fields.
   Country copyWith({
     String? name,
@@ -469,7 +455,6 @@ class Country {
     int? dialCode,
     int? minLength,
     int? maxLength,
-    String? mask,
   }) {
     return Country(
       name: name ?? this.name,
@@ -480,7 +465,6 @@ class Country {
       dialCode: dialCode ?? this.dialCode,
       minLength: minLength ?? this.minLength,
       maxLength: maxLength ?? this.maxLength,
-      mask: mask ?? this.mask,
     );
   }
 
@@ -495,8 +479,7 @@ class Country {
             other.flagImagePath == flagImagePath &&
             other.dialCode == dialCode &&
             other.minLength == minLength &&
-            other.maxLength == maxLength &&
-            other.mask == mask;
+            other.maxLength == maxLength;
   }
 
   @override
@@ -509,7 +492,6 @@ class Country {
         dialCode,
         minLength,
         maxLength,
-        mask,
       );
 
   @override

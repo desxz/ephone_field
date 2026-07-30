@@ -66,26 +66,19 @@ extension EphoneFieldTypeExtension on EphoneFieldType {
     }
   }
 
-  /// Returns input formatters for this field type (legacy mask path).
-  List<TextInputFormatter> inputFormatters(
-    Country country,
-    String? maskSplitCharacter,
-  ) {
+  /// Returns input formatters for this field type.
+  ///
+  /// Phone mode limits length and strips non-digits. Prefer native AsYouType
+  /// via [EPhoneField] when libphonenumber is available.
+  List<TextInputFormatter> inputFormatters(Country country) {
     switch (this) {
       case EphoneFieldType.initial:
       case EphoneFieldType.email:
         return const [];
       case EphoneFieldType.phone:
         return [
-          if (maskSplitCharacter != null)
-            PhoneNumberMaskFormatter(
-              country: country,
-              maskSplitCharacter: maskSplitCharacter,
-            )
-          else
-            LengthLimitingTextInputFormatter(country.maxLength),
-          PhoneNumberDigitsOnlyFormatter(
-              maskSplitCharacter: maskSplitCharacter),
+          LengthLimitingTextInputFormatter(country.maxLength),
+          PhoneNumberDigitsOnlyFormatter(),
         ];
     }
   }

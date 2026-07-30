@@ -8,8 +8,8 @@ import 'phone_parse_result.dart';
 abstract class PhoneNumberService {
   /// Whether as-you-type formatting is backed by native libphonenumber.
   ///
-  /// When `false`, callers should use legacy mask formatters instead of
-  /// [createAsYouType].
+  /// When `false`, callers should use length-limiting / digits-only formatters
+  /// instead of [createAsYouType].
   bool get supportsAsYouTypeFormatting;
 
   /// Whether [isValid] is backed by native libphonenumber.

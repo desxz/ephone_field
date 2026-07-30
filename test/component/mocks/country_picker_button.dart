@@ -22,8 +22,9 @@ class CountryPickerButtonMock extends StatelessWidget {
 
   CountryPickerConfig get _config => CountryPickerConfig(
         menuType: menuType,
-        pickerHeight:
-            menuType == PickerMenuType.page ? CountryPickerHeight.h100 : pickerHeight,
+        pickerHeight: menuType == PickerMenuType.page
+            ? CountryPickerHeight.h100
+            : pickerHeight,
         title: 'Select Country',
         isSearchable: true,
         buttonWidth: 150,

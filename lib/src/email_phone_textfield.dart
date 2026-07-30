@@ -89,7 +89,6 @@ class EPhoneField extends StatefulWidget {
     // Advanced
     this.typeResolver = defaultEphoneFieldTypeResolver,
     this.useLibPhoneFormatting = true,
-    this.phoneNumberMaskSplitter = ' ',
     @visibleForTesting this.debugPhoneNumberService,
   });
 
@@ -276,9 +275,6 @@ class EPhoneField extends StatefulWidget {
   /// When true and a native-capable service is available, use AsYouType.
   final bool useLibPhoneFormatting;
 
-  /// Mask separator used while formatting phone numbers (legacy mask path).
-  final String? phoneNumberMaskSplitter;
-
   /// Test-only phone capability override. Not part of the public plugin API.
   @visibleForTesting
   final PhoneNumberService? debugPhoneNumberService;
@@ -306,7 +302,6 @@ class _EPhoneFieldState extends State<EPhoneField> {
   List<TextInputFormatter>? _cachedFormatters;
   EphoneFieldType? _cachedFormatterType;
   Country? _cachedFormatterCountry;
-  String? _cachedFormatterSplitter;
   PhoneNumberService? _cachedFormatterService;
 
   @override
@@ -462,10 +457,10 @@ class _EPhoneFieldState extends State<EPhoneField> {
       textCapitalization: widget.textCapitalization,
       autocorrect: widget.autocorrect ?? !isPhone,
       enableSuggestions: widget.enableSuggestions ?? !isPhone,
-      smartDashesType: widget.smartDashesType ??
-          (isPhone ? SmartDashesType.disabled : null),
-      smartQuotesType: widget.smartQuotesType ??
-          (isPhone ? SmartQuotesType.disabled : null),
+      smartDashesType:
+          widget.smartDashesType ?? (isPhone ? SmartDashesType.disabled : null),
+      smartQuotesType:
+          widget.smartQuotesType ?? (isPhone ? SmartQuotesType.disabled : null),
       showCursor: widget.showCursor,
       cursorColor: widget.cursorColor,
       cursorErrorColor: widget.cursorErrorColor,
@@ -497,22 +492,19 @@ class _EPhoneFieldState extends State<EPhoneField> {
       maxLines: 1,
       onChanged: (value) {
         _maybeClearValidationError();
-        final changedType =
-            widget.typeResolver(value, widget.initialType);
+        final changedType = widget.typeResolver(value, widget.initialType);
         changedType
             .onChanged(_selectedCountry, _outputMapper, widget.onChanged)
             ?.call(value);
       },
       onSaved: (value) {
-        final savedType =
-            widget.typeResolver(value ?? '', widget.initialType);
+        final savedType = widget.typeResolver(value ?? '', widget.initialType);
         savedType
             .onSaved(_selectedCountry, _outputMapper, widget.onSaved)
             ?.call(value);
       },
       onFieldSubmitted: (value) {
-        final submittedType =
-            widget.typeResolver(value, widget.initialType);
+        final submittedType = widget.typeResolver(value, widget.initialType);
         submittedType
             .onFieldSubmitted(
               _selectedCountry,
@@ -534,8 +526,7 @@ class _EPhoneFieldState extends State<EPhoneField> {
         if (_suppressErrorOnce) {
           return null;
         }
-        final fieldType =
-            widget.typeResolver(value ?? '', widget.initialType);
+        final fieldType = widget.typeResolver(value ?? '', widget.initialType);
         final validationContext = ValidationContext(
           phoneService: _phoneService,
           country: _selectedCountry,
@@ -575,11 +566,9 @@ class _EPhoneFieldState extends State<EPhoneField> {
       return widget.inputFormatters!;
     }
 
-    final splitter = widget.phoneNumberMaskSplitter;
     if (_cachedFormatters != null &&
         _cachedFormatterType == type &&
         _cachedFormatterCountry == _selectedCountry &&
-        _cachedFormatterSplitter == splitter &&
         identical(_cachedFormatterService, _phoneService)) {
       return _cachedFormatters!;
     }
@@ -592,24 +581,23 @@ class _EPhoneFieldState extends State<EPhoneField> {
         service: _phoneService,
         regionCode: _selectedCountry.alpha2,
       );
+      // Allow spaces produced by AsYouType while stripping other junk.
       _cachedFormatters = <TextInputFormatter>[
         _libPhoneFormatter!,
-        PhoneNumberDigitsOnlyFormatter(maskSplitCharacter: splitter),
+        PhoneNumberDigitsOnlyFormatter(maskSplitCharacter: ' '),
       ];
     } else {
-      _cachedFormatters = type.inputFormatters(_selectedCountry, splitter);
+      _cachedFormatters = type.inputFormatters(_selectedCountry);
     }
 
     _cachedFormatterType = type;
     _cachedFormatterCountry = _selectedCountry;
-    _cachedFormatterSplitter = splitter;
     _cachedFormatterService = _phoneService;
     return _cachedFormatters!;
   }
 
   bool get _shouldUseLibPhoneFormatting =>
-      widget.useLibPhoneFormatting &&
-      _phoneService.supportsAsYouTypeFormatting;
+      widget.useLibPhoneFormatting && _phoneService.supportsAsYouTypeFormatting;
 
   Widget? _buildPrefixIcon(EphoneFieldType type) {
     if (type != EphoneFieldType.phone) {
@@ -663,7 +651,6 @@ class _EPhoneFieldState extends State<EPhoneField> {
     _cachedFormatters = null;
     _cachedFormatterType = null;
     _cachedFormatterCountry = null;
-    _cachedFormatterSplitter = null;
     _cachedFormatterService = null;
   }
 }

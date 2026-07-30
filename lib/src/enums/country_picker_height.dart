@@ -32,7 +32,3 @@ extension CountryPickerHeightExtension on CountryPickerHeight {
     }
   }
 }
-
-/// Deprecated alias for [CountryPickerHeight].
-@Deprecated('Use CountryPickerHeight instead.')
-typedef CountryPickerHeigth = CountryPickerHeight;

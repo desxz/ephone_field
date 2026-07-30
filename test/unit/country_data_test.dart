@@ -28,18 +28,6 @@ void main() {
       expect(alpha2Codes.toSet().length, alpha2Codes.length);
     });
 
-    test('mask placeholder count matches maxLength', () {
-      for (final country in Country.values) {
-        final placeholderCount =
-            country.mask.split('').where((char) => char == '#').length;
-        expect(
-          placeholderCount,
-          country.maxLength,
-          reason: '${country.name} mask does not match maxLength',
-        );
-      }
-    });
-
     test('minLength is less than or equal to maxLength', () {
       for (final country in Country.values) {
         expect(
@@ -67,8 +55,9 @@ void main() {
       );
     });
 
-    test('united states mask is grouped as ### ### ####', () {
-      expect(Country.unitedStates.mask, '### ### ####');
+    test('united states dial code is 1', () {
+      expect(Country.unitedStates.dialCode, 1);
+      expect(Country.unitedStates.maxLength, 10);
     });
   });
 }

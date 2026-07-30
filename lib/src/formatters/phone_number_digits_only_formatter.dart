@@ -1,13 +1,14 @@
 import 'package:flutter/services.dart';
 
-/// Allows only digits and an optional mask separator in phone input.
+/// Allows only digits and an optional separator character in phone input.
 class PhoneNumberDigitsOnlyFormatter extends TextInputFormatter {
   /// Creates a digits-only formatter.
   ///
-  /// When [maskSplitCharacter] is provided, that character is also permitted.
+  /// When [maskSplitCharacter] is provided, that character is also permitted
+  /// (for example a space from AsYouType output).
   PhoneNumberDigitsOnlyFormatter({this.maskSplitCharacter});
 
-  /// Optional mask separator character to preserve while filtering.
+  /// Optional separator character to preserve while filtering.
   final String? maskSplitCharacter;
 
   @override
@@ -45,17 +46,11 @@ class PhoneNumberDigitsOnlyFormatter extends TextInputFormatter {
         ? original.selection.baseOffset.clamp(0, original.text.length)
         : original.text.length;
 
-    final keptBefore = original.text
-        .substring(0, base)
-        .replaceAll(disallowed, '')
-        .length;
+    final keptBefore =
+        original.text.substring(0, base).replaceAll(disallowed, '').length;
 
     return TextSelection.collapsed(
       offset: keptBefore.clamp(0, filtered.length),
     );
   }
 }
-
-/// Deprecated alias for [PhoneNumberDigitsOnlyFormatter].
-@Deprecated('Use PhoneNumberDigitsOnlyFormatter instead.')
-typedef PhoneNumberDigistOnlyFormatter = PhoneNumberDigitsOnlyFormatter;

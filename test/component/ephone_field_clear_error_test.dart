@@ -63,7 +63,8 @@ void main() {
     expect(find.text(EphoneFieldCallerChecker.mockEmptyError), findsOneWidget);
   });
 
-  testWidgets('clears validation error when country changes after failed validate',
+  testWidgets(
+      'clears validation error when country changes after failed validate',
       (tester) async {
     final formKey = GlobalKey<FormState>();
     await tester.pumpWidget(

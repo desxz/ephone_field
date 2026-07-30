@@ -55,7 +55,7 @@ void main() {
       expect(service.createdSessions, isNotEmpty);
     });
 
-    testWidgets('falls back to legacy formatters when capability is false',
+    testWidgets('falls back to length and digits-only when AsYouType is off',
         (tester) async {
       final service = FakePhoneNumberService(
         supportsAsYouTypeFormatting: false,

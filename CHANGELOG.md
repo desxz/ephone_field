@@ -16,7 +16,11 @@
   artifact on `main`.
 * Requires Flutter `>=3.10.0` and Dart `>=3.0.0 <4.0.0`.
 * Correctness and UX fixes from the unreleased tree: controller/focus ownership,
-  `initialValue`, phone clear/`onChanged`, country data/mask alignment, picker a11y.
+  `initialValue`, phone clear/`onChanged`, country data length alignment, picker a11y.
+* **Breaking:** removed deprecated aliases (`Country.macedonia` / `swaziland`,
+  `CountryPickerHeigth`, `PhoneNumberDigistOnlyFormatter`).
+* **Breaking:** removed `PhoneNumberMaskFormatter`, `EPhoneField.phoneNumberMaskSplitter`,
+  and `Country.mask`. Without native AsYouType, phone input uses length limit + digits-only.
 
 ## 0.0.2
 

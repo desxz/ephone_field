@@ -18,8 +18,7 @@ class _EmptyOutputAsYouTypeSession implements AsYouTypeSession {
 }
 
 class _EmptyOutputPhoneNumberService extends FakePhoneNumberService {
-  _EmptyOutputPhoneNumberService()
-      : super(supportsAsYouTypeFormatting: true);
+  _EmptyOutputPhoneNumberService() : super(supportsAsYouTypeFormatting: true);
 
   @override
   AsYouTypeSession createAsYouType(String regionCode) =>
@@ -64,10 +63,12 @@ void main() {
       );
       expect(session.clearCount, 0);
       expect(
-        formatter.formatEditUpdate(
-          const TextEditingValue(text: '41'),
-          const TextEditingValue(text: '415'),
-        ).text,
+        formatter
+            .formatEditUpdate(
+              const TextEditingValue(text: '41'),
+              const TextEditingValue(text: '415'),
+            )
+            .text,
         '415',
       );
     });
@@ -94,10 +95,12 @@ void main() {
 
       expect(session.clearCount, greaterThan(clearsBefore));
       expect(
-        formatter.formatEditUpdate(
-          const TextEditingValue(text: '415'),
-          const TextEditingValue(text: '415'),
-        ).text,
+        formatter
+            .formatEditUpdate(
+              const TextEditingValue(text: '415'),
+              const TextEditingValue(text: '415'),
+            )
+            .text,
         '415',
       );
     });
@@ -135,17 +138,21 @@ void main() {
       value = apply(value, const TextEditingValue(text: '4'));
       expect(value.selection.baseOffset, value.text.length);
 
-      value = apply(value, TextEditingValue(
-        text: '${value.text}1',
-        selection: TextSelection.collapsed(offset: value.text.length + 1),
-      ));
+      value = apply(
+          value,
+          TextEditingValue(
+            text: '${value.text}1',
+            selection: TextSelection.collapsed(offset: value.text.length + 1),
+          ));
       expect(value.text, '41');
       expect(value.selection.baseOffset, 2);
 
-      value = apply(value, TextEditingValue(
-        text: '${value.text}5',
-        selection: TextSelection.collapsed(offset: value.text.length + 1),
-      ));
+      value = apply(
+          value,
+          TextEditingValue(
+            text: '${value.text}5',
+            selection: TextSelection.collapsed(offset: value.text.length + 1),
+          ));
       expect(value.text, '415');
       expect(value.selection.baseOffset, 3);
     });

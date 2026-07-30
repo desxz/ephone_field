@@ -97,7 +97,8 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
         final pickerHeight = _config.pickerHeight.height(dialogContext);
 
         return Dialog(
-          insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+          insetPadding:
+              const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           clipBehavior: Clip.antiAlias,
@@ -149,8 +150,8 @@ class _CountryPickerButtonState extends State<CountryPickerButton> {
           : null,
       builder: (sheetContext) {
         final viewInsets = MediaQuery.viewInsetsOf(sheetContext);
-        final availableHeight = MediaQuery.sizeOf(sheetContext).height -
-            viewInsets.bottom;
+        final availableHeight =
+            MediaQuery.sizeOf(sheetContext).height - viewInsets.bottom;
         final height = _config.pickerHeight
             .height(sheetContext)
             .clamp(0.0, availableHeight);
